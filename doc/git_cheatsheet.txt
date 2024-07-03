@@ -28,6 +28,12 @@ Setup:                                                    *git.cheat.setup*
     Set automatic command line coloring for Git for easy reviewing >
       git config --global color.ui auto
 <
+    Set automatic command line coloring for Git for easy reviewing >
+      git config --global color.ui auto
+<
+    List configurations >
+      git config --list
+<
 
 Init:                                                    *git.cheat.init*
   Configuring user information, initializing and cloning repositories
@@ -160,6 +166,12 @@ Rewrite History:                                    *git.cheat.history*
 <
   Clear staging area, rewrite working tree from specified commit >
     git reset --hard [commit]
+<
+  Undo last commit but keep the changes in your working directory >
+    git reset --soft HEAD~1
+<
+  Fix last commit >
+    git commit --amend
 <
 
 Temporary Commits:                                *git.cheat.temporary*
