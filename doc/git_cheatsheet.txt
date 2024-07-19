@@ -260,9 +260,15 @@ Manage multiple SSH keys                         *git.cheat.ssh*
   When cloning ajust the command >
     git clone git@personal-gitub.com:username/dummy_repository_github.git
 <
+Git submodules                                   *git.cheat.submodules*
+  Manage big projects using git submodules
+
+  Add a new submodule to your project, in the git root directory >
+    git submodule add git@github.com:username/repo_name.git path/directory/reponame
+<
 
 Note:
   Create the tags file using `:helptags ../doc`
 
-================================================================================
-vim:tw=80:ts=2:ft=help:norl:syntax=help:
+===================================================================================================
+vim:tw=100:ts=2:ft=help:norl:syntax=help:
