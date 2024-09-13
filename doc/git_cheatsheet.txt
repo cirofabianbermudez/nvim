@@ -215,6 +215,7 @@ Ignoring Patterns:                             *git.cheat.ignore*
   Save a file with desired patterns as .gitignore with either direct string
   matches or wildcard globs.
 
+  Use `.gitkeep` to add empty directories in git
 
 Manage multiple SSH keys                         *git.cheat.ssh*
   Create, configure and manage SSH keys
