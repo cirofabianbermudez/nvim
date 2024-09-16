@@ -96,6 +96,12 @@ Branch and Merge:                                *git.cheat.branch*
   Show all commits in the current branch’s history >
     git log
 <
+  Delete a branch locally >
+    git branch -d [branch-name] 
+<
+  Delete a branch from remote >
+    git push origin --delete [branch-name] 
+<
 
 Inspect and Compare:                             *git.cheat.inspect*
   Examining logs, diffs and object information
