@@ -4,9 +4,24 @@ This cheat sheet is based on the following sources:
 
 - <https://education.github.com/git-cheat-sheet-education.pdf>
 - <https://training.github.com/downloads/github-git-cheat-sheet.pdf>
+- <https://about.gitlab.com/images/press/git-cheat-sheet.pdf>
 - <https://git-scm.com/book/en/v2>
 
 Git is the free and open source distributed version control system that's responsible for everything GitHub related that happens locally on your computer. This cheat sheet features the most important and commonly used Git commands for easy reference.
+
+- [Git Cheat Sheet](#git-cheat-sheet)
+  - [Setup](#setup)
+  - [Init](#init)
+  - [Stage and snapshot](#stage-and-snapshot)
+  - [Branch and Merge](#branch-and-merge)
+  - [Inspect and Compare](#inspect-and-compare)
+  - [Share and Update](#share-and-update)
+  - [Tracking Path Changes](#tracking-path-changes)
+  - [Rewrite History](#rewrite-history)
+  - [Temporary Commits](#temporary-commits)
+  - [Ignoring Patterns](#ignoring-patterns)
+  - [Manage multiple SSH keys](#manage-multiple-ssh-keys)
+  - [Git submodules](#git-submodules)
 
 ## Setup
 
@@ -21,13 +36,7 @@ git config --global user.name "[username]"
 Set an email address that will be associated with each history marker
 
 ```plain
-git config --global user.email "[username]"
-```
-
-Set automatic command line coloring for Git for easy reviewing
-
-```plain
-git config --global color.ui auto
+git config --global user.email "[useremail]"
 ```
 
 Set automatic command line coloring for Git for easy reviewing
@@ -40,6 +49,26 @@ List configurations
 
 ```plain
 git config --list
+```
+
+List global configurations
+
+```plain
+git config --global --list
+```
+
+Set a name and an email for a specific resporitory without changing the global
+Git configurations.
+
+```plain
+git config user.name  "[username]"
+git config user.email "[useremail]"
+```
+
+List local configurations
+
+```plain
+git config --local --list
 ```
 
 ## Init
@@ -98,6 +127,12 @@ Unstage a file while retaining the changes in working directory
 git reset [file]
 git reset HEAD [file]
 git restore --staged [file]
+```
+
+Discard changes in the staged files
+
+```plain
+git restore [file]
 ```
 
 Diff of what is changed but not staged
@@ -378,12 +413,15 @@ Use `.gitkeep` to add empty directories in git
 
 Create, configure and manage SSH keys
 
-Create a new SSH key pair, use meaningful names like `id_ed25519_github`
+Create a new SSH key pair, use meaningful names like `id_ed25519_github` and enter a
+secure passphrase.
 
 ```bash
 cd ~/.ssh
 ssh-keygen -t ed25519 -C "your_email@example.com"
 ```
+
+Now you should have a SSH key-pair inside the `~/.ssh` directory, something like `id_ed25519_github` and `id_ed25519_github.pub`, your private and public keys.
 
 Create a `~/.ssh/config` file
 
@@ -392,7 +430,7 @@ cd ~/.ssh
 touch config
 ```
 
-Configuration example
+and write a configuration similar to the following example:
 
 ```plain
 # GitHub account
