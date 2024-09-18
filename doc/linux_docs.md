@@ -1,3 +1,4 @@
+# Linux notes
 
 To see which terminals you have installed on your computer you can use the command:
 

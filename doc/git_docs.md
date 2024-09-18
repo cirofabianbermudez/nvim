@@ -1,4 +1,4 @@
-# Git Cheat Sheet
+# Git/GitHub/GitLab notes
 
 This cheat sheet is based on the following sources:
 
@@ -9,7 +9,7 @@ This cheat sheet is based on the following sources:
 
 Git is the free and open source distributed version control system that's responsible for everything GitHub related that happens locally on your computer. This cheat sheet features the most important and commonly used Git commands for easy reference.
 
-- [Git Cheat Sheet](#git-cheat-sheet)
+- [Git/GitHub/GitLab notes](#gitgithubgitlab-notes)
   - [Setup](#setup)
   - [Init](#init)
   - [Stage and snapshot](#stage-and-snapshot)

@@ -1,12 +1,11 @@
 
-# 7zip
+# 7zip plain
 
 ## Installation
 
 ```bash
 scoop install main/7zip
 ```
-
 
 ## Usage
 
@@ -20,37 +19,37 @@ scoop install main/7zip
 
 Compress files or directories
 
-```bash
+```plain
 7z a compress_filename.7z file.txt directory
 ```
 
 Extract files from an archive
 
-```bash
+```plain
 7z x compress_filename.7z
 ```
 
 Extract files from an archive to an specific directory
 
-```bash
+```plain
 7z x compress_filename.7z -o/path/to/destination
 ```
 
 Add files or directories to an existing archive
 
-```bash
+```plain
 7z u compress_filename.7z newfile.txt
 ```
 
 List the content of the archive without extraction
 
-```bash
+```plain
 7z l compress_filename.7z
 ```
 
 Encrypt an archive with a password
 
-```bash
+```plain
 7z a -p<password> compress_filename.7z file.txt
 ```
 

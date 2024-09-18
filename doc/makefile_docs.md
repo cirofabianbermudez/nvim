@@ -1,3 +1,4 @@
+# Makefile notes
 
 To select a different Makefile you can run
 
