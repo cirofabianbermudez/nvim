@@ -6,4 +6,3 @@ require("core.neovide")
 require("core.systemverilog")
 require("core.formaters")
 require("core.lazy")
-
