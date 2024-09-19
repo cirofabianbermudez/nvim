@@ -1,2 +1,3 @@
 vim.keymap.set("i", "<C-k>", '[]()<left><esc>"+pF[a', { noremap = true })
-vim.keymap.set("n", "<leader>fa", [[:! start chrome "file://%:p"<CR>]], { noremap = true })
+vim.keymap.set("n", "<leader>fa", [[:! start chrome "file://%:p"<CR><CR>]], { noremap = true })
+vim.keymap.set("n", "<leader>fc", [[:! code %:p"<CR><CR>]], { noremap = true })

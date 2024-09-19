@@ -12,7 +12,15 @@ return {
           find_command = { "rg", "--files", "--type", "md" },
         })
       end
+     local function grep_current_file()
+        builtin.live_grep({
+          --search = vim.fn.input("Grep > "),
+          search_dirs = { vim.fn.expand("%:p") },
+          --grep_open_files = true,
+        })
+      end
 			vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
+			vim.keymap.set("n", "<leader>fj", grep_current_file, {})
 			vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
 			vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
 			vim.keymap.set("n", "<leader>fr", builtin.registers, {})
