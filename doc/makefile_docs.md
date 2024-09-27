@@ -1,5 +1,23 @@
 # Makefile notes
 
+## Makefile syntax
+
+A Makefile consists of a set of **rules**. A rule generally looks like this:
+
+```plain
+targets: prerequisites
+	command
+	command
+	command
+```
+
+The **targets** are file names, or just names separated by spaces. Typically, there is only one per rule.
+
+The **commands** are a series of steps typically used to make the target(s). These need to start with a tab character, not spaces.
+
+The **prerequisites** are also file names, or other targets separated by spaces. These files need to exist before the commands for the target are run. These are also called dependencies,
+
+
 To select a different Makefile you can run
 
 ```bash
@@ -68,5 +86,6 @@ CXXFLAGS = -g -std=c++23 -Wall
 | `clean`  | Conventionally used to define rules for cleaning up the project directory by removing generated files or artifacts.                     |
 
 <https://stackoverflow.com/questions/18136918/how-to-get-current-relative-directory-of-your-makefile>
+<https://makefiletutorial.com/>
 
 ROOT_DIR = $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
