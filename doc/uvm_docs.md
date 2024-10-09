@@ -1,5 +1,209 @@
 # UVM Notes
 
+## Accellera documentation summary
+
+---
+
+### `uvm_void`
+
+The uvm_void class is the base class for all UVM classes.  It is an abstract class with no data members or functions.  It allows for generic containers of objects to be created, similar to a void pointer in the C programming language.  User classes derived directly from uvm_void inherit none of the UVM functionality, but such classes may be placed in uvm_void-typed containers along with other UVM objects.
+
+**`uvm_void`**
+
+The uvm_void class is the base class for all UVM classes.
+
+#### Class Declaration
+
+```verilog
+virtual class uvm_void
+```
+
+---
+
+### `uvm_object`
+
+The uvm_object class is the base class for all UVM data and hierarchical classes.  Its primary role is to define a set of methods for such common operations as create, copy, compare, print, and record.  Classes deriving from `uvm_object` must implement the pure virtual methods such as create and get_type_name.
+
+#### Summary `uvm_object`
+
+The uvm_object class is the base class for all UVM data and hierarchical classes.
+
+#### Class Hierarchy
+
+```plain
+uvm_void
+uvm_object
+```
+
+#### Class Declaration
+
+```verilog
+virtual class uvm_object extends uvm_void
+```
+
+#### Methods and attibutes
+
+| Name                | Description                                                                                                                                                                                                                                                   |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `new`               | Creates a new uvm_object with the given instance name.                                                                                                                                                                                                        |
+| **Seeding**         |                                                                                                                                                                                                                                                               |
+| `use_uvm_seeding`   | This bit enables or disables the UVM seeding mechanism.                                                                                                                                                                                                       |
+| `ressed`            | Calls srandom on the object to reseed the object using the UVM seeding mechanism, which sets the seed based on type name and instance name instead of based on instance position in a thread.                                                                 |
+| **Identificattion** |                                                                                                                                                                                                                                                               |
+| `set_name`          | Sets the instance name of this object, overwriting any previously given name.                                                                                                                                                                                 |
+| `get_name`          | Returns the name of the object, as provided by the name argument in the new constructor or set_name method.                                                                                                                                                   |
+| `get_full_name`     | Returns the full hierarchical name of this object.                                                                                                                                                                                                            |
+| `get_inst_id`       | Returns the object’s unique, numeric instance identifier.                                                                                                                                                                                                     |
+| `get_inst_count`    | Returns the current value of the instance counter, which represents the total number of uvm_object-based objects that have been allocated in simulation.                                                                                                      |
+| `get_type`          | Returns the type-proxy (wrapper) for this object                                                                                                                                                                                                              |
+| `get_object_type`   | Returns the type-proxy (wrapper) for this object.                                                                                                                                                                                                             |
+| `get_type_name`     | This function returns the type name of the object, which is typically the type identifier enclosed in quotes.                                                                                                                                                 |
+| **Creation**        |                                                                                                                                                                                                                                                               |
+| `create`            | The create method allocates a new object of the same type as this object and returns it via a base uvm_object handle.                                                                                                                                         |
+| `clone`             | The clone method creates and returns an exact copy of this object.                                                                                                                                                                                            |
+| **Printing**          |                                                                                                                                                                                                                                                               |
+| `print`             | The print method deep-prints this object’s properties in a format and manner governed by the given printer argument; if the printer argument is not provided, the global uvm_default_printer is used.                                                         |
+| `sprint`            | The sprint method works just like the print method, except the output is returned in a string rather than displayed.                                                                                                                                          |
+| `do_print`          | The do_print method is the user-definable hook called by print and sprint that allows users to customize what gets printed or sprinted beyond the field information provided by the `uvm_field_* macros, Utility and Field Macros for Components and Objects. |
+| `convert2string`    | This virtual function is a user-definable hook, called directly by the user, that allows users to provide object information in the form of a string.                                                                                                         |
+| **Copying**            |                                                                                                                                                                                                                                                               |
+| `copy`              | The copy makes this object a copy of the specified object.                                                                                                                                                                                                    |
+| `do_copy`           | The do_copy method is the user-definable hook called by the copy method.                                                                                                                                                                                      |
+| **Comparing**         |                                                                                                                                                                                                                                                               |
+| `compare`           | Deep compares members of this data object with those of the object provided in the rhs (right-hand side)                                                                                                                                                      |
+| `do_compare`        | The do_compare method is the user-definable hook called by the compare method.                                                                                                                                                                                |
+|                     |                                                                                                                                                                                                                                                               |
+
+---
+
+### `uvm_report_object`
+
+The uvm_report_object provides an interface to the UVM reporting facility.  Through this interface, components issue the various messages that occur during simulation.  Users can configure what actions are taken and what file(s) are output for individual messages from a particular component or for all messages from all components in the environment.  Defaults are applied where there is no explicit configuration.
+
+Most methods in uvm_report_object are delegated to an internal instance of a uvm_report_handler, which stores the reporting configuration and determines whether an issued message should be displayed based on that configuration.  Then, to display a message, the report handler delegates the actual formatting and production of messages to a central uvm_report_server.
+
+A report consists of an id string, severity, verbosity level, and the textual message itself.  They may optionally include the filename and line number from which the message came.  If the verbosity level of a report is greater than the configured maximum verbosity level of its report object, it is ignored.  If a report passes the verbosity filter in effect, the report’s action is determined.  If the action includes output to a file, the configured file descriptor(s) are determined.
+
+#### Summary `uvm_report_object`
+
+The uvm_report_object provides an interface to the UVM reporting facility.
+
+#### Class Hierarchy
+
+```plain
+uvm_void
+uvm_object
+uvm_report_object
+```
+
+#### Class Declaration
+
+```verilog
+class uvm_report_object extends uvm_object
+```
+
+#### Methods and attibutes
+
+| Name                    | Description                                                                                                      |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `new`                   | Creates a new uvm_object with the given instance name.                                                           |
+| **Reporting**           |                                                                                                                  |
+| `uvm_get_report_object` | Returns the nearest uvm_report_object when called.                                                               |
+| `uvm_report_enabled`    | Returns 1 if the configured verbosity for this severity/id is greater than or equal to verbosity else returns 0. |
+| `uvm_report`            |                                                                                                                  |
+| `uvm_report_info`       |                                                                                                                  |
+| `uvm_report_warning`    |                                                                                                                  |
+| `uvm_report_error`      |                                                                                                                  |
+| `uvm_report_fatal`      | These are the primary reporting methods in the UVM.                                                              |
+|                         |                                                                                                                  |
+
+---
+
+### `uvm_component`
+
+The uvm_component class is the root base class for UVM components.  In addition to the features inherited from uvm_object and uvm_report_object, uvm_component provides the following interfaces:
+
+|                       |                                                                                                                                                                                                       |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Hierarchy             | provides methods for searching and traversing the component hierarchy.                                                                                                                                |
+| Phasing               | defines a phased test flow that all components follow, with a group of standard phase methods and an API for custom phases and multiple independent phasing domains to mirror DUT behavior e.g. power |
+| Transaction recording | provides a convenience interface to the uvm_report_handler.  All messages, warnings, and errors are processed through this interface.                                                                 |
+| Factory               | provides a convenience interface to the uvm_factory.  The factory is used to create new components and other objects based on type-wide and instance-specific configuration.                          |
+
+
+#### Summary `uvm_component`
+
+The uvm_component class is the root base class for UVM components.
+
+#### Class Hierarchy
+
+```plain
+uvm_void
+uvm_object
+uvm_report_object
+uvm_component
+```
+
+#### Class Declaration
+
+```verilog
+virtual class uvm_component extends uvm_report_object
+```
+
+#### Methods and attibutes
+
+| Name                        | Description                                                                                                                                                                                                                                              |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `new`                       | Creates a new component with the given leaf instance name and handle to its parent.                                                                                                                                                                      |
+| **Hierarchy Interface**     | These methods provide user access to information about the component hierarchy, i.e., topology.                                                                                                                                                          |
+| `get_parent`                | Returns a handle to this component’s parent, or null if it has no parent.                                                                                                                                                                                |
+| `get_full_name`             | Returns the full hierarchical name of this object.                                                                                                                                                                                                       |
+| `get_childen`               | This function populates the end of the children array with the list of this component’s children.                                                                                                                                                        |
+| `get_child`                 |                                                                                                                                                                                                                                                          |
+| `get_next_child`            |                                                                                                                                                                                                                                                          |
+| `get_first_child`           | hese methods are used to iterate through this component’s children, if any.                                                                                                                                                                              |
+| `get_num_children`          | Returns the number of this component’s children.                                                                                                                                                                                                         |
+| `has_child`                 | Returns 1 if this component has a child with the given name, 0 otherwise.                                                                                                                                                                                |
+| `lookup`                    | Looks for a component with the given hierarchical name relative to this component.                                                                                                                                                                       |
+| `get_depth`                 | Returns the component’s depth from the root level.                                                                                                                                                                                                       |
+| **Phasing Interface**       | These methods implement an interface which allows all components to step through a standard schedule of phases, or a customized schedule, and also an API to allow independent phase domains which can jump like state machines to reflect behavior e.g. |
+| `build_phase`               |                                                                                                                                                                                                                                                          |
+| `connect_phase`             |                                                                                                                                                                                                                                                          |
+| `end_of_elaboration_phase`  |                                                                                                                                                                                                                                                          |
+| `start_of_simulation_phase` |                                                                                                                                                                                                                                                          |
+| `run_phase`                 |                                                                                                                                                                                                                                                          |
+| `pre_reset_phase`           |                                                                                                                                                                                                                                                          |
+| `reset_phase`               |                                                                                                                                                                                                                                                          |
+| `post_reset_phase`          |                                                                                                                                                                                                                                                          |
+| `pre_configure_phase`       |                                                                                                                                                                                                                                                          |
+| `configure_phase`           |                                                                                                                                                                                                                                                          |
+| `post_configure_phase`      |                                                                                                                                                                                                                                                          |
+| `pre_main_phase`            |                                                                                                                                                                                                                                                          |
+| `main_phase`                |                                                                                                                                                                                                                                                          |
+| `post_main_phase`           |                                                                                                                                                                                                                                                          |
+| `pre_shutdown_phase`        |                                                                                                                                                                                                                                                          |
+| `shutdown_phase`            |                                                                                                                                                                                                                                                          |
+| `post_shutdown_phase`       |                                                                                                                                                                                                                                                          |
+| `extract_phase`             |                                                                                                                                                                                                                                                          |
+| `check_phase`               |                                                                                                                                                                                                                                                          |
+| `report_phase`              |                                                                                                                                                                                                                                                          |
+| `final_phase`               |                                                                                                                                                                                                                                                          |
+|                             |                                                                                                                                                                                                                                                          |
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## General
 
 - Agents are configurable for reuse across test/projects
