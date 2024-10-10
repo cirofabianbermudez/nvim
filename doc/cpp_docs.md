@@ -5,6 +5,7 @@
 | Flag                       | Description                                                                                      |
 | -------------------------- | ------------------------------------------------------------------------------------------------ |
 | `-o <filename>`            | Specifies the output file name.                                                                  |
+| `-c`                       | Compile the source code files into object files                                                  |
 | `-Wall`                    | Enables almost all compiler warnings.                                                            |
 | `-Wextra`                  | Enables more compiler warnings.                                                                  |
 | `-std=c++14`               | Specifies the C++ language standard to use.                                                      |
