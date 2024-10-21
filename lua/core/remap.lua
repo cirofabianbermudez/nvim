@@ -11,8 +11,8 @@ vim.keymap.set("n", "<leader>q", ":q<CR>", opt)
 vim.keymap.set("n", "<leader>W", ":wa<CR>", opt)
 
 -- Easy yank all or delete all
-vim.keymap.set("n", "<leader>gy", ":%y+<CR>", opt)
-vim.keymap.set("n", "<leader>gg", ":%y+ | %d<CR>", opt)
+vim.keymap.set("n", "<leader>ya", ":%y+<CR>", opt)
+vim.keymap.set("n", "<leader>da", ":%y+ | %d<CR>", opt)
 vim.keymap.set("n", "Y", "y$", opt)
 vim.keymap.set("n", "<leader>Y", '_v$<left>"+y')
 
