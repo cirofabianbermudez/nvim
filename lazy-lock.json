@@ -1,9 +1,9 @@
 {
+  "github-nvim-theme": { "branch": "main", "commit": "0e4636f556880d13c00d8a8f686fae8df7c9845f" },
   "lazy.nvim": { "branch": "main", "commit": "077102c5bfc578693f12377846d427f49bc50076" },
   "lualine.nvim": { "branch": "master", "commit": "b431d228b7bbcdaea818bdc3e25b8cdbe861f056" },
   "markdown-preview.nvim": { "branch": "master", "commit": "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee" },
   "neo-tree.nvim": { "branch": "v3.x", "commit": "a77af2e764c5ed4038d27d1c463fa49cd4794e07" },
-  "nord.nvim": { "branch": "main", "commit": "4cc19936b1b57ba08eb461c5f450b3976cbb8e0c" },
   "nui.nvim": { "branch": "main", "commit": "b58e2bfda5cea347c9d58b7f11cf3012c7b3953f" },
   "nvim-treesitter": { "branch": "master", "commit": "bab7b0f20bd3e805b77231a77f516c7d69382693" },
   "nvim-web-devicons": { "branch": "master", "commit": "19d257cf889f79f4022163c3fbb5e08639077bd8" },

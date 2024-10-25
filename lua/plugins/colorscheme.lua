@@ -1,20 +1,47 @@
 return {
-  "gbprod/nord.nvim",
+
+--  "projekt0n/github-nvim-theme",
+--  lazy = false,
+--  priority = 1000,
+--  config = function()
+--    local config = require("github-theme")
+--    config.setup({
+--      options = {
+--        transparency = true,
+--      },
+--    })
+--    vim.cmd.colorscheme("github_dark_default")
+--  end,
+
+  "olimorris/onedarkpro.nvim",
   lazy = false,
   priority = 1000,
   config = function()
-    local config = require("nord")
+    local config = require("onedarkpro")
     config.setup({
-      transparent = true,
-      styles = {
-        comments = { italic = false },
-        keywords = { italic = false },
-        functions = {},
-        variables = {},
+      options = {
+        transparency = true,
       },
     })
-    vim.cmd.colorscheme("nord")
+    vim.cmd.colorscheme("onedark")
   end,
+
+--  "gbprod/nord.nvim",
+--  lazy = false,
+--  priority = 1000,
+--  config = function()
+--    local config = require("nord")
+--    config.setup({
+--      transparent = true,
+--      styles = {
+--        comments = { italic = false },
+--        keywords = { italic = false },
+--        functions = {},
+--        variables = {},
+--      },
+--    })
+--    vim.cmd.colorscheme("nord")
+--  end,
 
 --	"folke/tokyonight.nvim",
 --	lazy = false,
