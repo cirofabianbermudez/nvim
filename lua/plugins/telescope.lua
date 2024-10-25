@@ -5,7 +5,16 @@ return {
 		dependencies = { "nvim-lua/plenary.nvim" },
 		config = function()
 			local builtin = require("telescope.builtin")
-      local docs_path =  os.getenv("USERPROFILE") .. "\\AppData\\Local\\nvim\\doc"
+
+      local is_windows = package.config:sub(1, 1) == '\\'
+      local docs_path
+
+      if is_windows then
+          docs_path = os.getenv("USERPROFILE") .. "\\AppData\\Local\\nvim\\doc"
+      else
+          docs_path = os.getenv("HOME") .. "/.config/nvim/doc"
+      end
+
       local function search_docs()
         builtin.find_files({
           cwd = docs_path,
