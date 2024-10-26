@@ -1,30 +1,30 @@
 return {
 
---  "projekt0n/github-nvim-theme",
---  lazy = false,
---  priority = 1000,
---  config = function()
---    local config = require("github-theme")
---    config.setup({
---      options = {
---        transparency = true,
---      },
---    })
---    vim.cmd.colorscheme("github_dark_default")
---  end,
-
-  "olimorris/onedarkpro.nvim",
+  "projekt0n/github-nvim-theme",
   lazy = false,
   priority = 1000,
   config = function()
-    local config = require("onedarkpro")
+    local config = require("github-theme")
     config.setup({
       options = {
         transparency = true,
       },
     })
-    vim.cmd.colorscheme("onedark")
+    vim.cmd.colorscheme("github_dark_high_contrast")
   end,
+
+--  "olimorris/onedarkpro.nvim",
+--  lazy = false,
+--  priority = 1000,
+--  config = function()
+--    local config = require("onedarkpro")
+--    config.setup({
+--      options = {
+--        transparency = true,
+--      },
+--    })
+--    vim.cmd.colorscheme("onedark")
+--  end,
 
 --  "gbprod/nord.nvim",
 --  lazy = false,
