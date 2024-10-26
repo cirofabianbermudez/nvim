@@ -3,7 +3,7 @@ return {
 	config = function()
 		local config = require("nvim-treesitter.configs")
 		config.setup({
-			ensure_installed = { "c", "lua", "cpp", "python", "vim", "vimdoc", "markdown" },
+			ensure_installed = { "c", "lua", "cpp", "python", "vim", "vimdoc", "markdown", "markdown_inline" },
 			sync_install = false,
 			auto_install = false,
 			highlight = { 
