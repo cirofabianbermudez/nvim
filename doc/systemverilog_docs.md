@@ -1875,7 +1875,7 @@ Threads scheduled for execution at current simulation time, but `i == 16` before
 
 Local variables once created are local to the child context
 
-- Can copy parant variable in `fork` declarative space
+- Can copy parent variable in `fork` declarative space
 
 ```verilog
 module test;
@@ -2561,7 +2561,7 @@ task node::ping();     // Place class name and double-colon before method name
 endtask : ping
 ```
 
-## Best Practices (1/2)
+## Best Practices (2/2)
 
 Create useful methods for data classes (user defined)
 
@@ -2697,7 +2697,655 @@ endmodule : test
 // Direct reference
 class harmonix;
   ComplexPkg::Complex i,j;    // Direct reference using ::
+  ...
 endclass : harmonix
+```
+
+## Using Packages: Example (2/2)
+
+Packages can be imported by other packages
+
+`export` allows a package imported by one package to be imported along with the importing package
+
+- `export` follows same syntax as `import`
+
+```verilog
+package signal_analysis;
+  import ComplexPkg::*;
+  // Export with signal_analysis
+  export ComplexPkg::*;
+  class harmonix;
+    Complex alpha, beta, gamma;
+  endclass : harmonix
+endpackage: signal_analysis
+```
+
+## Alternatives to Exhaustive Testing?
+
+32-bit adder example: Assume one set of input and output ca be verifies every 1ns.
+How long will exhaustive testing take?
+
+What if exhaustive testing is unachievable?
+
+- Answer: Verify design with a sufficient set of vectors to gain a level of confidence that product will ship with a tolerable field-failure rate
+
+Best known mechanism is randomization of data combined with functional coverage
+
+## Process of Reaching Verification Goals
+
+<div style="text-align: center;">
+  <img src="img/verification_goals.svg" alt="verification_goals" width=90%"/>
+</div>
+
+## OOP Based Randomization
+
+In SystemVerilog, randomization is achieved via classes
+
+- `randomize()` function is built into every class
+
+Two types of random properties are supported:
+
+- `rand` - Values can repeat without exhausting all possible values
+  - Think "rolling dice"
+- `randc` Exhaust all values before repeating any value
+  - Think "picking a card from a deck of cards"
+  - Can be as large as 32-bits in VCS
+  
+When the class function `randomize()` is called:
+
+- Randomizes each `rand` and `randc` property value
+  - To full range of its data type if no constraints specified
+
+When the class `randomize()` function is called, if there are no constrains in the variables it will produce a random answer all equally possible.
+
+`rand` and `randc` are not solve at the same time together, all `rand` variables are solve together and all `randc` variables are solve together.
+
+## Randomization Example
+
+```verilog
+class Packet;
+  randc bit[3:0] sa, da;           // Declare random properties in class
+  rand  bit[7:0] payload[];
+  
+  function Packet copy(...);
+  ...
+  endfunction : copy
+endclass: Packet
+```
+
+```verilog
+module test;
+  int run_for_n_pkts = 100;
+  Packet pkt = new();              // Construct an object to be randomized
+  initial begin
+    ...
+    repeat(run_for_n_pkts) begin
+      if (!pkt.randomize()) begin  // Randomize content of object
+        fork
+          send();
+          secv();
+        join
+        check();
+      end
+    end
+  end
+endmodule : test
+```
+
+It is always a good idea to check if the `randomize()` function was successful
+
+## Controlling Random Variables (1/2)
+
+How do you control the value range for `sa` and `da`?
+
+How do you control the size of `payload[]`
+
+```verilog
+class Packet;
+  randc bit[3:0] sa, da;
+  rand  bit[7:0] payload[];
+  function void display();
+    $display("sa = %0d, da = %0d", sa, da);
+    $display("size of payload array = %0d", payload.size());
+    $display("payload[]", payload);
+  endfunction : display
+endclass : Packet
+```
+
+```verilog
+module test;
+  Packet pkt = new();
+  if (!pkt.randomize()) begin
+    $finish;
+  end
+  pkt.display();
+endmodule : test
+```
+
+## Controlling Random Variables (2/2)
+
+Randomization can be controlled using `constraint` block
+
+```verilog
+class Packet;
+  randc bit[3:0] sa, da;
+  rand  bit[7:0] payload[];
+  constraint corner_test {
+    sa == 12;                    // Equality operator, not assignment
+    da inside {2,4,[16:10]};     // Set membership
+    payload.size() >= 2;         // Array aggregate
+    payload.size() <= 4;
+  }
+endclass : Packet
+constraint valid {...};
+```
+
+- Constraint support only 2-state values;
+- Multiple `constraint` blocks may be defined is same class
+- Constraint expressions are describing a relationship not an assignment
+
+```verilog
+constraint single_sa { sa = 12;}      // Syntax error
+```
+
+## SystemVerilog Constraints
+
+Relational Operators
+
+```verilog
+constraint single_sa {
+  sa == 12;
+  da < sa;
+}
+```
+
+Set Membership
+
+- Select from a list or set with keyword inside
+
+```verilog
+constraint Limit1 {
+  sa inside {[5:7], 10, 15};  // 5,6,7,10,15 equally weighted probability
+}
+```
+
+- Exclude from a specified set with `!`
+
+```verilog
+constraint Limit2 {
+  !( sa inside {[1:10], 15} );  // 0,11,12,13,14 equally weighted probability
+}
+```
+
+## Weighted Constraints
+
+Constraint values can also be weighted over a specified range using keyword `dist` and:
+
+- `:=` (apply the same wight to all values in range)
+
+```verilog
+constraint Limit {                 // equal weights
+  sa dist {[5:7] := 30, 9 := 20};  // 5,6,7 equally weight of 30 each, 9 has a weight of 20
+}
+```
+
+- `:/` (divide the wight among all values in range)
+
+```verilog
+constraint Limit {                 // divided weights
+  sa dist {[5:7] :/ 30, 9 := 20};  // 5,6,7 equally weight of 10 each, 9 has a weight of 20
+}
+```
+
+## Array Constraint Support
+
+Members can be constrained within `foreach` loop
+
+Aggregates can be used to constrain arrays
+
+- `size()`, `sum()` and more
+
+Set membership can be used to reference content
+
+```verilog
+class Config:
+  rand bit[7:0] addrs[10];
+  rand bit drivers_in_use[16];
+  rand int num_of_drivers, one_addr;
+  
+  constraint limit {
+    num_of_drivers inside { [1:16] };
+    drivers_in_use.sum() with (int'(item)) == num_of_drivers;
+    foreach (addrs[idx]) (idx > 0) -> addrs[idx] > addrs[idx-1]
+    one_addr inside addrs;
+  }
+endclass : Config
+```
+
+## Implication and Order Constraints
+
+`->` (Implication Operator)
+
+- `if (...) [else ...]` also available
+- Caution: does not imp0ly solving order
+
+```verilog
+typedef enum {low, mid, high, any} AddrTyp_e;
+class MyBus;
+  rand bit[7:0]  addr;
+  rand AddrTyp_e atype;
+  constraint addr_range {
+    (atype == low)  -> addr inside { [0:15] };
+    (atype == mid)  -> addr inside { [16:127] };
+    (atype == high) -> addr inside { [128:255] };
+  //  if     (atype == low)  addr inside { [0:15] };
+  //  elseif (atype == mid)  addr inside { [16:127] };
+  //  elseif (atype == high)  addr inside { [128:255] };
+  }
+endclass : MyBus
+```
+
+## Equivalence Constraints
+
+Use `<->` (Equivalence operator) to define a true bidirectional constraint
+
+- `A <-> B` means if A is true B must be true and if B is true A must be true
+- Caution: does not imply solving order
+
+```verilog
+typedef enum {low, mid, high, any} AddrTyp_e;
+class MyBus;
+  rand bit[7:0]  addr;
+  rand AddrTyp_e atype;
+  constraint addr_range {
+    (atype == low)  <-> addr inside { [0:15] };
+    (atype == mid)  <-> addr inside { [16:127] };
+    (atype == high) <-> addr inside { [128:255] };
+  }
+endclass : MyBus
+```
+
+## Uniqueness Constraints
+
+Constraint each variable in a group to be `unique` after randomization
+
+```verilog
+class C;
+  rand bit [2:0] a [7];
+  rand bit [2:0] b;
+  constraint cst1 {
+    unique { a[0:2], a[6], b}     // Array slices allowed
+  }
+endclass : C
+
+C c_obj = new();
+if (!c_obj.randomize()) begin
+  $finish;
+end
+
+$display("a = ", c_obj.a);     // a = {h5, h0, h3, h1, h7, h2, h2}
+$display("b = ", c_obj.b);     // b = 6
+```
+
+## System Functions
+
+Bit-Vector system functions can be used in constraint (VCS only)
+
+- Treated as an operator/expression instead of a function
+  - `$countbits`
+  - `$countones`
+  - `$onehot`
+  - `$onehot0`
+  - `$bits`
+  
+```verilog
+rand bit[3:0] vector;
+constraint cst { $countones(vector) == 2;}
+
+// same as
+constraint cst { 
+  (vector[0] + vector[1] + vector[2] + vector[3] ) == 2;
+}
+```
+
+## User-defined Functions in Constraints
+
+User-defined functions can be used to constrain variables
+
+- See LRM for rules and limitations on functions and randomization order
+- Can also use C functions using DPI
+
+```verilog
+class D;
+  rand bit [6:0]  a,b;
+  rand bit [7:0]  c;
+  constraint c0 { c == add(a,b); }
+  
+  function bit[7:0] add (input bit[6:0] i1, i2);
+    return (i1 + i2);
+  endfunction : add
+endclass : D
+```
+
+## Randomizing Real numbers
+
+Limited support for randomization of ral variables (VCS only)
+
+- Starting with the VCS 2017.12 release you can randomize variables of type
+  `real`, `shortreat`, `realtime`
+- Requires the `-xlrm floating_pnt_constraint` compiler switch
+- Only one constraint per real variable allowed
+- Only one real variable per constraint allowed
+- Can only be constrained by constants or non-random state variables
+
+```verilog
+class cls;
+  rand int       ix;
+  rand real      rx;
+  rand shortreal sx;
+  rand shortreal tx;
+  
+  constraint t { tx dist { [0.02:0.20] :/30, [0.1:1.0] :/ 70 }; }
+  constraint s { sx dist { [0.04:0.40] :/50, [0.1:1.0] :/ 50 }; }
+  constraint s { rx dist { [0.01:0.10] :/10, [0.1:1.0] :/ 90 }; 
+                 ix inside {[5:10]}; }
+
+endclass : cls
+```
+
+## Constraint Solver Order
+
+By default the simulator randomizes variables in any order it can in order to get a valid solution. To address this we can use:
+
+`solve-before` construct set solving order for `rand` properties
+
+- `randc` properties are always solved before `rand properties
+  - Can not force `rand` to be randomized before `randc` properties
+
+- `$void` (rand_property) solves `rand_property` first (VCS only)
+- If the randomize function can not come up with a valid solution then if will solve with in another way.
+
+```verilog
+class MyBus;
+  rand bit flag;
+  rand bit[11:0] addr;
+  constraint addr_range {
+    if (flag == 0) begin
+      addr = 0;
+    end else begin
+      addr inside { [1:1024] };
+    end
+    solve flag before addr;     // Guidance only
+  }
+endclass : 
+```
+
+## Inline Constraints
+
+Individual invocations of `randomize()` can be customized using
+
+```verilog
+obj.randomize() with { <additional constraints> }
+```
+
+```verilog
+module test;
+  class demo;
+    rand int x, y, z;
+    constraint Limit1 { x > 0; x <= 5; }
+    ...
+  endclass : demo
+  
+  initial begin
+    demo obj_a = new();
+    // ADD another constraint. Does NOT override Limit1
+    if (!obj_a.randomize() with { x > 3 && x < 10;} ) begin
+      $display("ERROR while randomize()");
+    end
+  end
+endmodule : test
+```
+
+All constraints are merged.
+
+## Soft Constraints
+
+Use keyword `soft` when defining soft constraints
+
+- Only for `rand` variables
+- Not for `randc` variables
+
+```verilog
+class A;
+  rand bit [7:0] x;
+  constraint A1 { soft x == 6;}
+endclass
+```
+
+Soft constraints are satisfied unless contradicted
+
+- By a hard constraint
+- By a soft constraint with higher priority
+
+```verilog
+A a = new();
+initial begin
+  a.randomize() with { x inside {[0:7]}; }   // x = 6
+  a.randomize() with { x inside {[0:4]}; }   // 0 <= x <= 4
+end
+```
+
+## Where are Soft Constraints Used?
+
+In environment classes: to specify default ranges of random variables
+
+In test program: to bias ranges in test
+
+```verilog
+class Packet;
+  rand bit[11:0] len;
+  rand int       min, max;
+  constraint len_c { soft len inside {[min:max]} }
+  constraint range { soft min == 0; soft max = 10; }
+endclass
+
+Packet p, q;
+int tmin, tmax
+// Override class constraints with higher priority constraints
+stat = p.randomize() with {
+  soft len inside {[tmin:tmax]}
+}
+// or change the object's min and max with hard constraints
+stat = q.randomize() with {min==tmin; max==tmax;} 
+```
+
+## Mutually Constrained Random Variables
+
+Constraint limits can be random variables
+
+```verilog
+class demo:
+  rand bit[7:0] high;
+  rand int unsigned x;
+  constraint Limit {
+    x > 1;
+    x < high;
+  }
+endclass : demo
+```
+
+What random values are generated for variable `high`?
+
+- `randomize()` will eliminate values `{0,1,2}` for possible values for high
+- If there is no legal value for high, then `randomize()` function prints warning and returns a 0. The properties are left unchanged
+- Caution: does not imply solve order
+
+## Inconsistent Constraints
+
+What if the constraints cannot be solved by `randomize()`?
+
+- It leaves the object unchanged and return a status value of 0
+  - Simulation does not stop
+- It produces this simulation error
+
+```plain
+Solver failed when solving following set of constraints
+rand bit[31:0] x;       // rand_mode = ON
+rand bit[7:0]  high;    // rand_mode = ON
+constraint Limit{       // (from this) (constraint_mode = ON) (demo.sv:4)
+  (x > 1000);
+  (x <= high);
+}
+```
+
+```verilog
+class demo:
+  rand bit[7:0] high;
+  rand int unsigned x;
+  constraint Limit {
+    x > 1000;
+    x <= high;
+  }
+endclass : demo
+```
+
+## Effects of Calling `randomize()`
+
+When `randomize()` executes, three events occur:
+
+- `pre_randomize()` is called
+- Variables are randomizes
+- `post_randomize()` is called
+
+`pre_randomize()` (Optional)
+
+- Set/Correct constraints
+  - Example: `rand_mode(0|1)`
+
+`post_randomize()` (Optional)
+
+- Make changes after randomization
+  - Example: `CRC
+  
+```verilog
+class Packet;
+  int test_mode;
+  rand bit[3:0]  sa, da;
+  rand bit[7:0]  payload[];
+       bit[15:0] crc[];
+       
+  constraint LimitA {
+    sa inside { [0:7] };
+    da inside { [0:7] };
+    payload.size() inside { [2:4] };
+  };
+  
+  function void pre_randomize();
+    if(test_mode) begin
+      sa.rand_mode(0);
+    end
+  endfunction
+
+  function void post_randomize();
+    gen_crc();  // User method
+  endfunction
+endclass : Packet
+```
+
+## Controlling Randomization at Runtime
+
+Turn randomization for properties on or off with:
+
+```verilog
+task/function int object_name.property.rand_mode( 1 | 0 );
+```
+
+- `1` - enable randomization (default)
+- `0` - disable randomization
+- If called as function, returns `rand_mode` state of property (0 or 1)
+
+```verilog
+class Node;
+  rand int x, y, z;
+  constraint Limit1 {
+    x inside {[0:16]};
+    y inside {[23:41]};
+    z < y; z > x;
+  }
+endclass : Node
+```
+
+```verilog
+module test;
+  initial begin
+    Node obj1 = new();
+    obj1.x = 0;
+    obj1.x.rand_mode(0);      // Solver still checks x satisfies its constraints
+    if (!obj.randomize()) begin
+    ...
+    end
+  end
+endmodule : test
+```
+
+## Controlling Constraint at Runtime
+
+Turn constraint blocks on and off with:
+
+```verilog
+task/function int object_name.constraint_block_name.constraint_mode( 1 | 0 );
+```
+
+- `1` - enable constraint (default)
+- `0` - disable constraint
+- If called as function, return state of constraint (0 or 1)
+
+```verilog
+class demo;
+  rand int x, y, z;
+  constraint no_error { x > 0; x <= 5; }
+  static constraint with_err { x > 0; x <= 32;}
+endclass : demo
+```
+
+```verilog
+module test;
+  initial begin
+    demo obj_a = new();
+    obj_a.no_error.constraint_mode(0);    // Test with errors
+    if (!obj.randomize()) begin
+    ...
+    end
+  end
+endmodule : test
+```
+
+## Constraint Prototypes
+
+Can define constraint prototypes in class using `extern`
+
+- Define the constraint in same scop
+
+```verilog
+class demo;
+  rand int x, y, z;
+  extern constraint valid;      // must define
+endclass : demo
+
+// extern constraint must be defined later in same scope as class
+constraint demo::valid { x > 0; y >= 0; z % x == 0; }
+```
+
+```verilog
+module test_corner_case;
+  `include "demo.sv"
+  initial begin
+    demo obj_a = new();
+    if (!obj_a.randomize()) begin
+    ...
+    end
+  end
+endmodule : test_corner_case
 ```
 
 ## Operators and system task and functions

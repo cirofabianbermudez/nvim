@@ -85,3 +85,7 @@ vim.keymap.set("n", "<leader>S", "<cmd>lua require('vscode').action('workbench.a
 
 -- Make macros compatible with <C-a>
 vim.opt.nrformats:append("alpha")
+
+
+vim.keymap.set("n", "<C-k>", "i```verilog<CR>```<ESC>O", opt)
+vim.keymap.set("i", "<C-k>", "```verilog<CR>```<ESC>O", opt)
