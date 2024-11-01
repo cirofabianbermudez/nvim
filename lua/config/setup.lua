@@ -29,7 +29,7 @@ vim.opt.softtabstop = 2
 vim.opt.expandtab = true
 
 -- Custom autocomplete commands view
-vim.opt.wildmode = "longest,list,full"
+-- vim.opt.wildmode = "longest,list,full"
 
 -- Fix splitting
 vim.opt.splitbelow = true -- :split

@@ -37,19 +37,19 @@ vim.keymap.set("x", "<Tab>", ">", opt)
 vim.keymap.set("x", "<S-Tab>", "<", opt)
 
 -- Save to system clipboard registers "+ or "*  to copy "+y   to paste "+p
-vim.keymap.set("n", "<leader>y", '"+y')
-vim.keymap.set("v", "<leader>y", '"+y')
+vim.keymap.set("n", "<leader>y", '"+y', opt)
+vim.keymap.set("v", "<leader>y", '"+y', opt)
 
 -- Paste from system clipboard
-vim.keymap.set("n", "<leader>p", '"+p')
-vim.keymap.set("v", "<leader>p", '"+p')
+vim.keymap.set("n", "<leader>p", '"+p', opt)
+vim.keymap.set("v", "<leader>p", '"+p', opt)
 
 -- Paste without losing the content of the register
 vim.keymap.set("x", "<leader>P", '"_dP', opt)
 
 -- Delete without saving the content of the register
-vim.keymap.set("n", "<leader>d", '"_d')
-vim.keymap.set("v", "<leader>d", '"_d')
+vim.keymap.set("n", "<leader>d", '"_d', opt)
+vim.keymap.set("v", "<leader>d", '"_d', opt)
 
 -- Reload files
 vim.keymap.set("n", "<leader>0", "<cmd>lua require('vscode').action('workbench.action.reloadWindow')<CR>", opt)
@@ -74,14 +74,14 @@ vim.keymap.set("n", "N", "Nzzzv", opt)
 vim.keymap.set("n", "<leader>?", ":echo expand('%:p')<CR>", opt)
 
 -- Easy yank all or delete all
-vim.keymap.set("n", "<leader>ya", ":%y+<CR>", opt)
-vim.keymap.set("n", "<leader>da", ":%y+ | %d<CR>", opt)
-vim.keymap.set("n", "Y", "y$", opt)
-vim.keymap.set("n", "<leader>Y", '_v$<left>"+y')
+vim.keymap.set("n", "<leader>ya", ":%y+<CR>",      opt)
+vim.keymap.set("n", "<leader>yd", ":%y+ | %d<CR>", opt)
+vim.keymap.set("n", "Y", "y$",                     opt)
+vim.keymap.set("n", "<leader>yl", '_v$<left>"+y',  opt) 
 
 -- Replace shortcut
-vim.keymap.set("n", "<leader>s", "<cmd>lua require('vscode').action('editor.action.startFindReplaceAction')<CR>", opt)
-vim.keymap.set("n", "<leader>S", "<cmd>lua require('vscode').action('workbench.action.replaceInFiles')<CR>", opt)
+vim.keymap.set("n", "<leader>sa", "<cmd>lua require('vscode').action('editor.action.startFindReplaceAction')<CR>", opt)
+vim.keymap.set("n", "<leader>ss", "<cmd>lua require('vscode').action('workbench.action.replaceInFiles')<CR>", opt)
 
 -- Make macros compatible with <C-a>
 vim.opt.nrformats:append("alpha")
