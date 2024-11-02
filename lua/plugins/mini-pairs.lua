@@ -1,5 +1,5 @@
 return { -- DONE
-  enabled = true,
+  enabled = false,
   'echasnovski/mini.pairs',
   version = '*',
 	event = "VeryLazy",
