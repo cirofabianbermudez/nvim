@@ -1,4 +1,4 @@
-return {
+return { -- CHECK
   enabled = true,
 	"folke/tokyonight.nvim",
 	lazy = false,

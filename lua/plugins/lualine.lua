@@ -1,3 +1,4 @@
+-- DONE
 local function file_last_modified()
 
 	local file = vim.fn.expand('%:p')
@@ -51,10 +52,11 @@ return {
 				theme = "auto",
 				component_separators = { left = "", right = "" },
 				section_separators = { left = "", right = "" },
-				disabled_filetypes = { "neo-tree" },
+				disabled_filetypes = { "dashboard", "alpha", "ministarter", "neo-tree" },
 			},
 		sections = {
 		  lualine_x = { file_last_modified, 'encoding', 'fileformat', 'filetype'},
 		},
+    extensions = { "neo-tree", "lazy" },
 	},
 }

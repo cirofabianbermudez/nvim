@@ -1,4 +1,4 @@
-return {
+return { -- DONE
   enabled = true,
 	"nvim-telescope/telescope.nvim",
 	tag = '0.1.8',
@@ -6,7 +6,7 @@ return {
 	event = "VeryLazy",
 	opts = {},
 	config = function(_, opts)
-	
+
 		local builtin = require("telescope.builtin")
 		local is_windows = package.config:sub(1, 1) == '\\'
 		local docs_path
@@ -29,7 +29,7 @@ return {
 				search_dirs = { vim.fn.expand("%:p") },
 			})
 		end
-	
+
 		vim.keymap.set("n", "<leader>fg", builtin.live_grep,     {desc = "Telescope: Live Grep (Root)", noremap = true, silent = true })
 		vim.keymap.set("n", "<leader>fj", grep_current_file,     {desc = "Telescope: Live Grep (File)", noremap = true, silent = true })
 		vim.keymap.set("n", "<leader>ff", builtin.find_files,    {desc = "Telescope: Find Files",       noremap = true, silent = true })

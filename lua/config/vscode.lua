@@ -17,7 +17,8 @@ vim.keymap.set("n", "<leader>ff", "<cmd>lua require('vscode').action('workbench.
 vim.keymap.set("n", "<leader>fg", "<cmd>lua require('vscode').action('workbench.action.findInFiles')<CR>", opt)
 
 -- VSCode
-vim.keymap.set("n", "<leader>fb", "<cmd>lua require('vscode').action('workbench.action.toggleSidebarVisibility')<CR>", opt)
+vim.keymap.set("n", "<leader>fb", "<cmd>lua require('vscode').action('workbench.action.toggleSidebarVisibility')<CR>",
+    opt)
 vim.keymap.set("n", "<leader>fs", "<cmd>lua require('vscode').action('editor.action.quickFix')<CR>", opt)
 vim.keymap.set("n", "<leader>fv", "<cmd>lua require('vscode').action('editor.action.showHover')<CR>", opt)
 vim.keymap.set("n", "<leader>fp", "<cmd>lua require('vscode').action('workbench.actions.view.problems')<CR>", opt)
@@ -25,7 +26,8 @@ vim.keymap.set("n", "<leader>f/", "<cmd>lua require('vscode').action('editor.act
 vim.keymap.set("n", "<leader>fm", "<cmd>lua require('vscode').action('markdown.showPreview')<CR>", opt)
 vim.keymap.set("n", "<leader>fn", "<cmd>lua require('vscode').action('markdown.showPreviewToSide')<CR>", opt)
 vim.keymap.set("n", "<leader>f.", "<cmd>lua require('vscode').action('markdown.preview.refresh')<CR>", opt)
-vim.keymap.set("n", "<leader>ft", "<cmd>lua require('vscode').action('workbench.action.terminal.toggleTerminal')<CR>", opt)
+vim.keymap.set("n", "<leader>ft", "<cmd>lua require('vscode').action('workbench.action.terminal.toggleTerminal')<CR>",
+    opt)
 
 -- Markdown
 vim.keymap.set("i", "<C-k>", '[]()<left><esc>"+pF[a', { noremap = true })
@@ -74,10 +76,10 @@ vim.keymap.set("n", "N", "Nzzzv", opt)
 vim.keymap.set("n", "<leader>?", ":echo expand('%:p')<CR>", opt)
 
 -- Easy yank all or delete all
-vim.keymap.set("n", "<leader>ya", ":%y+<CR>",      opt)
+vim.keymap.set("n", "<leader>ya", ":%y+<CR>", opt)
 vim.keymap.set("n", "<leader>yd", ":%y+ | %d<CR>", opt)
-vim.keymap.set("n", "Y", "y$",                     opt)
-vim.keymap.set("n", "<leader>yl", '_v$<left>"+y',  opt) 
+vim.keymap.set("n", "Y", "y$", opt)
+vim.keymap.set("n", "<leader>yl", '_v$<left>"+y', opt)
 
 -- Replace shortcut
 vim.keymap.set("n", "<leader>sa", "<cmd>lua require('vscode').action('editor.action.startFindReplaceAction')<CR>", opt)
@@ -85,7 +87,6 @@ vim.keymap.set("n", "<leader>ss", "<cmd>lua require('vscode').action('workbench.
 
 -- Make macros compatible with <C-a>
 vim.opt.nrformats:append("alpha")
-
 
 vim.keymap.set("n", "<C-k>", "i```verilog<CR>```<ESC>O", opt)
 vim.keymap.set("i", "<C-k>", "```verilog<CR>```<ESC>O", opt)

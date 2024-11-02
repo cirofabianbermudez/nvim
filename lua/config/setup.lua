@@ -49,4 +49,3 @@ vim.opt.updatetime = 50
 
 -- Make macros compatible with <C-a>
 vim.opt.nrformats:append("alpha")
-

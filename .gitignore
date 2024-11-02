@@ -1,8 +1,7 @@
-# Files
-plugin/packer_compiled.lua
-*.bak
-.temp
-.luarc.json
-
 # Directories
 scripts/formaters/
+
+# Files
+*.bak
+*.txt
+session.vim

@@ -1,6 +1,7 @@
-return {
+return { -- DONE
   enabled = true,
 	"nvim-neo-tree/neo-tree.nvim",
+	event = "VeryLazy",
 	branch = "v3.x",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
@@ -9,13 +10,13 @@ return {
 	},
 	opts = {
 	  sources = { "filesystem", "buffers", "git_status" },
-	  window = {
-		  width = 28,
-		},
 		filesystem = {
 		  bind_to_cwd = false,
 		  follow_current_file = { enabled = true },
 		},
+    window = {
+      width = 30,
+    },
 	},
 	config = function(_, opts)
 	  require("neo-tree").setup(opts)
