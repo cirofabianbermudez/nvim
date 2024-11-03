@@ -42,7 +42,7 @@ SystemVerilog introduces two new design units
   - Is mechanism to connect testbench to DUT
   - Is a named bundle of wires
   - Can be passed just like a port in a port list
-  
+
 SystemVerilog testbenches uses Object Oriented Programming (OOP)
 
 - Uses `class` definition
@@ -64,7 +64,7 @@ program automatic test(router_if.TB vif);
   initial begin
     run();
   end
-  
+
   task run();
   ...
   endtask : run
@@ -292,7 +292,7 @@ Input Skew is the `setup` time of the capture flop for the DUT output
 Each time slot is divided into 5 major regions
 
 - `Preponed` Sample signal before any changed (`1#step`)
-- `Active`   Design simulation (`modules`), including NBA (Non-Blocking Assignments)
+- `Active` Design simulation (`modules`), including NBA (Non-Blocking Assignments)
 - `Observed` Assertions evaluated after design executes
 - `Reactive` Testbench activity (`program`)
 - `Postponed` Read only phase
@@ -349,7 +349,7 @@ program automatic test(router_if.TB vif);
   initial begin
     reset();
   end
-  
+
   task reset();
     vif.reset_n = 1'b0;          // Asynchronous signals are driven without reference to clocking block
     vif.cb.frame_n <= 16'hffff;  // Synchronous signals are referenced via clocking block
@@ -383,7 +383,7 @@ module router_test_top;
 
   // Instantiate interface
   router_if vif(SystemClock);    // Connect SystemCLock to interface block
-  
+
   // Instantiate test program
   test router_test(vif)
 
@@ -398,7 +398,7 @@ module router_test_top;
     .busy_n    (vif.busy_n),
     .frameo_n  (vif.frameo_n)
   );
-  
+
 endmodule
 ```
 
@@ -450,14 +450,14 @@ SIM_OPTS = -l simv.log \
 
 all: help
 
-compile: 
+compile:
  @mkdir -p $(RUN_DIR)/sim
  cd $(RUN_DIR)/sim && $(VCS)
 
-sim: 
+sim:
  cd $(RUN_DIR)/sim && ./simv +ntb_random_seed=${SEED} $(SIM_OPTS)
 
-random: 
+random:
  cd $(RUN_DIR)/sim && ./simv +ntb_random_seed_automatic $(SIM_OPTS)
 
 verdi:
@@ -466,7 +466,7 @@ verdi:
 clean:
  rm -rf $(RUN_DIR)
 
-help: 
+help:
  @echo ""
  @echo "=================================================================="
  @echo ""
@@ -535,7 +535,7 @@ module name(interface);
   // Local scope variables
   // Top-level test code
   end
-  
+
   task task_name(...);
   // task local scope variables
   // task code
@@ -649,10 +649,10 @@ bit[32:0] signed ref_data = -155;
 
 Sized integral 2-state data types:
 
-- `byte`     - 8-bit signed data type
+- `byte` - 8-bit signed data type
 - `shortint` - 16-bit signed data type
-- `int`      - 32-bit signed data type
-- `longint`  - 64-bit signed data type
+- `int` - 32-bit signed data type
+- `longint` - 64-bit signed data type
 
 ```verilog
 shortint temp = 256;
@@ -665,7 +665,7 @@ longint unsigned testdata;
 
 Real 2-state data types:
 
-- `real`      - Equivalent to `double` in C
+- `real` - Equivalent to `double` in C
 - `shortreal` - Equivalent to `float` in C
 - `realtime`
   - 64-bit real variable for use with `$realtime`
@@ -870,9 +870,9 @@ int b[$] = {4,5};         // note no '
 q.insert(2,j);            // {0,1,2,3,6}
 q.insert(4, b);           // {0,1,2,3,4,5,6}
 q.delete(1);              // (0,2,3,4,5,6}
-q.push_front(7);          // (7,0,2,3,4,5,6} 
+q.push_front(7);          // (7,0,2,3,4,5,6}
 j = q.pop_back();         // (7,0,2,3,4,5}   j = 6
-q.push_back(8);           // {17,0,2,3,4,5,8} 
+q.push_back(8);           // {17,0,2,3,4,5,8}
 $display(q.size());       // 7
 $display("%p", q);        // '{17,0,2,3,4,5,8}
 q.delete();               // delete all elements
@@ -1023,7 +1023,7 @@ Example: `find_first()` and `find_first_index()`
 module test;
   int array[] = new[5];
   int idx[$], val[$], dyn_2d[][], mixed_2d[$][];
-  
+
   initial begin
     foreach(array[i]) begin
       array[i] = 4 - 1;
@@ -1062,7 +1062,7 @@ int addr[$:4] = {0,1,2,3,4}; addr.push_back(10); addr[0] = addr[5];
 | Fixed Size  | Allocated at compile time, unchangeable afterwards | Numerical | `int addr[5];     (fast)`     |
 | Dynamic     | Allocated at run time, changeable at run-time      | Numerical | `logic flags[];   (fast)`     |
 | Queue       | Push/pop/copy at run-time to change size           | Numerical | `int in_use[$];   (fast)`     |
-| Associative | Write at run-time to allocate memory               | Typed*    | `state d[string]; (moderate)` |
+| Associative | Write at run-time to allocate memory               | Typed\*   | `state d[string]; (moderate)` |
 
 > Note: The index of associative arrays should always be typed
 
@@ -1277,7 +1277,7 @@ Use `iff` operator to qualify
   - bin of cover points
   - cross coverage
   - cross coverage bins
-  
+
 ## Know Your Operators
 
 What is printed to console with following code?
@@ -1467,8 +1467,7 @@ You use output when:
 Differences between `output`, `inout`, and `ref`
 
 - `output`: Used for returning a value. The value is assigned at the end of the task and passed back to the caller.
-- `inout`: Used when a variable is both read and written inside the task. The argument is passed in, modified, and then passed back out.
--`ref`: Direct reference to the original variable, allowing changes inside the task to immediately affect the variable in the caller's scope.
+- `inout`: Used when a variable is both read and written inside the task. The argument is passed in, modified, and then passed back out. -`ref`: Direct reference to the original variable, allowing changes inside the task to immediately affect the variable in the caller's scope.
 
 When to Use Tasks Instead of Functions:
 
@@ -1551,7 +1550,7 @@ function void check();
     // %m hierarchical path to check()
     // Indicate message severity (ERROR, DEGUB, etc.)
     // $realtime Simulation time
-    $display("%m\n[ERROR]%t: %s," $realtime, message); 
+    $display("%m\n[ERROR]%t: %s," $realtime, message);
     $finish;
   end
   $display("[NOTE]%t: %0d Packets passed\n" $realtime, ++cnt);
@@ -1716,8 +1715,8 @@ join
 
 One execution thread, all other threads reside on queues
 
-- READY  - to be executed ar current simulation time
-- WAIT   - blocked from execution until wait condition is met
+- READY - to be executed ar current simulation time
+- WAIT - blocked from execution until wait condition is met
 
 When the executing thread is blocked, it moves to the WAIT queue
 
@@ -1788,7 +1787,7 @@ module test;
       send(i);
     end
   end
-  
+
   task send(int j);
     fork
       begin
@@ -1818,7 +1817,7 @@ module test;
     end
     wait fork;  // Blocking statement to control proper termination
   end           // of simulation
-  
+
   task send(int j);
     fork
       begin
@@ -1955,7 +1954,7 @@ task recv();
     join_any
 
     disable fork;  // Kills all child threads
-    // disable recv_wd_timer;          this is legal but NOT RECOMMENDED 
+    // disable recv_wd_timer;          this is legal but NOT RECOMMENDED
   end join
   get_payload();
 endtask
@@ -2008,17 +2007,17 @@ Similar to a `module`, an OOP `class` encapsulates:
 ```verilog
 class Packet;
   // Packet properties
-  string   name;     
+  string   name;
   bit[3:0] sa, da;
   bit[7:0] payload[];
-  
+
   // Packet methods
   task send();
     send_addrs();
     send_pad();
     send_payload();
   endtask : send
-  
+
   task send_addrs();   ... endtask
   task send_pad();     ... endtask
   task send_payload(); ... endtask
@@ -2060,7 +2059,7 @@ endclass : Packet
 
 ```verilog
 module test;
-  Packet pkt1 = new();      
+  Packet pkt1 = new();
   Packet pkt2;       // This is a handle
   Packet pkt3;
   initial begin
@@ -2088,7 +2087,7 @@ module test;
     byte payload[];
     task send();
   endclass : Packet
-  
+
   Packet pkt;
   initial begin
     pkt = new();
@@ -2127,12 +2126,12 @@ module test;
       payload = new[init_payload_size];
     endfunction : new
   endclass : Packet
-  
+
   initial begin
     Packet pkt1 = new(3, 7, 2);
     pkt1.new(5, 8, 3);          // Syntax error!
   end
-  
+
 endmodule
 ```
 
@@ -2143,7 +2142,7 @@ endmodule
 - An object's handle to itself
 - Unambiguously refer to `class` members of the current instance (object)
   - More readable - allows method arguments to have same name as `class` variables
-  
+
 ```verilog
 class Packet;
   bit[3:0] sa, da;
@@ -2153,7 +2152,7 @@ class Packet;
     this.da = da;
     this.payload = new[payload_size];
   endfunction : new
-  
+
 endclass : Packet
 ```
 
@@ -2204,7 +2203,7 @@ module test;
     protected err_cnt = 0;
     task run(); ... endtask
   endclass : driver
-  
+
   initial begin
     driver drv = new();
     drv.max_err_cnt = -1;    // Compile error!
@@ -2349,7 +2348,7 @@ class Packet;
   static function int get_count();
     return count;
   endfunction
-  
+
   function new();
     this.id = count++;
   endfunction
@@ -2417,7 +2416,7 @@ Standard methodology
 
 - Test call `run()` method of the various OOP testbench components
   - Generator, Monitor, Driver, Scoreboard, etc
-  
+
 ```verilog
 class Driver;
 ...
@@ -2505,7 +2504,7 @@ A forward `typedef`
 
 - Is needed to use a class before declaration
   - e.g. two classes need handle to each other
-Can be used for many data typeCan be used for many data types
+    Can be used for many data typeCan be used for many data types
 
 Use a `typedef` to make a forward reference, the problem we are trying to solve is what happens when two classes reference each other? Which one do we declare first?
 
@@ -2566,16 +2565,18 @@ endtask : ping
 Create useful methods for data classes (user defined)
 
 - `display()`
+
   - Print object variables to console - helpful for debugging
 
 - `compare()`
+
   - Return match, mismatch, other status based by comparing object variables to variables of another object
   - Simplifies self-check
 
 - `copy()`
   - Copy selected variables or nested objects
   - Allows you to do deep copy if required
-  
+
 Use `typedef` to create shortcuts
 
 - `typedef stack#(Packet) pkt_stack`
@@ -2594,7 +2595,7 @@ class Driver;
   function new(virtual router_if.TB vif) // Pass virtual connections via constructor argument
     this.vif = vif;
   endfunction : new
-  
+
   task send_addr();
     this.vif.cb.frame_n[sa] <= 1'b0;    // Drive/Sample signals using virtual interface
     for (int i = 0; i < 4; i++) begin
@@ -2627,13 +2628,13 @@ package ComplexPkg:
     extern virtual task display();
     ...
   endclass : Complex
-  
+
   function automatic Complex add(Complex a, Complex b);
     add = new();
     add.r = a.r + b.r;
     add.i = a.i + b.i;
   endfunction : add
-  
+
   function automatic Complex mul(Complex a, Complex b);
     mul = new();
     mul.r = (a.r * b.r) - (a.i * b.i);
@@ -2674,7 +2675,7 @@ ComplexPkg::Complex cout = ComplexPkg::mul(a,b);
   - Now all symbols in `ComplexPkg` are visible
 - OK to import same package in multiple locations
   - `include` cannot be used in multiple places
-  
+
 ## Using Packages: Example (1/2)
 
 ```verilog
@@ -2750,7 +2751,7 @@ Two types of random properties are supported:
 - `randc` Exhaust all values before repeating any value
   - Think "picking a card from a deck of cards"
   - Can be as large as 32-bits in VCS
-  
+
 When the class function `randomize()` is called:
 
 - Randomizes each `rand` and `randc` property value
@@ -2766,7 +2767,7 @@ When the class `randomize()` function is called, if there are no constrains in t
 class Packet;
   randc bit[3:0] sa, da;           // Declare random properties in class
   rand  bit[7:0] payload[];
-  
+
   function Packet copy(...);
   ...
   endfunction : copy
@@ -2912,7 +2913,7 @@ class Config:
   rand bit[7:0] addrs[10];
   rand bit drivers_in_use[16];
   rand int num_of_drivers, one_addr;
-  
+
   constraint limit {
     num_of_drivers inside { [1:16] };
     drivers_in_use.sum() with (int'(item)) == num_of_drivers;
@@ -2997,13 +2998,13 @@ Bit-Vector system functions can be used in constraint (VCS only)
   - `$onehot`
   - `$onehot0`
   - `$bits`
-  
+
 ```verilog
 rand bit[3:0] vector;
 constraint cst { $countones(vector) == 2;}
 
 // same as
-constraint cst { 
+constraint cst {
   (vector[0] + vector[1] + vector[2] + vector[3] ) == 2;
 }
 ```
@@ -3020,7 +3021,7 @@ class D;
   rand bit [6:0]  a,b;
   rand bit [7:0]  c;
   constraint c0 { c == add(a,b); }
-  
+
   function bit[7:0] add (input bit[6:0] i1, i2);
     return (i1 + i2);
   endfunction : add
@@ -3044,10 +3045,10 @@ class cls;
   rand real      rx;
   rand shortreal sx;
   rand shortreal tx;
-  
+
   constraint t { tx dist { [0.02:0.20] :/30, [0.1:1.0] :/ 70 }; }
   constraint s { sx dist { [0.04:0.40] :/50, [0.1:1.0] :/ 50 }; }
-  constraint s { rx dist { [0.01:0.10] :/10, [0.1:1.0] :/ 90 }; 
+  constraint s { rx dist { [0.01:0.10] :/10, [0.1:1.0] :/ 90 };
                  ix inside {[5:10]}; }
 
 endclass : cls
@@ -3060,6 +3061,7 @@ By default the simulator randomizes variables in any order it can in order to ge
 `solve-before` construct set solving order for `rand` properties
 
 - `randc` properties are always solved before `rand properties
+
   - Can not force `rand` to be randomized before `randc` properties
 
 - `$void` (rand_property) solves `rand_property` first (VCS only)
@@ -3077,7 +3079,7 @@ class MyBus;
     end
     solve flag before addr;     // Guidance only
   }
-endclass : 
+endclass :
 ```
 
 ## Inline Constraints
@@ -3095,7 +3097,7 @@ module test;
     constraint Limit1 { x > 0; x <= 5; }
     ...
   endclass : demo
-  
+
   initial begin
     demo obj_a = new();
     // ADD another constraint. Does NOT override Limit1
@@ -3156,7 +3158,7 @@ stat = p.randomize() with {
   soft len inside {[tmin:tmax]}
 }
 // or change the object's min and max with hard constraints
-stat = q.randomize() with {min==tmin; max==tmax;} 
+stat = q.randomize() with {min==tmin; max==tmax;}
 ```
 
 ## Mutually Constrained Random Variables
@@ -3226,20 +3228,20 @@ When `randomize()` executes, three events occur:
 
 - Make changes after randomization
   - Example: `CRC
-  
+
 ```verilog
 class Packet;
   int test_mode;
   rand bit[3:0]  sa, da;
   rand bit[7:0]  payload[];
        bit[15:0] crc[];
-       
+
   constraint LimitA {
     sa inside { [0:7] };
     da inside { [0:7] };
     payload.size() inside { [2:4] };
   };
-  
+
   function void pre_randomize();
     if(test_mode) begin
       sa.rand_mode(0);
@@ -3324,7 +3326,7 @@ endmodule : test
 
 Can define constraint prototypes in class using `extern`
 
-- Define the constraint in same scop
+- Define the constraint in same scope
 
 ```verilog
 class demo;

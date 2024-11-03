@@ -1,6 +1,6 @@
 -- Set leader key to <Space>
 vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
+vim.g.maplocalleader = " "
 
 -- Options when running macros and remaps
 local opts = { noremap = true, silent = true }

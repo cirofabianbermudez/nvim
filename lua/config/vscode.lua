@@ -26,8 +26,7 @@ vim.keymap.set("n", "<leader>f/", "<cmd>lua require('vscode').action('editor.act
 vim.keymap.set("n", "<leader>fm", "<cmd>lua require('vscode').action('markdown.showPreview')<CR>", opt)
 vim.keymap.set("n", "<leader>fn", "<cmd>lua require('vscode').action('markdown.showPreviewToSide')<CR>", opt)
 vim.keymap.set("n", "<leader>f.", "<cmd>lua require('vscode').action('markdown.preview.refresh')<CR>", opt)
-vim.keymap.set("n", "<leader>ft", "<cmd>lua require('vscode').action('workbench.action.terminal.toggleTerminal')<CR>",
-    opt)
+vim.keymap.set("n", "<leader>ft", "<cmd>lua require('vscode').action('workbench.action.terminal.toggleTerminal')<CR>", opt)
 
 -- Markdown
 vim.keymap.set("i", "<C-k>", '[]()<left><esc>"+pF[a', { noremap = true })
@@ -89,4 +88,4 @@ vim.keymap.set("n", "<leader>ss", "<cmd>lua require('vscode').action('workbench.
 vim.opt.nrformats:append("alpha")
 
 vim.keymap.set("n", "<C-k>", "i```verilog<CR>```<ESC>O", opt)
-vim.keymap.set("i", "<C-k>", "```verilog<CR>```<ESC>O", opt)
+-- vim.keymap.set("i", "<C-k>", "```verilog<CR>```<ESC>O", opt)
