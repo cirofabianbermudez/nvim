@@ -14,6 +14,7 @@ vim.opt.showcmd = true
 vim.opt.laststatus = 2
 vim.cmd("syntax enable")
 vim.cmd("autocmd FileType * setlocal formatoptions-=cro")
+--vim.opt.shell = "pwsh"
 
 -- Optional for compatibility
 vim.opt.compatible = false

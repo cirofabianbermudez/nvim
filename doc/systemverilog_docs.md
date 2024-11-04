@@ -793,6 +793,10 @@ $display("current = %0d, next = %s", current, next);
 $display("next = %p", next);
 ```
 
+`%p` is designed to print a pretty representation of the data, which can be useful for composite data types like `struct`, `union`, `enum` `array` or `class` types.
+
+It essentially help in visualizing complex data structures more easily and is particularly helpful for debugging and displaying hierarchical data types.
+
 ## Data Arrays - Fixed-size Arrays (1/4)
 
 ```verilog
@@ -1548,7 +1552,7 @@ function void check();
   string message;
   if (!compare(message)) begin
     // %m hierarchical path to check()
-    // Indicate message severity (ERROR, DEGUB, etc.)
+    // Indicate message severity (ERROR, DEBUG, etc.)
     // $realtime Simulation time
     $display("%m\n[ERROR]%t: %s," $realtime, message);
     $finish;
@@ -3350,9 +3354,87 @@ module test_corner_case;
 endmodule : test_corner_case
 ```
 
+## Nested Objects with Random Variables
+
+`randomize()` follows a linked list of objects handles, randomizing each linked object to the end of the list
+
+```verilog
+class color;
+  rand int hue, saturation, luminosity;
+endclass : color
+
+class pixel;
+  rand color r, g, b
+  ...
+endclass : pixel
+```
+
+```verilog
+module test;
+  initial begin
+    pixel px1 = new();
+    px1.r = new();
+    px1.g = new();
+    px1.b = new();
+    ...
+    if (!px1.randomize()) begin // This will randomize objects px1 and px1.r, px1.g, px1.b
+    ...
+    end
+
+  end
+endmodule : test
+```
+
+## `std::randomize()`
+
+`std::randomize()` for variables outside classes
+
+- Very fast performance in VCS
+- `std::` is optional
+
+Available in `program`, `module`, `function` `task`, and `class`
+
+- Randomization using `obj.randomize()` is still preferred
+
+```verilog
+module test;
+  bit [11:0] addr;
+  bit [5:0]  offset;
+  function bit genConstrainAddrOffset();
+    // Constraints using with keyword
+    return std::randomize() with { addr > 1000; addr + offset < 2000; };
+  endfunction
+endmodule : test
+```
+
+## Changing the Random Seed at Simulation
+
+Provide an initial seed for simulator with the following options (VCS)
+
+- `ntb_random_seed = <initial_seed>`
+  - `simv <other_opts> +ntb_random_seed = 123`
+
+
+- `ntb_random_seed_automatic`
+  - Unique initial seed, combining the time of day, hostname and process id
+  - `simv <other_opts> +ntb_random_seed_automatic`
+
+Seed appears in simulation log and coverage report
+
+To query for the initial simulation seed use
+
+- `$get_initial_random_seed();`
+
+To save simulation log messages to a file use
+
+- `simv <other_opts> -l simv.log`
+
+
 ## Operators and system task and functions
 
 | Type           | Description                                                    |
 | -------------- | -------------------------------------------------------------- |
 | `$isunknown()` | Returns 1 if any bit of the expression is X or Z               |
 | `$clog2()`     | Computes the ceiling of the logarithm base 2 of a given valueZ |
+
+

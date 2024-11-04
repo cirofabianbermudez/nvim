@@ -156,6 +156,10 @@ vim.keymap.set("v", "<leader>p", '"+p', {desc = "Paste from system clipboard (v)
 vim.keymap.set("n", "<leader>ra", ":%s//gci<left><left><left><left>", {desc = "Replace asking" })
 vim.keymap.set("n", "<leader>re", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], {desc = "Replace in the entire file "})
 
+-- Terminal Esc
+vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>t", ":vsplit | terminal pwsh<CR>", { noremap = true, silent = true })
+
 -- Harpoon like movement mark with mQ mW mE mR mT
 -- vim.keymap.set("n", "<leader>1", "'Q", opt)
 -- vim.keymap.set("n", "<leader>2", "'W", opt)
