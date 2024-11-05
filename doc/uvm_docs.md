@@ -6,7 +6,7 @@
 
 ### `uvm_void`
 
-The uvm_void class is the base class for all UVM classes.  It is an abstract class with no data members or functions.  It allows for generic containers of objects to be created, similar to a void pointer in the C programming language.  User classes derived directly from uvm_void inherit none of the UVM functionality, but such classes may be placed in uvm_void-typed containers along with other UVM objects.
+The uvm_void class is the base class for all UVM classes. It is an abstract class with no data members or functions. It allows for generic containers of objects to be created, similar to a void pointer in the C programming language. User classes derived directly from uvm_void inherit none of the UVM functionality, but such classes may be placed in uvm_void-typed containers along with other UVM objects.
 
 **`uvm_void`**
 
@@ -22,7 +22,7 @@ virtual class uvm_void
 
 ### `uvm_object`
 
-The uvm_object class is the base class for all UVM data and hierarchical classes.  Its primary role is to define a set of methods for such common operations as create, copy, compare, print, and record.  Classes deriving from `uvm_object` must implement the pure virtual methods such as create and get_type_name.
+The uvm_object class is the base class for all UVM data and hierarchical classes. Its primary role is to define a set of methods for such common operations as create, copy, compare, print, and record. Classes deriving from `uvm_object` must implement the pure virtual methods such as create and get_type_name.
 
 #### Summary `uvm_object`
 
@@ -43,46 +43,46 @@ virtual class uvm_object extends uvm_void
 
 #### Methods and attibutes
 
-| Name                | Description                                                                                                                                                                                                                                                   |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `new`               | Creates a new uvm_object with the given instance name.                                                                                                                                                                                                        |
-| **Seeding**         |                                                                                                                                                                                                                                                               |
-| `use_uvm_seeding`   | This bit enables or disables the UVM seeding mechanism.                                                                                                                                                                                                       |
-| `reseed`            | Calls srandom on the object to reseed the object using the UVM seeding mechanism, which sets the seed based on type name and instance name instead of based on instance position in a thread.                                                                 |
-| **Identificattion** |                                                                                                                                                                                                                                                               |
-| `set_name`          | Sets the instance name of this object, overwriting any previously given name.                                                                                                                                                                                 |
-| `get_name`          | Returns the name of the object, as provided by the name argument in the new constructor or set_name method.                                                                                                                                                   |
-| `get_full_name`     | Returns the full hierarchical name of this object.                                                                                                                                                                                                            |
-| `get_inst_id`       | Returns the object’s unique, numeric instance identifier.                                                                                                                                                                                                     |
-| `get_inst_count`    | Returns the current value of the instance counter, which represents the total number of uvm_object-based objects that have been allocated in simulation.                                                                                                      |
-| `get_type`          | Returns the type-proxy (wrapper) for this object                                                                                                                                                                                                              |
-| `get_object_type`   | Returns the type-proxy (wrapper) for this object.                                                                                                                                                                                                             |
-| `get_type_name`     | This function returns the type name of the object, which is typically the type identifier enclosed in quotes.                                                                                                                                                 |
-| **Creation**        |                                                                                                                                                                                                                                                               |
-| `create`            | The create method allocates a new object of the same type as this object and returns it via a base uvm_object handle.                                                                                                                                         |
-| `clone`             | The clone method creates and returns an exact copy of this object.                                                                                                                                                                                            |
-| **Printing**        |                                                                                                                                                                                                                                                               |
-| `print`             | The print method deep-prints this object’s properties in a format and manner governed by the given printer argument; if the printer argument is not provided, the global uvm_default_printer is used.                                                         |
-| `sprint`            | The sprint method works just like the print method, except the output is returned in a string rather than displayed.                                                                                                                                          |
-| `do_print`          | The do_print method is the user-definable hook called by print and sprint that allows users to customize what gets printed or sprinted beyond the field information provided by the `uvm_field_* macros, Utility and Field Macros for Components and Objects. |
-| `convert2string`    | This virtual function is a user-definable hook, called directly by the user, that allows users to provide object information in the form of a string.                                                                                                         |
-| **Copying**         |                                                                                                                                                                                                                                                               |
-| `copy`              | The copy makes this object a copy of the specified object.                                                                                                                                                                                                    |
-| `do_copy`           | The do_copy method is the user-definable hook called by the copy method.                                                                                                                                                                                      |
-| **Comparing**       |                                                                                                                                                                                                                                                               |
-| `compare`           | Deep compares members of this data object with those of the object provided in the rhs (right-hand side)                                                                                                                                                      |
-| `do_compare`        | The do_compare method is the user-definable hook called by the compare method.                                                                                                                                                                                |
-|                     |                                                                                                                                                                                                                                                               |
+| Name                | Description                                                                                                                                                                                                                                                    |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `new`               | Creates a new uvm_object with the given instance name.                                                                                                                                                                                                         |
+| **Seeding**         |                                                                                                                                                                                                                                                                |
+| `use_uvm_seeding`   | This bit enables or disables the UVM seeding mechanism.                                                                                                                                                                                                        |
+| `reseed`            | Calls srandom on the object to reseed the object using the UVM seeding mechanism, which sets the seed based on type name and instance name instead of based on instance position in a thread.                                                                  |
+| **Identificattion** |                                                                                                                                                                                                                                                                |
+| `set_name`          | Sets the instance name of this object, overwriting any previously given name.                                                                                                                                                                                  |
+| `get_name`          | Returns the name of the object, as provided by the name argument in the new constructor or set_name method.                                                                                                                                                    |
+| `get_full_name`     | Returns the full hierarchical name of this object.                                                                                                                                                                                                             |
+| `get_inst_id`       | Returns the object’s unique, numeric instance identifier.                                                                                                                                                                                                      |
+| `get_inst_count`    | Returns the current value of the instance counter, which represents the total number of uvm_object-based objects that have been allocated in simulation.                                                                                                       |
+| `get_type`          | Returns the type-proxy (wrapper) for this object                                                                                                                                                                                                               |
+| `get_object_type`   | Returns the type-proxy (wrapper) for this object.                                                                                                                                                                                                              |
+| `get_type_name`     | This function returns the type name of the object, which is typically the type identifier enclosed in quotes.                                                                                                                                                  |
+| **Creation**        |                                                                                                                                                                                                                                                                |
+| `create`            | The create method allocates a new object of the same type as this object and returns it via a base uvm_object handle.                                                                                                                                          |
+| `clone`             | The clone method creates and returns an exact copy of this object.                                                                                                                                                                                             |
+| **Printing**        |                                                                                                                                                                                                                                                                |
+| `print`             | The print method deep-prints this object’s properties in a format and manner governed by the given printer argument; if the printer argument is not provided, the global uvm_default_printer is used.                                                          |
+| `sprint`            | The sprint method works just like the print method, except the output is returned in a string rather than displayed.                                                                                                                                           |
+| `do_print`          | The do*print method is the user-definable hook called by print and sprint that allows users to customize what gets printed or sprinted beyond the field information provided by the `uvm_field*\* macros, Utility and Field Macros for Components and Objects. |
+| `convert2string`    | This virtual function is a user-definable hook, called directly by the user, that allows users to provide object information in the form of a string.                                                                                                          |
+| **Copying**         |                                                                                                                                                                                                                                                                |
+| `copy`              | The copy makes this object a copy of the specified object.                                                                                                                                                                                                     |
+| `do_copy`           | The do_copy method is the user-definable hook called by the copy method.                                                                                                                                                                                       |
+| **Comparing**       |                                                                                                                                                                                                                                                                |
+| `compare`           | Deep compares members of this data object with those of the object provided in the rhs (right-hand side)                                                                                                                                                       |
+| `do_compare`        | The do_compare method is the user-definable hook called by the compare method.                                                                                                                                                                                 |
+|                     |                                                                                                                                                                                                                                                                |
 
 ---
 
 ### `uvm_report_object`
 
-The uvm_report_object provides an interface to the UVM reporting facility.  Through this interface, components issue the various messages that occur during simulation.  Users can configure what actions are taken and what file(s) are output for individual messages from a particular component or for all messages from all components in the environment.  Defaults are applied where there is no explicit configuration.
+The uvm_report_object provides an interface to the UVM reporting facility. Through this interface, components issue the various messages that occur during simulation. Users can configure what actions are taken and what file(s) are output for individual messages from a particular component or for all messages from all components in the environment. Defaults are applied where there is no explicit configuration.
 
-Most methods in uvm_report_object are delegated to an internal instance of a uvm_report_handler, which stores the reporting configuration and determines whether an issued message should be displayed based on that configuration.  Then, to display a message, the report handler delegates the actual formatting and production of messages to a central uvm_report_server.
+Most methods in uvm_report_object are delegated to an internal instance of a uvm_report_handler, which stores the reporting configuration and determines whether an issued message should be displayed based on that configuration. Then, to display a message, the report handler delegates the actual formatting and production of messages to a central uvm_report_server.
 
-A report consists of an id string, severity, verbosity level, and the textual message itself.  They may optionally include the filename and line number from which the message came.  If the verbosity level of a report is greater than the configured maximum verbosity level of its report object, it is ignored.  If a report passes the verbosity filter in effect, the report’s action is determined.  If the action includes output to a file, the configured file descriptor(s) are determined.
+A report consists of an id string, severity, verbosity level, and the textual message itself. They may optionally include the filename and line number from which the message came. If the verbosity level of a report is greater than the configured maximum verbosity level of its report object, it is ignored. If a report passes the verbosity filter in effect, the report’s action is determined. If the action includes output to a file, the configured file descriptor(s) are determined.
 
 #### Summary `uvm_report_object`
 
@@ -121,15 +121,14 @@ class uvm_report_object extends uvm_object
 
 ### `uvm_component`
 
-The uvm_component class is the root base class for UVM components.  In addition to the features inherited from uvm_object and uvm_report_object, uvm_component provides the following interfaces:
+The uvm_component class is the root base class for UVM components. In addition to the features inherited from uvm_object and uvm_report_object, uvm_component provides the following interfaces:
 
 |                       |                                                                                                                                                                                                       |
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Hierarchy             | provides methods for searching and traversing the component hierarchy.                                                                                                                                |
 | Phasing               | defines a phased test flow that all components follow, with a group of standard phase methods and an API for custom phases and multiple independent phasing domains to mirror DUT behavior e.g. power |
-| Transaction recording | provides a convenience interface to the uvm_report_handler.  All messages, warnings, and errors are processed through this interface.                                                                 |
-| Factory               | provides a convenience interface to the uvm_factory.  The factory is used to create new components and other objects based on type-wide and instance-specific configuration.                          |
-
+| Transaction recording | provides a convenience interface to the uvm_report_handler. All messages, warnings, and errors are processed through this interface.                                                                  |
+| Factory               | provides a convenience interface to the uvm_factory. The factory is used to create new components and other objects based on type-wide and instance-specific configuration.                           |
 
 #### Summary `uvm_component`
 
@@ -192,18 +191,6 @@ virtual class uvm_component extends uvm_report_object
 
 ---
 
-
-
-
-
-
-
-
-
-
-
-
-
 ## General
 
 - Agents are configurable for reuse across test/projects
@@ -231,15 +218,14 @@ virtual class uvm_component extends uvm_report_object
   ```
 - Then, the `uvm_root` singleton executes the pase methods of components
 
-
 ## Report Messages
 
 - Print messages with UVM Macros
   ```systemverilog
-  `uvm_info(string ID, string MSG, verbosity) 
-  `uvm_fatal(string ID, string MSG) 
-  `uvm_error(string ID, string MSG) 
-  `uvm_warning(string ID, string MSG) 
+  `uvm_info(string ID, string MSG, verbosity)
+  `uvm_fatal(string ID, string MSG)
+  `uvm_error(string ID, string MSG)
+  `uvm_warning(string ID, string MSG)
   ```
 - The verbosity can be `UVM_MEDIUM`, `UVM_LOW`, `UVM_HIGH`, `UVM_FULL`, `UVM_NONE`
 - Verbosity filters default to `UVM_MEDIUM`
@@ -254,12 +240,13 @@ virtual class uvm_component extends uvm_report_object
     end
     ```
 
-
 ## UVM Test
 
 - UVM test class is the top component of test structure
+
   - Extends from the `uvm_test` base class
   - Creates environment object
+
     ```systemverilog
     class test_base extends uvm_test;
 
@@ -268,7 +255,7 @@ virtual class uvm_component extends uvm_report_object
       function new(string name, uvm_component parent);
         super.new(name, parent);
       endfunction
-      
+
       router_env env;
       virtual function void build_phase();
         super.build_phase(phase);
@@ -277,13 +264,15 @@ virtual class uvm_component extends uvm_report_object
 
     endclass
     ```
-  - Then, develop targeted tests extending from `test_base`
 
+  - Then, develop targeted tests extending from `test_base`
 
 ## UVM Envoronment
 
 - Encapsulates DUT specific Verification Components
+
   - Encapsulate agents, scoreboards and coverage
+
     ```systemverilog
     class router_env extends uvm_env;
 
@@ -306,36 +295,39 @@ virtual class uvm_component extends uvm_report_object
 ## UVM Agent
 
 - Encapsulates sequencer, driver and monitor
-    ```systemverilog
-    class input_agent extends uvm_agent;
 
-      `uvm_component_utils(input_agent)
+  ```systemverilog
+  class input_agent extends uvm_agent;
 
-      function new(string name, uvm_component parent);
-        super.new(name, parent);
-      endfunction
-      
-      typedef uvm_sequencer #(packet) packet_sequencer;
-      packet_sequencer sqr;
-      driver drv;
+    `uvm_component_utils(input_agent)
 
-      virtual function void build_phase(uvm_phase phase);
-        super.build_phase(phase);
-        sqr = packet_sequencer::type_id::create("sqr", this);
-        drv = driver::type_id::create("drv", this);
-      endfunction
+    function new(string name, uvm_component parent);
+      super.new(name, parent);
+    endfunction
 
-      virtual function void connect_phase(uvm_phase phase);
-        dvr.seq_item_port.connect(sqr.seq_item_export);
-      endfunction
+    typedef uvm_sequencer #(packet) packet_sequencer;
+    packet_sequencer sqr;
+    driver drv;
 
-    endclass
-    ```
+    virtual function void build_phase(uvm_phase phase);
+      super.build_phase(phase);
+      sqr = packet_sequencer::type_id::create("sqr", this);
+      drv = driver::type_id::create("drv", this);
+    endfunction
+
+    virtual function void connect_phase(uvm_phase phase);
+      dvr.seq_item_port.connect(sqr.seq_item_export);
+    endfunction
+
+  endclass
+  ```
 
 ## UVM Driver
 
 - Driver class extend from `uvm_driver` class
+
   - `uvm_driver` class has a built-in TLM port
+
     ```systemverilog
     class driver extends uvm_driver;
 
@@ -355,9 +347,9 @@ virtual class uvm_component extends uvm_report_object
 
     endclass
     ```
+
   - Driver implements `run_phase` as an infinite loop to process all sequence items received from sequencer
   - `item_done()` in the TLM port must be called before retrieving next item
-
 
 ## UVM Transaction
 
@@ -366,7 +358,9 @@ virtual class uvm_component extends uvm_report_object
 - Properties should be public by default
   - Must be visible to constraints in others classes
 - Properties should be rand by default
+
   - Can be turned off with `rand_mod()`
+
   ```systemverilog
   class packet extends uvm_sequence_item;
       `uvm_object_utils(packet)
@@ -389,6 +383,7 @@ virtual class uvm_component extends uvm_report_object
       }
   endclass
   ```
+
 - Define constraint block for the must-obey constraints
   - Never turned off
   - Never overridden
@@ -457,10 +452,13 @@ virtual class uvm_component extends uvm_report_object
 
 - The stimulus generator in UVM is called a sequence
 - User sequences must be extended from `uvm_sequence` class
+
   - Parameterized to the transaction type to be generated
   - Two handles are available (built in):
+
     - `req` for request to driver
     - `rsp` for response back from driver
+
     ```systemverilog
     class packet_sequence extends uvm_sequence #(packet);
       `uvm_object_utils(packet_sequence)
@@ -468,13 +466,14 @@ virtual class uvm_component extends uvm_report_object
       function new(string name);
         super.new(name);
       endfunction
-      
+
       virtual task body();
         `uvm_do(req);
       endtask
 
     endclass
     ```
+
 - Sequence functional code resided in `body()` task
   - `` `uvm_do() `` creates, randomizes and passes transaction to driver through sequencer
   - `` `uvm_do_with() `` is the same as `` `uvm_do() `` but with addition al constraints
@@ -494,19 +493,19 @@ virtual class uvm_component extends uvm_report_object
 - There are two ways to execute a sequence
   - Explicitly
     - Test writer must create the sequence object then call the `start()` method
-        ```systemverilog
-        virtual task main_phase(uvm_phase phase);
-            packet_sequence seq;
-            phase.raise_objection(this);
-            seq = packet_sequence::type_id::create("seq", this);
-            if ( !seq.randomize() ) begin
-                `uvm_fatal();
-            end
-            seq.set_starting_phase(phase);
-            seq.start(env.agt.sqr);
-            phase.drop_objection(this);
-        endtask
-        ```
+      ```systemverilog
+      virtual task main_phase(uvm_phase phase);
+          packet_sequence seq;
+          phase.raise_objection(this);
+          seq = packet_sequence::type_id::create("seq", this);
+          if ( !seq.randomize() ) begin
+              `uvm_fatal();
+          end
+          seq.set_starting_phase(phase);
+          seq.start(env.agt.sqr);
+          phase.drop_objection(this);
+      endtask
+      ```
     - Only do this in test
     - Must implement the phase method
     - Must raise and drop phase objection in phase method
@@ -515,11 +514,11 @@ virtual class uvm_component extends uvm_report_object
     - Test writer populates the `uvm_config_db` with the intended sequence execution
       - Can be done in test code or via run-time switch
     - The sequencer will pick it up from the `uvm_config_db`, create the sequence object and call the `start()` method automatically
-        ```systemverilog
-        virtual function void build_phase(uvm_phase phase);
-            uvm_config_db #(uvm_object_wrapper)::set(this, "env.agt.sqr.main_phase", "default_sequence", packet_sequence::get_type() );
-        endfunction
-        ```
+      ```systemverilog
+      virtual function void build_phase(uvm_phase phase);
+          uvm_config_db #(uvm_object_wrapper)::set(this, "env.agt.sqr.main_phase", "default_sequence", packet_sequence::get_type() );
+      endfunction
+      ```
     - Populate `uvm_config_db` with sequence to be executed by the chosen sequencer in phase specified
       - Set in `build_phase`
       - Can be done in environment class or test class
@@ -538,9 +537,9 @@ virtual class uvm_component extends uvm_report_object
     - Sequences can be targeted for a chosen phase
       - `"env.agt.sqr.reset_phase"` or `"env.agt.sqr.configure_phase"` or `"env.agt.sqr.main_phase"`
     - Sequence phase objection for UVM-1.2
-        ```systemverilog
-        set_automatic_phase_objection(1);
-        ```
+      ```systemverilog
+      set_automatic_phase_objection(1);
+      ```
 
 ## UVM Configuration and Factory
 
@@ -589,10 +588,12 @@ virtual class uvm_component extends uvm_report_object
   - `uvm_config_db` parent wins for multiple writes
 - After `build_phase` last one wins
 - Mechanism for configuring object properties
+
   - `uvm_config_db#(type)::set(context, inst_name, field, value)`
   - `uvm_config_db#(type)::get(context, inst_name, field, var)`
   - Context is usually `this`
   - Examples
+
     ```systemverilog
     // Set from the environment
     master_agent_config agt_cfg;
@@ -611,10 +612,18 @@ virtual class uvm_component extends uvm_report_object
     // Set from the program/module. Context of "null" or "uvm_root::get()"
     master_interface vif;
     uvm_config_db#(virtual master_interface.TB)::get(this, "", "vif", vif);
+    ```
+
   ```
+
+  ```
+
 - Agent component field configuration
+
   - Environment should target agent
+
     - Agent then configures its child components
+
       ```systemverilog
       class router_env extends uvm_env;
         virtual function void build_phase(uvm_phase phase);
@@ -635,9 +644,12 @@ virtual class uvm_component extends uvm_report_object
         endfunction
       endclass
       ```
+
 - In driver/monitor
+
   - Call `uvm_config_db#()::get()` in `build_phase`
   - Check for correctness in `end_of_elaboration_phase`
+
     ```systemverilog
     class driver extends uvm_driver#(packet);
       virtual router_io vif;
@@ -654,8 +666,11 @@ virtual class uvm_component extends uvm_report_object
       endfunction
     endclass
     ```
+
 - In agent
+
   - In `build_phase`
+
     - Call `uvm_config_db#():get()` to retrieve interface
     - Call `uvm_config_db#():set()` to set interface fo children of agent
       ```systemverilog
@@ -667,7 +682,12 @@ virtual class uvm_component extends uvm_report_object
           uvm_config_db#(virtual router_io)::set(this, "*", "vif", vif); // Anything below it
         endfunction
       endclass
+      ```
+
     ```
+
+    ```
+
 - Manage test variations
   - Tests need to introduce class variations
     - Adding constraints
@@ -690,10 +710,13 @@ virtual class uvm_component extends uvm_report_object
     - `set_inst_override_by_type()`
     - Created objects con now be overridden with a new implementation
 - Factory transactions
+
   - How to manufacture transaction instances with additional information without modifying the original source file?
+
     - Construct transaction object via `create()` method
     - Required, macro defines a proxy class called `type_id`. An instance of proxy class is registered in `uvm_factory`
     - Use proxy's `create()` method to construct transaction object.
+
       ```systemverilog
       class packet extends uvm_sequence_item;
         rand bit[3:0] sa, da;
@@ -711,8 +734,11 @@ virtual class uvm_component extends uvm_report_object
         endtask
       endclass
       ```
+
 - Factory components
+
   - Construct object via `create()` using factory class
+
     ```systemverilog
     class driver extends uvm_driver #(packet);
         `uvm_component_utils(driver)
@@ -729,6 +755,7 @@ virtual class uvm_component extends uvm_report_object
         endfunction
       endclass
     ```
+
 - Factory override
   - User can choose type of override
     - `set_inst_override_by_type()`
@@ -778,12 +805,12 @@ virtual class uvm_component extends uvm_report_object
   - Transaction exchanged between verification environment components
     - Sequencer -> Driver
     - Monitor -> Collectors (Scoreboard, Coverage)
-  -  Component can embed method for communication
-    ```systemverilog
-      class Consumer extends uvm_component;
-        virtual task put(transaction tr);
-      endclass
-    ```
+  - Component can embed method for communication
+  ```systemverilog
+    class Consumer extends uvm_component;
+      virtual task put(transaction tr);
+    endclass
+  ```
   - But, the communication method should not be called through the component object's handle
     - Code becomes too inflexible for testbench structure
   - Use an intermediary object (TLM) to handle the communication
@@ -809,8 +836,6 @@ virtual class uvm_component extends uvm_report_object
     - Push, put_producer calls `port.put()` -> [port] -> put_consumers implements `put()`
     - Pull, get_producer implements `get()` -> [port] -> get_consumer calls `port.get()`
 
-
-
 # Rules
 
 1. Import the UVM classes with `import uvm_pkg::*;`.
@@ -822,44 +847,49 @@ virtual class uvm_component extends uvm_report_object
 
 5. Every UVM class that you create must be registered into this UVM factory using utility macros.
 
-    ```systemverilog
-    `uvm_component_utils()
-    `uvm_object_utils()
-    ```
+   ```systemverilog
+   `uvm_component_utils()
+   `uvm_object_utils()
+   ```
 
-    The purpose of the UVM factory is to enable an object of one type to be substituted with an object of a derived type without changing the testbench structure or even the testbench code. The mechanism used is referred to as an override, by either instance or type.
+   The purpose of the UVM factory is to enable an object of one type to be substituted with an object of a derived type without changing the testbench structure or even the testbench code. The mechanism used is referred to as an override, by either instance or type.
 
 6. The UVM factory requires that you define the constructor.
 
-    For components:
-    ```systemverilog
-    function new(string name = "my_component", uvm_component parent = null);
-      super.new(name, parent);
-    endfunction
-    ```
-    For objects:
-    ```systemverilog
-    function new(string name = "my_item");
-      super.new(name);
-    endfunction
-    ```
+   For components:
 
-7. To connect the driver to the interface you should use a virtual interface. In order to pass the virtual interface reference into the class you have to use the UVM configuration database. 
+   ```systemverilog
+   function new(string name = "my_component", uvm_component parent = null);
+     super.new(name, parent);
+   endfunction
+   ```
 
-    In `tb.sv`
-    ```systemverilog
-    uvm_config_db #(virtual dut_if)::set(null, "*", "vif", dut_vif);
-    ```
+   For objects:
 
-    In `driver.sv`
-    ```systemverilog
-    virtual function void build_phase(uvm_phase phase);
-      super.build_phase(phase);
-      if ( !uvm_config_db #(virtual dut_if)::get(this, "", "vif", vif) ) begin
-        `uvm_error("", "Unable to retrieve virtual interface from config db")
-      end
-    endfunction
-    ```
+   ```systemverilog
+   function new(string name = "my_item");
+     super.new(name);
+   endfunction
+   ```
+
+7. To connect the driver to the interface you should use a virtual interface. In order to pass the virtual interface reference into the class you have to use the UVM configuration database.
+
+   In `tb.sv`
+
+   ```systemverilog
+   uvm_config_db #(virtual dut_if)::set(null, "*", "vif", dut_vif);
+   ```
+
+   In `driver.sv`
+
+   ```systemverilog
+   virtual function void build_phase(uvm_phase phase);
+     super.build_phase(phase);
+     if ( !uvm_config_db #(virtual dut_if)::get(this, "", "vif", vif) ) begin
+       `uvm_error("", "Unable to retrieve virtual interface from config db")
+     end
+   endfunction
+   ```
 
 8. The communication between the sequencer and the driver is transaction level TLM, port and export.
 9. There are four step that the sequence have to do to generate a transaction:
@@ -874,13 +904,11 @@ virtual class uvm_component extends uvm_report_object
     endfunction
     ```
 
-
 ## Most important elements of `uvm_pkg`
 
 - UVM execution manager singleton object `uvm_root::get()`
 - UVM execution factory `uvm_factory::get()`
 - UVM configuration database `uvm_config_db`
-
 
 ## Messages
 
@@ -909,8 +937,8 @@ You can select the verbosity from the command line with
 ```
 
 The `%m` or `%M` is a scape sequence for format specification that display hierarchical name.
-- `` `uvm_info("TRACE", "$sformatf("%m")", UVM_HIGH)``
 
+- `` `uvm_info("TRACE", "$sformatf("%m")", UVM_HIGH)``
 
 Print the topology
 
@@ -923,7 +951,6 @@ Print the Factory Configuration
 ```systemverilog
 uvm_factory::get().print();
 ```
-
 
 The constructor arguments allow access to useful name functions, this is part of `` `uvm_object ``:
 
@@ -953,7 +980,7 @@ The `utils` macro is used primarily to register an object or component with the 
 
 ## UVM Field macros
 
-Are called this way because they operate on class properties and provide automatic implementations of core methods like copy, compare, pack, record and print. This macros should be inside 
+Are called this way because they operate on class properties and provide automatic implementations of core methods like copy, compare, pack, record and print. This macros should be inside
 
 ```systemverilog
 `uvm_object_utils_begin(<class_name>)
@@ -983,7 +1010,6 @@ function void do_pack();
 function void do_unpack();
 ```
 
-
 Flags are numeric and can be combined using a bitwise OR `|` or AND `&` operator.
 
 | Operation Flag                 | Description                                                 |
@@ -995,7 +1021,6 @@ Flags are numeric and can be combined using a bitwise OR `|` or AND `&` operator
 | `UVM_NOPACK`                   | Excludes the field in pack and unpack.                      |
 | `UVM_NORECORD`                 | Excludes the field in vendor-specific transaction recording |
 
-
 | Radix Flag     | Description                  |
 | -------------- | ---------------------------- |
 | `UVM_BIN`      | binary format `%b`           |
@@ -1004,12 +1029,168 @@ Flags are numeric and can be combined using a bitwise OR `|` or AND `&` operator
 | `UVM_OCT`      | format `%o`                  |
 | `UVM_UNSIGNED` | unsigned decimal format `%u` |
 | `UVM_STRING`   | string format `%s`           |
-| `UVM_TIME`     | time format  `%t`            |
+| `UVM_TIME`     | time format `%t`             |
 
-## Glossary 
+## Glossary
 
 - Transition Level Modeling (TLM)
 - Right hand side (rhs)
+
+## Register & Memories
+
+Every DUT has them
+
+First to be verified
+
+- Reset value
+- Bit(s) behavior
+
+High maintenance
+
+- Modify tests
+- Modify fimware model
+
+## Testbench without UVM Register Abstraction
+
+## UVM Register Abstraction
+
+Abstracts reading/writing to configuration fields and memories
+
+Supports both front door and back door access
+
+Built in callbacks for read/write
+
+Mirrors register data
+
+Built-in functional coverage
+
+Hierarchical model for ease or reuse
+
+Pre-defined tests exercise registers and memories
+
+## Generating RAL code
+
+UVM RAL code can be created automatically using ralgen and
+
+- RALF file format (Synopsys)
+- IPXACT file format (industry standard)
+
+Supports
+
+- Coverage
+- Backdoor access
+  - DPI
+  - XMR
+  - Virtual interfaces
+- Constraints
+- User code
+
+Many companies have their own flow
+
+Implementing RAL: 6 Easy Steps!
+
+## Implement UVM Register Abstraction
+
+Step 1: Verify frontdoor without UVM register abstraction
+Step 2: Describe register fields in `.ralf file`, `ip-xact`
+Step 3: Use ralgen to create UVM register abstraction
+Step 4: Create UVM register abstraction adapter
+Step 5: Add UVM register abstraction and adapter in environment
+Step 6: Write and run UVM register abstraction sequences
+Optional: Implement mirror predictor
+Optional: Run built-in test
+
+## Example Specification
+
+## Step 1: Create Host Data & Driver
+
+```verilog
+class host_data extends uvm_sequence_item;
+  // constructor and utils macro not shown
+  rand uvm_qaccess_e kind;
+  uvm_status_e       status;
+  rand bit[15:0]     addr, data;
+endclass
+```
+
+Transaction specifies operation, address, data and status
+
+```verilog
+class host_driver extends uvm_driver #(host_data);
+  // constructor and utils macro not shown
+  task run_phase(uvm_phase phase)
+    forever begin
+       seq_item_port.get_next_item(req);
+       data_rw(req);            // call device driver
+       seq_item_port.item_done();
+    end
+  endtask
+  // device drivers not shown
+endclass
+```
+
+Implement host sequence
+
+```verilog
+class host_bfm_sequence extends uvm_sequence #(host_data);
+  // utils macro, constructor, pre/post_start not shown
+  task body();
+    `uvm_do_with(req, {addr=='h000;            kind==UVM_READ} );
+    `uvm_do_with(req, {addr=='h100;  data=='1; kind==UVM_WRITE});
+    `uvm_do_with(req, {addr=='h1025;           kind==UVM_READ} );
+  endtask
+endclass
+```
+
+Sequence hardcodes register addresses. Access DUT through front door
+
+Hardent
+
+## Structure of a Register Model
+
+Implemented with six building block classes
+
+| Name           | Code            |
+| -------------- | --------------- |
+| Register field | `uvm_reg_field` |
+| Register       | `uvm_reg`       |
+| Register file  | `uvm_reg_file`  |
+| Memory         | `uvm_mem`       |
+| Register map   | `uvm_map`       |
+| Register block | `uvm_reg_block` |
+
+Register model are created by scripts
+
+## Adapter
+
+Inherit from abstract base class `uvm_reg_adapter`
+
+Override two methods
+
+- `reg2bus()`
+
+  - Convert generic RM transaction items to bus sequence items
+
+- `bus2reg()`
+  - Convert but sequence items to generic RM transaction items
+
+RM -> Register Model
+
+```verilog
+pure virtual function uvm_sequence_item reg2bus(const ref uvm_reg_bus_op rw);
+pure virtual function void bus2reg(uvm_sequence_item bus_item, ref uvm_reg_bus_op rw);
+```
+
+`uvm_reg_bus_op`
+
+| Type                | Field     | Description                                                  |
+| ------------------- | --------- | ------------------------------------------------------------ |
+| `uvm_reg_addr_t`    | `addr`    | Address field, defaults to 64 bits                           |
+| `uvm_reg_data_t`    | `data`    | Read or write data, defaults to 65 bits                      |
+| `uvm_access_e`      | `kind`    | `UVM_READ`, `UVM_WRITE`, `UVM_BURST_WRITE`, `UVM_BURST_READ` |
+| `unsigned int`      | `n_bits`  | Number of bits being transferred                             |
+| `uvm_reg_byte_en_t` | `byte_en` | Byte enable                                                  |
+| `uvm_status_e`      | `status`  | `UVM_IS_OK`, `UVM_HAS_X`, `UVM_NOT_OK`                       |
 
 
 
@@ -1018,7 +1199,7 @@ Flags are numeric and can be combined using a bitwise OR `|` or AND `&` operator
 
 ## Installation
 
-Easier UVM from Doulos is a Perl script code generator for UVM. It is very easy to use and tha advantage of using it is that you get a complete and functional UVM environment that works out of the box.
+Easier UVM from Doulos is a Perl script code generator for UVM. It is very easy to use and the advantage of using it is that you get a complete and functional UVM environment that works out of the box.
 
 ## Input files
 
@@ -1028,32 +1209,32 @@ Easier UVM from Doulos is a Perl script code generator for UVM. It is very easy 
 - `arith.tpl` file for the UVM component configurations
 - `pinlist` file to map the virtual interface
 
-
 ## Example for a simple adder
 
-
 `dut/adder.sv`
+
 ```verilog
 module adder (
   input  logic [7:0] A,B,
-  output logic [8:0] F 
+  output logic [8:0] F
 );
-  
+
   always_comb begin
     F = A + B;
   end
-  
+
 endmodule
 ```
 
 `common.tpl`
+
 ```
 dut_top = adder
 top_default_seq_count = 10
 ```
 
-
 `arith.tpl`
+
 ```
 agent_name = arith
 trans_item = trans
@@ -1071,6 +1252,7 @@ monitor_inc = arith_monitor_inc.sv  inline
 ```
 
 `pinlist`
+
 ```
 !arith_if
 A A
@@ -1079,6 +1261,7 @@ F F
 ```
 
 `arith_driver_inc.sv`
+
 ```verilog
 task arith_driver::do_drive();
   vif.A <= req.input1;
@@ -1088,6 +1271,7 @@ endtask
 ```
 
 `arith_monitor_inc.sv`
+
 ```verilog
 task arith_monitor::do_mon();
   forever @(vif.F) begin
@@ -1099,7 +1283,6 @@ task arith_monitor::do_mon();
   end
 endtask
 ```
-
 
 Finally This is how you run the script:
 

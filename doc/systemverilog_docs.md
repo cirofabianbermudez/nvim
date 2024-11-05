@@ -1539,7 +1539,7 @@ Execution of loop immediately advances to next iteration when
 
 - `continue` is executed
 
-## Helpful Debuggin Features
+## Helpful Debugging Features
 
 What to print for debugging?
 
@@ -2663,7 +2663,7 @@ Packages can not gave hierarchical references
 
 ## Using Packages
 
-Directly reference package member using class scop resolution operator `::`
+Directly reference package member using class scope resolution operator `::`
 
 ```verilog
 ComplexPkg::Complex cout = ComplexPkg::mul(a,b);
@@ -3428,6 +3428,63 @@ To query for the initial simulation seed use
 To save simulation log messages to a file use
 
 - `simv <other_opts> -l simv.log`
+
+
+## Object Oriented Programming: Inheritance
+
+Object-oriented programming
+
+- New classes derived from original (base or super) class
+- New class inherits all contents of base class
+
+```verilog
+class BadPacket extends Packet;
+  function void display();            // Inherited from Packet
+  ...
+  endfunction : display
+  function bit[31:0] compute_crc();   // Inherited from Packet
+  ...
+  endfunction : compute_crc
+
+  bit is_bad;
+  function bit[31:0] compute_crc();   // Can override method of base class
+    this.crc = super.compute_crc();   // Can call overridden behavior using super
+    return(ctc = is_bad ? ~crc : crc);
+  endfunction : compute_crc
+endclass : BadPacket
+```
+
+`BadPacket` has access to `da`, `sa`, `data`, `crc` because it inherited from base class `packet`
+
+New class is called *subclass* or *extended* or *derived* class
+
+Derived classes compatible with base class
+
+- Can reuse code that uses the base class
+
+```verilog
+Packet pkt = new();
+transmit(pkt);
+
+BadPacket bad_pkt = new();
+transmit(bad_pkt);            // Compatible
+
+task transmit(Packet pkt);
+  ...
+  pkt.crc = pkt.compute_crc;
+  ...
+endtask : transmit
+```
+
+```verilog
+pkt = bad_pkt;          // OK
+bad_pkt = pkt;          // Error
+$cast(bad_pkt, pkt);    // OK    Assign an extended class to a base class
+```
+
+<div style="text-align: center;">
+  <img src="img/inheritance.svg" alt="inheritance" width=90%"/>
+</div>
 
 
 ## Operators and system task and functions
