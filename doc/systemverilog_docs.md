@@ -4,7 +4,9 @@
 
 LRM -> Language Reference Manual
 
-## Well Designed Verification Environment
+## SystemVerilog Verification Environment
+
+### Well Designed Verification Environment
 
 Test Environment must:
 
@@ -24,13 +26,13 @@ Test must:
     - Random Tests
 - Be robust, reusable, scalable
 
-## SystemVerilog Test Environment
+### SystemVerilog Test Environment
 
 <div style="text-align: center;">
   <img src="img/test_environment.svg" alt="test_environment" width=90%"/>
 </div>
 
-## SystemVerilog - Key Features
+### SystemVerilog - Key Features
 
 SystemVerilog introduces two new design units
 
@@ -47,7 +49,7 @@ SystemVerilog testbenches uses Object Oriented Programming (OOP)
 
 - Uses `class` definition
 
-## Program Block - Encapsulate Test Code
+### Program Block - Encapsulate Test Code
 
 The `program` block provides
 
@@ -60,6 +62,7 @@ Develop test code in `program` code
 - Can also use a `module` block
 
 ```verilog
+// Optionally pass interface in port list
 program automatic test(router_if.TB vif);
   initial begin
     run();
@@ -71,7 +74,7 @@ program automatic test(router_if.TB vif);
 endprogram : test
 ```
 
-## Interface - Encapsulate Connectivity
+### Interface - Encapsulate Connectivity
 
 An `interface` encapsulates the communication between DUT and testbench including
 
@@ -88,7 +91,7 @@ Solves many problem with traditional connections
 - Easy to add new connections
 - Opportunity to pass DUT connections throughout the testbench (virtual interfaces)
 
-## Comparing SystemVerilog Containers
+### Comparing SystemVerilog Containers
 
 | `module`           | `interface`        | `program`     | `class`       |
 | ------------------ | ------------------ | ------------- | ------------- |
@@ -105,7 +108,7 @@ Solves many problem with traditional connections
 | `task`             | `task`             | `task`        | `task`        |
 | `function`         | `function`         | `function`    | `function`    |
 
-## Interface - An Example
+### Interface - An Example
 
 The RTL code is connected with bundled signals
 
@@ -143,7 +146,7 @@ module top;
 endmodule
 ```
 
-## Synchronous Timing: `clocking` Blocks
+### Synchronous Timing: `clocking` Blocks
 
 Are just for testbench
 
@@ -180,7 +183,7 @@ clocking cb @(posedge clock);
 endclocking : cb
 ```
 
-## Signal Direction Using `modport`
+### Signal Direction Using `modport`
 
 Enforce signal access and direction with `modport`
 
@@ -218,7 +221,7 @@ module router (router_if.DUT vif, input logic clock);
 endmodule : router
 ```
 
-## A complete `interface`
+### A complete `interface`
 
 ```verilog
 interface router_if (input logic clock);
@@ -250,13 +253,13 @@ interface router_if (input logic clock);
 endinterface: router_if
 ```
 
-## Driving and Samplign DUT Signals
+### Driving and Samplign DUT Signals
 
 DUT signals are driven in the device driver
 
 DUT signals are sampled in the device monitor
 
-## SystemVerilog Testbench Timing
+### SystemVerilog Testbench Timing
 
 Clocking clock emulates synchronous drives and samples
 
@@ -273,7 +276,7 @@ $$
 \end{array}
 $$
 
-## Input and Output Skews
+### Input and Output Skews
 
 <div style="text-align: center;">
   <img src="img/sv_skew.svg" alt="sv_skew" width=90%"/>
@@ -287,7 +290,7 @@ Input Skew is the `setup` time of the capture flop for the DUT output
 
 - Defaults to `#1step` - preponed region of simulation step
 
-## SystemVerilog Scheduling
+### SystemVerilog Scheduling
 
 Each time slot is divided into 5 major regions
 
@@ -305,7 +308,7 @@ Each time slot is divided into 5 major regions
 | `Reactive`  | testbench  |
 | `Postponed` | `$monitor` |
 
-## Synchronous Drive Statements
+### Synchronous Drive Statements
 
 ```verilog
 interface.cb.signal <= <values|expression>;
@@ -321,7 +324,13 @@ Example:
 vif.cb.din[3] <= var_a;
 ```
 
-## Sampling Synchronous Signals
+```verilog
+vif.cb.din[3]  = 1'b1;  // Error because blocking
+vif.cb.dout[3] <= 1'b1; // Error because output
+vif.dout[3]    <= 1'b1; // Error because missing cb
+```
+
+### Sampling Synchronous Signals
 
 ```verilog
 variable = interface.cb.signal;
@@ -338,10 +347,13 @@ Sampling of output signal is not allowed
 Example:
 
 ```verilog
-data[i] = vif.cb.dout[7];
+data[i]  = vif.cb.dout[7];
+all_data = vif.cb.dout;
+frm_out  = vif.framo_n[7];           // Error missing cb
+$display("din = %b/n", vif.cb.din);  // Error because input
 ```
 
-## Using Interface in Program
+### Using Interface in Program
 
 ```verilog
 // Pass modport as port list
@@ -362,7 +374,7 @@ program automatic test(router_if.TB vif);
 endprogram: test
 ```
 
-## Complete Top-Level Harness
+### Complete Top-Level Harness
 
 Instantiate test program and interface in harness file
 
@@ -402,7 +414,7 @@ module router_test_top;
 endmodule
 ```
 
-## Compile RTL and Simulate with VCS
+### Compile RTL and Simulate with VCS
 
 Compile HDL code: (generate `simv` simulation binary)
 
@@ -496,7 +508,7 @@ tb/tb.sv
 
 For more information about all the flags refer to [VCS/SIMV docs](vcs_simv_docs.md).
 
-## SystemVerilog Run-Time Options
+### SystemVerilog Run-Time Options
 
 Pass values form simulation command line using `+argument`
 
@@ -519,7 +531,9 @@ end : proc_user_args
 
 Create your own argument options for simulation control and debug
 
-## SystemVerilog Testbench Code Structure: `module`
+## SystemVerilog Language Basics - 1
+
+### SystemVerilog Testbench Code Structure: `module`
 
 Test code can be embedded inside `module` block
 
@@ -563,7 +577,7 @@ module tb;
 endmodule
 ```
 
-## Lexical Convention
+### Lexical Convention
 
 Same as Verilog
 
@@ -593,7 +607,7 @@ Can be padded with `_` (underscore) for readability
 32'h_beef_cafe
 ```
 
-## Data types
+### Data types
 
 A datatype is a set of values (2-state or 4-state) that can be used to declare data objects or to define user-defined data types
 The Verilog data types have 4-state values: (`0`, `1`, `Z`, `X`).
@@ -615,7 +629,7 @@ SystemVerilog adds 2-state value types based on bit:
 
 The keyword `logic` defines that the variable or net is a 4-state data type.
 
-## 2-State (1|0) Data Types (1/3)
+### 2-State (1|0) Data Types (1/3)
 
 ```plain
 bit [msb:lsb] var_name [=initial_value]
@@ -641,7 +655,7 @@ bit[7:0] c =  '1;          //  8'b1111_1111
 bit[32:0] signed ref_data = -155;
 ```
 
-## 2-State (1|0) Data Types (2/3)
+### 2-State (1|0) Data Types (2/3)
 
 ```plain
 2-state-type variable_name [=initial_value];
@@ -661,7 +675,7 @@ longint a, b;
 longint unsigned testdata;
 ```
 
-## 2-State (1|0) Data Types (3/3)
+### 2-State (1|0) Data Types (3/3)
 
 Real 2-state data types:
 
@@ -681,7 +695,7 @@ if (cov_result == 100.0) begin
 end
 ```
 
-## 4-State (1|0|X|Z) Data Types (1/2)
+### 4-State (1|0|X|Z) Data Types (1/2)
 
 ```plain
 reg | logic [msb:lsb] variable_name [=initial_value]
@@ -702,7 +716,7 @@ logic[15:0] sample = '1, ref_data = 'x;
 assign sample = vif.cb.dout;
 ```
 
-## 4-State (1|0|X|Z) Data Types (2/2)
+### 4-State (1|0|X|Z) Data Types (2/2)
 
 Sized 4-state data types
 
@@ -728,7 +742,7 @@ if (current_time > 100ms)
 
 You can use time units in SystemVerilog
 
-## String Data Type
+### String Data Type
 
 ```verilog
 string variable_name [=initial_value]
@@ -768,7 +782,7 @@ int len = sformat(formatted_str, "Value: %0d", 42);
 string formatted_str = sformatf("Value: %0d", 42);
 ```
 
-## Enumerated Data Types
+### Enumerated Data Types
 
 Define enumerated type
 
@@ -797,7 +811,7 @@ $display("next = %p", next);
 
 It essentially help in visualizing complex data structures more easily and is particularly helpful for debugging and displaying hierarchical data types.
 
-## Data Arrays - Fixed-size Arrays (1/4)
+### Data Arrays - Fixed-size Arrays (1/4)
 
 ```verilog
 type array_name[size] = [=initial_value];
@@ -820,7 +834,7 @@ end
 
 `$dimensions` returns number of dimensions
 
-## Data Arrays - Dynamic Arrays (2/4)
+### Data Arrays - Dynamic Arrays (2/4)
 
 ```verilog
 type array_name[size] = [=initial_value];
@@ -842,7 +856,7 @@ ID = data_array;                   // ID resized to match data_array
 data_array.delete();               // de-allocate memory
 ```
 
-## Data Arrays - Queues (3/4)
+### Data Arrays - Queues (3/4)
 
 ```verilog
 type array_name[$[:bound]] = [=initial_value];
@@ -883,7 +897,7 @@ q.delete();               // delete all elements
 $display(q.size());       // 0
 ```
 
-## Data Arrays - Associative Arrays (4/4)
+### Data Arrays - Associative Arrays (4/4)
 
 ```verilog
 type array_name[index_type];   // indexed by specific type
@@ -931,7 +945,7 @@ if (t.first (index)) begin                      // locate first valid index
 end  // better to use `foreach` loop
 ```
 
-## Array Loop Support and Reduction Operator
+### Array Loop Support and Reduction Operator
 
 Loop: `foreach`
 
@@ -956,7 +970,7 @@ $display("or'ed value is = %0d", data.or());
 $display("xor'ed value is = %0d", data.xor());
 ```
 
-## Array Methods (1/4)
+### Array Methods (1/4)
 
 ```verilog
 function array_type[$] array.find() with (expression)
@@ -976,7 +990,7 @@ function int_or_index_type[$] array.find_index() with (expression)
 
 Empty queue is returned when match fails
 
-## Array Methods (2/4)
+### Array Methods (2/4)
 
 Example: `find()` and `find_index()`
 
@@ -995,7 +1009,7 @@ module test;
 endmodule
 ```
 
-## Array Methods (3/4)
+### Array Methods (3/4)
 
 ```verilog
 function array_type[$] array.find_first() with ([expr]|1)
@@ -1019,7 +1033,7 @@ If `with` expression is 1, first element or index is returned
 
 - `item` in expression references array element during search
 
-## Array Methods (4/4)
+### Array Methods (4/4)
 
 Example: `find_first()` and `find_first_index()`
 
@@ -1040,7 +1054,7 @@ endmodule
 
 More array methods available - check LRM
 
-## Data Arrays - Out-of-Bounds Access
+### Data Arrays - Out-of-Bounds Access
 
 Multiple dimensions are supported for all unpacked array types
 
@@ -1059,7 +1073,7 @@ int addr[$:4] = {0,1,2,3,4}; addr.push_back(10); addr[0] = addr[5];
 - Bounded queues - warning issued for out-of-bound write
 - Out-of-bound read returns `'0` for 2-state, `'x` for 4-state arrays
 
-## Array Summary
+### Array Summary
 
 | Type        | Memory                                             | Index     | Example (performance)         |
 | ----------- | -------------------------------------------------- | --------- | ----------------------------- |
@@ -1074,7 +1088,7 @@ Standard array - All memory elements allocated, even if unused
 
 Associative array - Unused elementes do not use memory
 
-## `struct` - Data Structure
+### `struct` - Data Structure
 
 Defines a wrapper for a set of variables
 
@@ -1101,7 +1115,7 @@ var1 = {default:0};        // Both fields set to 0
 var1.my_int = var0.my_int;
 ```
 
-## `union` - Data Union
+### `union` - Data Union
 
 Overloading variable definition similar to C `union`
 
@@ -1156,7 +1170,59 @@ my_var1.my_i = my_var0.my_i; // Wrong
 
 For union tagged packed once you have use one variable you can not use the other.
 
-## System Functions: Randomization
+### Quiz 1
+
+Is the code below legal? Will it compile?
+
+Answer: Yes
+
+```verilog
+module test;
+  bit   [31:0] count;
+  logic [31:0] Count = 'x;
+  initial begin
+    cout = Count;
+    $display("Count = %0x count = %0d", Count, count);
+  end
+endmodule
+```
+
+What type is type `logic` a synonym of? What does the `'x` initialize `Count` to?
+
+Answer: `reg`, all 32-bits get the value of `x`
+
+What will the program display? Why is value of `count` different from `Count`?
+
+Answer: It will display `Count = XXXXXXXX count = 0`, because `x` is converted to zero
+
+### Quiz 1
+
+Define three types of arrays
+
+- Fixed array of size 1024     `int farray[1023];`
+- Dynamic array of size 1024   `int farray[] = new[1024];`
+- Associative array with an `int` type index    `int assoc_a[int]`
+
+Write to three locations in each array
+
+- 0, 500, 1023
+
+```verilog
+farray[0]    = 10;
+farray[500]  = 20;
+farray[1023] = 30;
+```
+
+How many elements has each of these allocated after the write operation?
+
+- Fixed array             1024
+- Dynamic array           1024
+- Associative array uses  3
+
+
+## SystemVerilog Language Basics - 2
+
+### System Functions: Randomization
 
 `$urandom`: Return a 32-bit unsigned random number
 
@@ -1179,7 +1245,7 @@ randcase
 endcase
 ```
 
-## User Defined Types and Type Cast
+### User Defined Types and Type Cast
 
 Use `typedef` to create an alias for another type
 
@@ -1200,7 +1266,11 @@ payload = new[(uint'(temp) % 3) = 2];      // temp cast to uint
 payload = new[(unsigned'(temp) % 3) = 2];  // can also cast to unsigned
 ```
 
-## Operators
+What are the possible sizes of array `payload`? 
+
+0,1,2 for the modulo operation, then +2, the values are 2,3,4
+
+### Operators
 
 | Operator    | Description              |
 | ----------- | ------------------------ |
@@ -1245,7 +1315,7 @@ Assignment:
 = += -+ *= /= %= <<= >>= <<<= >>>= &= |= ^= ~&= ~|= ~^=
 ```
 
-## `inside` Operator
+### `inside` Operator
 
 Use `inside` operator to find an expression within a set of values
 
@@ -1269,7 +1339,7 @@ Example:
 if (result inside {3b'1?1, 3'b00?} ) // {3'b101, 3'b111, 3'b000, 3'b001}
 ```
 
-## `iff` Operator
+### `iff` Operator
 
 Use `iff` operator to qualify
 
@@ -1282,7 +1352,7 @@ Use `iff` operator to qualify
   - cross coverage
   - cross coverage bins
 
-## Know Your Operators
+### Know Your Operators
 
 What is printed to console with following code?
 
@@ -1311,7 +1381,7 @@ end else begin
 end
 ```
 
-## Sequential Flow Control
+### Sequential Flow Control
 
 Conditionals
 
@@ -1331,7 +1401,7 @@ Loops
 - `break` to terminate loop
 - `continue` to terminate current loop iteration
 
-## Subroutines (`task` and `function`)
+### Subroutines (`task` and `function`)
 
 Tasks can block
 
@@ -1349,7 +1419,7 @@ Subroutine variables
 - Can be made `automatic` or `static`
 
 ```verilog
-task print_sum(ref int a[], intput int start = 0);   // Pass by value, Default value
+task print_sum(ref int a[], input int start = 0);   // Pass by value, Default value
   automatic int sum = 0;
   for (int j = start; j < a.size(); j++>) begin
     sum += a[j];
@@ -1377,7 +1447,7 @@ Tasks are `static` by default, while functions are `automatic` by default.
 
 The qualifier goes on the right of the `task` of `function` keyword.
 
-## Subroutine Argument Binding and Skipping
+### Subroutine Argument Binding and Skipping
 
 Argument can be bounde (passed) to the subroutine by
 
@@ -1401,7 +1471,7 @@ module test;
 endmodule
 ```
 
-## Subroutine Arguments
+### Subroutine Arguments
 
 Type and direction are both sticky
 
@@ -1425,7 +1495,7 @@ task T3(a, b, output bit [15:0], u, v, const ref byte c[]);
 // Read-only pass via reference
 ```
 
-## Output Mechanism in Tasks
+### Output Mechanism in Tasks
 
 `tasks` in SystemVerilog do not "return" values in the same way functions do. However, tasks can modify the variables passed to them through `output`, `inout`, or `ref` arguments, which allows the caller to receive values after the task completes.
 
@@ -1481,7 +1551,7 @@ When to Use Tasks Instead of Functions:
 
 Tasks do not have a return value but instead modify arguments using the `output` direction to pass values back.
 
-## Test for Understanding
+### Test for Understanding
 
 What is the direction and data type of each argument?
 
@@ -1518,7 +1588,7 @@ Output:
 
 > Note: If the output is not assign inside the `task` it becomes `X`.
 
-## Code block Lifetime Controls
+### Code block Lifetime Controls
 
 Simulation ends when all programs/modules end
 
@@ -1539,7 +1609,7 @@ Execution of loop immediately advances to next iteration when
 
 - `continue` is executed
 
-## Helpful Debugging Features
+### Helpful Debugging Features
 
 What to print for debugging?
 
@@ -1577,7 +1647,7 @@ Most common timeformat is
 $timeformat(-9, 0, "ns", 10);
 ```
 
-## Testbenchs Require Concurrency
+### Testbenchs Require Concurrency
 
 Components of the testbench run concurrently
 
@@ -1588,7 +1658,7 @@ Components of the testbench run concurrently
   <img src="img/test_env_concurrency.svg" alt="test_env_concurrency" width=90%"/>
 </div>
 
-## Concurrency in Simulator
+### Concurrency in Simulator
 
 A simulator can only execute one thread at a time in a single-core CPU
 
@@ -1598,7 +1668,7 @@ A simulator can only execute one thread at a time in a single-core CPU
   <img src="img/concurrency.svg" alt="concurrency" width=90%"/>
 </div>
 
-## Creating Concurrent Threads
+### Creating Concurrent Threads
 
 Concurrent threads are created in a `fork-join` block
 
@@ -1618,7 +1688,7 @@ statement3;
 - Statements enclose in `begin-end` in a `fork-join` block are executed sequentially as a single concurrent child thread
 - No predetermined execution order for concurrent threads
 
-## How Many Child Threads?
+### How Many Child Threads?
 
 A:
 
@@ -1675,7 +1745,7 @@ join
 
 Answer: One child threads, the outer `begin`, `end`, all tasks inside operate sequentially
 
-## Join Options
+### Join Options
 
 ```verilog
 fork
@@ -1692,7 +1762,7 @@ statement4;
 
 - `join_none`: Child threads are queued, `statement4` executes. Child threads not executed until parent thread encounter a blocking statement or completes
 
-## Thread Execution
+### Thread Execution
 
 Once a thread executes
 
@@ -1715,7 +1785,7 @@ join_any
 join
 ```
 
-## Thread Execution Model
+### Thread Execution Model
 
 One execution thread, all other threads reside on queues
 
@@ -1728,7 +1798,7 @@ When the executing thread is blocked, it moves to the WAIT queue
 
 Simulation time advances when all threads are in WAIT
 
-## Thread Design (1/2)
+### Thread Design (1/2)
 
 Will this work?
 
@@ -1755,7 +1825,7 @@ join
 
 Answer: No, because there is no blocking statement in `thread_1`
 
-## Thread Design (2/2)
+### Thread Design (2/2)
 
 In multi-threaded programs, all threads must be finite or advance the clock!
 
@@ -1782,7 +1852,7 @@ fork
 join
 ```
 
-## Thread vs Program Completion
+### Thread vs Program Completion
 
 ```verilog
 module test;
@@ -1807,7 +1877,7 @@ Simulation ends at time 0, Why?
 
 With the `fork`, `join_none`, child thread are queued, this happens 16 times, and they are expected to run at time `1ns` but because there is no blocking statement after the `for` loop then the `initial` block ends at time zero and the threads are never executed. There is nothing preventing the `initial` block from ending.
 
-## Waiting for Child Threads to Finish
+### Waiting for Child Threads to Finish
 
 To prevent improper early termination of simulation, use `wait fork`
 
@@ -1833,7 +1903,7 @@ module test;
 endmodule
 ```
 
-## Thread Execution Issues
+### Thread Execution Issues
 
 ```verilog
 module test;
@@ -1874,7 +1944,7 @@ When the for `loop` is unrolled, all the threads are queued one after the other,
 
 Threads scheduled for execution at current simulation time, but `i == 16` before they execute.
 
-## Thread Execution Issues: Local Variable
+### Thread Execution Issues: Local Variable
 
 Local variables once created are local to the child context
 
@@ -1911,7 +1981,7 @@ Driving port 15
 
 Variables are created in the declarative space of each `fork`, `join_none`
 
-## Implement Watch-Dog Timer with `join_any`
+### Implement Watch-Dog Timer with `join_any`
 
 Typically used in conjunction with `disable fork`
 
@@ -1937,7 +2007,7 @@ endtask
   <img src="img/watchdog.svg" alt="watchdog" width=90%"/>
 </div>
 
-## Avoid `disable fork` problems
+### Avoid `disable fork` problems
 
 Use enclosing `fork join` to localize `disable fork`
 
@@ -1974,7 +2044,7 @@ So now the `disable fork` will only work within this two threads and not any thr
 
 You can also `disable fork` by level, but in classes if you have multiple objects of the same class all objects will be disable, not just the one you called.
 
-## Abstraction Enhances Re-Usability of Code
+### Abstraction Enhances Re-Usability of Code
 
 Some common objects that you can reuse across multiple projects are:
 
@@ -1985,7 +2055,7 @@ Some common objects that you can reuse across multiple projects are:
 
 and so on
 
-## SystemVerilog OOP Program Constructs
+### SystemVerilog OOP Program Constructs
 
 Building SystemVerilog OOP structure is similar to building Verilog RTL structure
 
@@ -1999,7 +2069,7 @@ Building SystemVerilog OOP structure is similar to building Verilog RTL structur
 
 Unlike in a `module`, nothing executes automatically in an object. Some subroutine in the object mst be called to perform an action.
 
-## OOP Encapsulation (OOP Class)
+### OOP Encapsulation (OOP Class)
 
 Similar to a `module`, an OOP `class` encapsulates:
 
@@ -2028,7 +2098,7 @@ class Packet;
 endclass : Packet
 ```
 
-## `module` vs `class`
+### `module` vs `class`
 
 Why use `class`?
 
@@ -2043,7 +2113,7 @@ Why use `class`?
   - Classes can be modified via inheritance without impacting existing users
   - Modifications to modules will impact all existing users
 
-## Constructing OOP Objects
+### Constructing OOP Objects
 
 OOP objects are constructed from `class` definitions
 
@@ -2077,7 +2147,7 @@ endmodule
   <img src="img/handle.svg" alt="handle" width=90%"/>
 </div>
 
-## Accessing Object Members
+### Accessing Object Members
 
 Object members are accessed using the object handle
 
@@ -2102,7 +2172,7 @@ module test;
 endmodule
 ```
 
-## Initialization of Object Properties
+### Initialization of Object Properties
 
 Define constructor `new()` in class to initialize properties
 
@@ -2139,7 +2209,7 @@ module test;
 endmodule
 ```
 
-## Initialization of Object Properties: `this`
+### Initialization of Object Properties: `this`
 
 `this` keyword
 
@@ -2160,7 +2230,7 @@ class Packet;
 endclass : Packet
 ```
 
-## OOP Data Hiding (Integrity of Data) (1/3)
+### OOP Data Hiding (Integrity of Data) (1/3)
 
 Unrestricted access to object properties can cause unintentional data corruption
 
@@ -2192,7 +2262,7 @@ endmodule
 
 `max_err_cnt` should not be able to be `-1`;
 
-## OOP Data Hiding (Integrity of Data) (2/3)
+### OOP Data Hiding (Integrity of Data) (2/3)
 
 Properties and methods can be protected using `local` or `protected`
 
@@ -2216,7 +2286,7 @@ module test;
 endmodule
 ```
 
-## OOP Data Hiding (Integrity of Data) (3/3)
+### OOP Data Hiding (Integrity of Data) (3/3)
 
 Create public `class` method to allow users to access `local` members
 
@@ -2247,7 +2317,7 @@ module test;
 endmodule
 ```
 
-## Working with Objects - Handle Assignment
+### Working with Objects - Handle Assignment
 
 What happens when one object handle is assigned to another?
 
@@ -2274,7 +2344,7 @@ What happens to the `pkt1` object memory?
 
 Object handles are similar to pointers. The handle points to a specific space in memory. So the answer is that `pkt1` memory is gets clean up by the simulator and that memory is free to be use for something else, this is the garbage collector
 
-## Working with Objects - Garbage Collection
+### Working with Objects - Garbage Collection
 
 VCS garbage collector reclaims memory automatically
 
@@ -2316,7 +2386,7 @@ Normally every class that needs it should provide a `copy()` method
 pkt1_copy = pkt1.copy();
 ```
 
-## Working with Objects - `static` Members
+### Working with Objects - `static` Members
 
 Variables and subroutines can be defines using `static` keyword
 
@@ -2359,7 +2429,7 @@ class Packet;
 endclass : Packet
 ```
 
-## Working with Objects - `const` Properties
+### Working with Objects - `const` Properties
 
 Use `const` keyword to define constant properties that can not be modified
 
@@ -2389,7 +2459,7 @@ module test;
 endmodule
 ```
 
-## Working with Objects - Array Methods
+### Working with Objects - Array Methods
 
 ```verilog
 class Packet;
@@ -2410,7 +2480,7 @@ initial begin
 end
 ```
 
-## Working with Objects - Concurrency
+### Working with Objects - Concurrency
 
 Classes can not have initial or `always` blocks
 
@@ -2435,7 +2505,7 @@ endtask : run
 endclass : Driver
 ```
 
-## Parameterized Classes
+### Parameterized Classes
 
 Written for generic types and/or values
 
@@ -2502,7 +2572,7 @@ endmodule
 
 `type` is a keyword and `T` is the placeholder name of the type of variable.
 
-## Forward `typedef`
+### Forward `typedef`
 
 A forward `typedef`
 
@@ -2530,7 +2600,7 @@ class Packet;
 endclass : Packet
 ```
 
-## Best Practices (1/2)
+### Best Practices (1/2)
 
 Placed class methods outside of the `class` definition
 
@@ -2564,7 +2634,7 @@ task node::ping();     // Place class name and double-colon before method name
 endtask : ping
 ```
 
-## Best Practices (2/2)
+### Best Practices (2/2)
 
 Create useful methods for data classes (user defined)
 
@@ -2586,7 +2656,7 @@ Use `typedef` to create shortcuts
 - `typedef stack#(Packet) pkt_stack`
   - Now use `pkt_stack` instead of `stack#(Packet)`
 
-## Virtual Interfaces
+### Virtual Interfaces
 
 Classes need to drive/sample signals of interface
 
@@ -2610,7 +2680,7 @@ class Driver;
 endclass : Driver
 ```
 
-## SystemVerilog Packages
+### SystemVerilog Packages
 
 Package is a mechanism for sharing among modules, programs, interfaces and other packages:
 
@@ -2623,7 +2693,7 @@ Package is a mechanism for sharing among modules, programs, interfaces and other
 
 Declarations may be referenced within modules, interfaces, programs and other packages
 
-## Packages: Example
+### Packages: Example
 
 ```verilog
 package ComplexPkg:
@@ -2649,7 +2719,7 @@ endpackage : ComplexPkg
 
 Task and Functions inside a package are `static` by default, for that reason the `automatic` keyword is necessary
 
-## Rules Governing Packages
+### Rules Governing Packages
 
 Packages are explicitly named scopes appearing at the outermost level of the source text (at the same level as top-level modules as primitives)
 
@@ -2661,7 +2731,7 @@ Packages can not gave hierarchical references
 
 > Note: Subroutines defined in a `package` are `static` unless explicitly made `automatic`. Classes are always `automatic`
 
-## Using Packages
+### Using Packages
 
 Directly reference package member using class scope resolution operator `::`
 
@@ -2680,7 +2750,7 @@ ComplexPkg::Complex cout = ComplexPkg::mul(a,b);
 - OK to import same package in multiple locations
   - `include` cannot be used in multiple places
 
-## Using Packages: Example (1/2)
+### Using Packages: Example (1/2)
 
 ```verilog
 // Implicit import all symbols
@@ -2706,7 +2776,7 @@ class harmonix;
 endclass : harmonix
 ```
 
-## Using Packages: Example (2/2)
+### Using Packages: Example (2/2)
 
 Packages can be imported by other packages
 
@@ -2725,7 +2795,7 @@ package signal_analysis;
 endpackage: signal_analysis
 ```
 
-## Alternatives to Exhaustive Testing?
+### Alternatives to Exhaustive Testing?
 
 32-bit adder example: Assume one set of input and output ca be verifies every 1ns.
 How long will exhaustive testing take?
@@ -2736,13 +2806,13 @@ What if exhaustive testing is unachievable?
 
 Best known mechanism is randomization of data combined with functional coverage
 
-## Process of Reaching Verification Goals
+### Process of Reaching Verification Goals
 
 <div style="text-align: center;">
   <img src="img/verification_goals.svg" alt="verification_goals" width=90%"/>
 </div>
 
-## OOP Based Randomization
+### OOP Based Randomization
 
 In SystemVerilog, randomization is achieved via classes
 
@@ -2765,7 +2835,7 @@ When the class `randomize()` function is called, if there are no constrains in t
 
 `rand` and `randc` are not solve at the same time together, all `rand` variables are solve together and all `randc` variables are solve together.
 
-## Randomization Example
+### Randomization Example
 
 ```verilog
 class Packet;
@@ -2799,7 +2869,7 @@ endmodule : test
 
 It is always a good idea to check if the `randomize()` function was successful
 
-## Controlling Random Variables (1/2)
+### Controlling Random Variables (1/2)
 
 How do you control the value range for `sa` and `da`?
 
@@ -2827,7 +2897,7 @@ module test;
 endmodule : test
 ```
 
-## Controlling Random Variables (2/2)
+### Controlling Random Variables (2/2)
 
 Randomization can be controlled using `constraint` block
 
@@ -2853,7 +2923,7 @@ constraint valid {...};
 constraint single_sa { sa = 12;}      // Syntax error
 ```
 
-## SystemVerilog Constraints
+### SystemVerilog Constraints
 
 Relational Operators
 
@@ -2882,7 +2952,7 @@ constraint Limit2 {
 }
 ```
 
-## Weighted Constraints
+### Weighted Constraints
 
 Constraint values can also be weighted over a specified range using keyword `dist` and:
 
@@ -2902,7 +2972,7 @@ constraint Limit {                 // divided weights
 }
 ```
 
-## Array Constraint Support
+### Array Constraint Support
 
 Members can be constrained within `foreach` loop
 
@@ -2927,7 +2997,7 @@ class Config:
 endclass : Config
 ```
 
-## Implication and Order Constraints
+### Implication and Order Constraints
 
 `->` (Implication Operator)
 
@@ -2950,7 +3020,7 @@ class MyBus;
 endclass : MyBus
 ```
 
-## Equivalence Constraints
+### Equivalence Constraints
 
 Use `<->` (Equivalence operator) to define a true bidirectional constraint
 
@@ -2970,7 +3040,7 @@ class MyBus;
 endclass : MyBus
 ```
 
-## Uniqueness Constraints
+### Uniqueness Constraints
 
 Constraint each variable in a group to be `unique` after randomization
 
@@ -2992,7 +3062,7 @@ $display("a = ", c_obj.a);     // a = {h5, h0, h3, h1, h7, h2, h2}
 $display("b = ", c_obj.b);     // b = 6
 ```
 
-## System Functions
+### System Functions
 
 Bit-Vector system functions can be used in constraint (VCS only)
 
@@ -3013,7 +3083,7 @@ constraint cst {
 }
 ```
 
-## User-defined Functions in Constraints
+### User-defined Functions in Constraints
 
 User-defined functions can be used to constrain variables
 
@@ -3032,7 +3102,7 @@ class D;
 endclass : D
 ```
 
-## Randomizing Real numbers
+### Randomizing Real numbers
 
 Limited support for randomization of ral variables (VCS only)
 
@@ -3058,7 +3128,7 @@ class cls;
 endclass : cls
 ```
 
-## Constraint Solver Order
+### Constraint Solver Order
 
 By default the simulator randomizes variables in any order it can in order to get a valid solution. To address this we can use:
 
@@ -3086,7 +3156,7 @@ class MyBus;
 endclass :
 ```
 
-## Inline Constraints
+### Inline Constraints
 
 Individual invocations of `randomize()` can be customized using
 
@@ -3114,7 +3184,7 @@ endmodule : test
 
 All constraints are merged.
 
-## Soft Constraints
+### Soft Constraints
 
 Use keyword `soft` when defining soft constraints
 
@@ -3141,7 +3211,7 @@ initial begin
 end
 ```
 
-## Where are Soft Constraints Used?
+### Where are Soft Constraints Used?
 
 In environment classes: to specify default ranges of random variables
 
@@ -3165,7 +3235,7 @@ stat = p.randomize() with {
 stat = q.randomize() with {min==tmin; max==tmax;}
 ```
 
-## Mutually Constrained Random Variables
+### Mutually Constrained Random Variables
 
 Constraint limits can be random variables
 
@@ -3186,7 +3256,7 @@ What random values are generated for variable `high`?
 - If there is no legal value for high, then `randomize()` function prints warning and returns a 0. The properties are left unchanged
 - Caution: does not imply solve order
 
-## Inconsistent Constraints
+### Inconsistent Constraints
 
 What if the constraints cannot be solved by `randomize()`?
 
@@ -3215,7 +3285,7 @@ class demo:
 endclass : demo
 ```
 
-## Effects of Calling `randomize()`
+### Effects of Calling `randomize()`
 
 When `randomize()` executes, three events occur:
 
@@ -3258,7 +3328,7 @@ class Packet;
 endclass : Packet
 ```
 
-## Controlling Randomization at Runtime
+### Controlling Randomization at Runtime
 
 Turn randomization for properties on or off with:
 
@@ -3294,7 +3364,7 @@ module test;
 endmodule : test
 ```
 
-## Controlling Constraint at Runtime
+### Controlling Constraint at Runtime
 
 Turn constraint blocks on and off with:
 
@@ -3326,7 +3396,7 @@ module test;
 endmodule : test
 ```
 
-## Constraint Prototypes
+### Constraint Prototypes
 
 Can define constraint prototypes in class using `extern`
 
@@ -3354,7 +3424,7 @@ module test_corner_case;
 endmodule : test_corner_case
 ```
 
-## Nested Objects with Random Variables
+### Nested Objects with Random Variables
 
 `randomize()` follows a linked list of objects handles, randomizing each linked object to the end of the list
 
@@ -3385,7 +3455,7 @@ module test;
 endmodule : test
 ```
 
-## `std::randomize()`
+### `std::randomize()`
 
 `std::randomize()` for variables outside classes
 
@@ -3407,13 +3477,13 @@ module test;
 endmodule : test
 ```
 
-## Changing the Random Seed at Simulation
+### Changing the Random Seed at Simulation
 
 Provide an initial seed for simulator with the following options (VCS)
 
 - `ntb_random_seed = <initial_seed>`
-  - `simv <other_opts> +ntb_random_seed = 123`
 
+  - `simv <other_opts> +ntb_random_seed = 123`
 
 - `ntb_random_seed_automatic`
   - Unique initial seed, combining the time of day, hostname and process id
@@ -3429,8 +3499,7 @@ To save simulation log messages to a file use
 
 - `simv <other_opts> -l simv.log`
 
-
-## Object Oriented Programming: Inheritance
+### Object Oriented Programming: Inheritance
 
 Object-oriented programming
 
@@ -3456,7 +3525,7 @@ endclass : BadPacket
 
 `BadPacket` has access to `da`, `sa`, `data`, `crc` because it inherited from base class `packet`
 
-New class is called *subclass* or *extended* or *derived* class
+New class is called _subclass_ or _extended_ or _derived_ class
 
 Derived classes compatible with base class
 
@@ -3486,12 +3555,530 @@ $cast(bad_pkt, pkt);    // OK    Assign an extended class to a base class
   <img src="img/inheritance.svg" alt="inheritance" width=90%"/>
 </div>
 
+### OOP Polymorphism
 
-## Operators and system task and functions
+Which method gets called?
+
+```verilog
+class bad_packet extends packet;
+  // pkt function
+  function int compute_crc();
+  ...
+  endfunction
+  // bad_packet function
+  function int compute_crc();
+  ...
+  endfunction
+endclass : bad_packet
+```
+
+Depends on
+
+- Type of handle p (e.g. `packet` or `bad_packet`)
+- Whether `compute_crc()` is `virtual` or not
+
+If `compute_crc()` is not virtual - base class method is called
+
+```verilog
+Packet p = new();
+BadPacket = bp = new();
+p.crc = p.compute_crc();
+bp.crc = bp.compute_crc();
+transmit(p);
+transmit(bp);
+
+task transmit()
+...
+pkt.crc = pkt.comput_crc();  // Here there is a problem
+...
+endtask : transmit
+```
+
+The problem is that when the transmit function is called using `BadPacket` the `compute_crc()` method called is not the correct one, to fix this use the `virtual` keyword
+
+If `compute_crc()` is virtual - overriding method is called
+
+```verilog
+class bad_packet extends packet;
+  // pkt function
+  virtual function int compute_crc();
+  ...
+  endfunction
+  // bad_packet function
+  // virtual not needed for derived classes but recommended
+  virtual function int compute_crc();
+  ...
+  endfunction
+endclass : bad_packet
+```
+
+### Polymorphism: Modify Constraints for Test Cases
+
+Define test-specific constraint in derived classes
+
+- Can also override existing constraints
+
+```verilog
+class data;
+  rand bit[31:0] x, y;
+  constraint valid {
+    x > 0; y >= 0;
+  }
+endclass : data
+```
+
+```verilog
+class Generator;
+  data blueprint;
+  ...
+  while(...) begin
+  ...
+  blueprint.randomize();
+  ...
+  end
+endclass : data
+```
+
+```verilog
+module test_corner_case;
+  class test_data extends data;
+    constraint corner_case {
+      x == 5; y == 10;
+    }
+  endclass : test_data
+
+  initial begin
+    test_data tdata = new();
+    Generator gen = new();
+    gen.blueprint = tdata;  // polymorphism
+    ...
+  end
+endprogram : test_corner_case
+```
+
+Note that `gen.blueprint` is assign to a handle of a extended class of `data`, the only difference is that extended class `test_data` as different constraints has different constraints.
+
+### Data Protection: `local`
+
+`local` members of a base class are not accessible in the derived class
+
+```verilog
+class BadPacket extends Packet;
+  // Packet
+  local int DONE;
+  function void display();
+  ...
+  endfunction : display
+
+  function bit[31:0] compute_crc();
+  ...
+  endfunction : display
+
+  // BadPacket
+  function bit[31:0] compute_crc();
+    this.crc = super.compute_crc();
+    if ( is_bad ) crc = ~crc;
+    DONE = 1'b1;                     // Error because is only accesible for base class
+  endfunction : display
+endclass : BadPacket
+```
+
+### Data Protection: `protected`
+
+`protected` members of a base class are accessible in the derived class, but not to external code
+
+```verilog
+class BadPacket extends Packet;
+  // Packet
+  protected int DONE;
+  function void display();
+  ...
+  endfunction : display
+
+  function bit[31:0] compute_crc();
+  ...
+  endfunction : display
+
+  // BadPacket
+  function bit[31:0] compute_crc();
+    this.crc = super.compute_crc();
+    if ( is_bad ) crc = ~crc;
+    DONE = 1'b1;                     // Good because it is accessible for derived classes
+  endfunction : display
+endclass : BadPacket
+```
+
+### Constructing Derived Class Objects
+
+When constructing an object of a derived class
+
+- If the derives class does not have a constructor a defined VCS inserts one
+
+```verilog
+function new();
+  super.new();
+endfunction
+```
+
+If the derived class defines a constructor a call to `new()` it must be the fist procedural statement
+
+```verilog
+super.new([args])
+```
+
+- Must use `super.new([...])`
+- Must be called with the correct set of arguments
+- If the call is missing, the compiler inserts one without arguments, as the first procedural statement of the function
+
+```verilog
+super.new()
+```
+
+### Taking a Closer Look: 1
+
+Will the following code compile?
+
+Which one of the task `new()` is executed?
+
+```verilog
+class A;
+  protected int a;
+  function int get_a();
+    get_a = a;
+  endfunction: get_a
+  function new(int b);
+    a = b;
+  endfunction
+endclass: A
+
+class B extends A;
+  protected int b = 1000;
+  task print_a();
+    $display("a is $d", get_a())
+  endtask: print_a
+endclass: A
+
+class C extends B;
+  function new(int c);
+    a = c;
+  endfunction
+endclass: A
+
+module test;
+  C test_c = new(10);
+  initial begin
+    test_c.print_a();
+  end
+endmodule
+```
+
+### Taking a Closer Look: 1 (Answers)
+
+VCS will attemp to execute every task `new()` starting with `new()` of class C, resulting in a syntax error
+
+```verilog
+class A;
+  protected int a;
+  function int get_a();
+    get_a = a;
+  endfunction: get_a
+  function new(int b);
+    a = b;
+  endfunction
+endclass: A
+
+class B extends A;
+  protected int b = 1000;
+  task print_a();
+    $display("a is $d", get_a())
+  endtask: print_a
+  // This is implicit
+  function new();
+    super.new();     // This calls class A with no args
+  endfunction        // that is a Error: Mismatching argument list
+endclass: A
+
+class C extends B;
+  function new(int c);
+    super.new();     // This is implicit
+    a = c;
+  endfunction
+endclass: A
+
+module test;
+  C test_c = new(10);
+  initial begin
+    test_c.print_a();
+  end
+endmodule
+```
+
+### Taking a Closer Look: 1 (Guideline)
+
+Always call `super.new()` as the first procedural statement in constructor, with correct argument set
+
+```verilog
+class A;
+  protected int a;
+  function int get_a();
+    get_a = a;
+  endfunction: get_a
+  function new(int b);
+    a = b;
+  endfunction
+endclass: A
+
+class B extends A;
+  protected int b = 1000;
+  task print_a();
+    $display("a is $d", get_a())
+  endtask: print_a
+  // Inserted by the user
+  function new(int b);
+    super.new(b);
+  endfunction
+endclass: A
+
+
+class C extends B;
+  function new(int c);
+    super.new(c); // Inserted by the user
+    a = c;
+  endfunction
+endclass: A
+
+module test;
+  C test_c = new(10);
+  initial begin
+    test_c.print_a();
+  end
+endmodule
+```
+
+### Taking a Closer Look: 2
+
+Given the following class inheritance hierarchy, is the program code legal?
+
+```verilog
+class A;
+  protected int a;
+  function int get_a();
+    get_a = a;
+  endfunction: get_a
+  function new(int b);
+    a = b;
+  endfunction
+endclass: A
+
+class B extends A;
+  protected int b = 1000;
+  task print_a();
+    $display("a is $d", get_a())
+  endtask: print_a
+  function new(int b);
+    super.new(b);
+  endfunction
+endclass: A
+
+class C extends A;
+  function new(int c);
+    super.new(c);
+    a = c;
+  endfunction
+endclass: A
+
+module test;
+  C test_c = new(10);
+  B test_b = obj_c;
+endmodule
+```
+
+### Taking a Closer Look: 2 (Answer)
+
+Both classes, B and C extend from base class A, but they are unrelated. A handle of one object can not point to its sibling object
+
+B and C, both derived from A
+
+### Inheritance: Quiz 1
+
+1. Will this code compile without errors?
+
+- If not, why not?
+
+2. Will it throw any runtime errors?
+3. What will the program display?
+
+```verilog
+module test1
+  class abc;
+    rand int a;
+  endclass
+
+  class xyz extends abc;
+    rand int a;
+  endclass: abc
+
+  initial begin
+    abc o1 = new();
+    xyz o2 = new();
+    o1 = o2;
+    $display("test: o1 = %d", o1.b);
+  end
+
+endmodule: test1
+```
+
+Answer: The code will not compile, desplite `o1 = o2;` been legal, you can use a base class handle to point to a child class, `o1.b` is ilegal because the handle does not have acess to `b`.
+
+### Inheritance: Quiz 2
+
+1. Will this code compile without errors?
+
+- If not, why not?
+
+2. Will it throw any runtime errors?
+3. What will the program display?
+
+```verilog
+module test1
+  class abc;
+    rand int a = 10;
+    function void print_a();
+      $display("abc: a = ", a);
+    endfunction
+  endclass
+
+  class xyz extends abc;
+    function void print_a();
+      $display("xyz: a = ", a);
+    endfunction
+  endclass: abc
+
+  initial begin
+    abc o1 = new();
+    xyz o2 = new();
+    o1 = o2;
+    o1.print_a();
+  end
+
+endmodule: test1
+```
+
+Answer: The code will compile, it will not throw any runtime errors, because the functions are not `virtual`, the `print_a()` method from `abc` is going to be used. It will not display nothing because the `%d` is missing. And if it were there, it will display zero, because it is not being randomize anywhere.
+
+### Inheritance: Quiz 3
+
+1. Will this code compile without errors?
+
+- If not, why not?
+
+2. Will it throw any runtime errors?
+3. What will the program display?
+
+```verilog
+module test1
+  class abc;
+    rand int a = 10;
+    virtual function void print_a();
+      $display("abc: a = ", a);
+    endfunction
+  endclass
+
+  class xyz extends abc;
+    virtual function void print_a();
+      $display("xyz: a = ", a);
+    endfunction
+  endclass: abc
+
+  initial begin
+    abc o1 = new();
+    xyz o2 = new();
+    o1 = o2;
+    o1.print_a();
+  end
+
+endmodule: test1
+```
+
+Answer: The code will compile, it will not throw any runtime errors, because the functions are `virtual`, the `print_a()` method from `xyz` is going to be used. It will not display nothing because the `%d` is missing. And if it were there, it will display zero, because it is not being randomize anywhere.
+
+
+### Inheritance: Quiz 4
+
+1. Will this code compile without errors?
+
+- If not, why not?
+
+2. Will it throw any runtime errors?
+3. What will the program display?
+
+```verilog
+module test1
+  class abc;
+    rand int a = 10;
+    virtual function void print_a();
+      $display("abc: a = ", a);
+    endfunction
+  endclass
+
+  class xyz extends abc;
+    virtual function void print_a();
+      $display("xyz: a = ", a);
+    endfunction
+  endclass: abc
+
+  initial begin
+    abc o1 = new();
+    xyz o2 = new();
+    o2 = o1;
+    o2.print_a();
+  end
+
+endmodule: test1
+```
+
+Answer: The code will not compile because it is ilegal to assign a child handle to a parent handle without `$cast()`
+
+
+### Inheritance: Quiz 5
+
+1. Will this code compile without errors?
+
+- If not, why not?
+
+2. Will it throw any runtime errors?
+3. What will the program display?
+
+```verilog
+module test1
+  class abc;
+    rand int a = 10;
+    virtual function void print_a();
+      $display("abc: a = ", a);
+    endfunction
+  endclass
+
+  class xyz extends abc;
+    virtual function void print_a();
+      $display("xyz: a = ", a);
+    endfunction
+  endclass: abc
+
+  initial begin
+    abc o1 = new();
+    xyz o2 = new();
+    $cast(o2, o1);
+    o2.print_a();
+  end
+
+endmodule: test1
+```
+
+Answer: The code will compile without errors, but at runtime there is an error, the rules are very clear, despite doing the dinamic cast it is ilegal to take an extended class handle to point to a base class
+
+### Operators and system task and functions
 
 | Type           | Description                                                    |
 | -------------- | -------------------------------------------------------------- |
 | `$isunknown()` | Returns 1 if any bit of the expression is X or Z               |
 | `$clog2()`     | Computes the ceiling of the logarithm base 2 of a given valueZ |
-
-

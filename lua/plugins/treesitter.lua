@@ -13,7 +13,7 @@ return {
 	opts = {
 		highlight = { enable = true },
 		indent = { enable = true },
-    --disable = {"verilog", "systemverilog"},
+    -- disable = {"verilog", "systemverilog"},
 		ensure_installed = {
 			"bash",
 			"bibtex",
