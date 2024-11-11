@@ -1195,7 +1195,7 @@ What will the program display? Why is value of `count` different from `Count`?
 
 Answer: It will display `Count = XXXXXXXX count = 0`, because `x` is converted to zero
 
-### Quiz 1
+### Quiz 2
 
 Define three types of arrays
 
@@ -1449,7 +1449,7 @@ The qualifier goes on the right of the `task` of `function` keyword.
 
 ### Subroutine Argument Binding and Skipping
 
-Argument can be bounde (passed) to the subroutine by
+Argument can be bundle (passed) to the subroutine by
 
 - Position
 - Name
@@ -1494,6 +1494,7 @@ task T3(a, b, output bit [15:0], u, v, const ref byte c[]);
 // u, v: output bit [15:0]
 // Read-only pass via reference
 ```
+
 
 ### Output Mechanism in Tasks
 
@@ -1586,6 +1587,13 @@ Output:
 0    0    X    X
 ```
 
+Answer:
+
+- `a` has direction `ref` and type `byte`
+- `b` has direction `ref` (sticky) and type `logic[15:0]`
+- `c` the same as `b`
+- `u` and `v` have direction `output` and type `logic[15:0]` (sticky)
+
 > Note: If the output is not assign inside the `task` it becomes `X`.
 
 ### Code block Lifetime Controls
@@ -1595,7 +1603,7 @@ Simulation ends when all programs/modules end
 - Execution of a `program` ends when
   - All `initial` blocks in `program`/`module` reach end of code block, or `$finish` is executed
 
-Execition of a subroutine ends when one of
+Execution of a subroutine ends when one of
 
 - `endtask`, `endfunction` is encountered
 - `return` is executed
@@ -1647,11 +1655,13 @@ Most common timeformat is
 $timeformat(-9, 0, "ns", 10);
 ```
 
+## Concurrency
+
 ### Testbenchs Require Concurrency
 
 Components of the testbench run concurrently
 
-- Concurrent components run as separate threads
+- Concurrent components run as separate **threads**
 - The Generator and Driver are concurrent components
 
 <div style="text-align: center;">
@@ -2043,6 +2053,8 @@ So if this task was called from another place where they were others threads run
 So now the `disable fork` will only work within this two threads and not any threads outside of this.
 
 You can also `disable fork` by level, but in classes if you have multiple objects of the same class all objects will be disable, not just the one you called.
+
+## Object Oriented Programming (OOP) - Encapsulation
 
 ### Abstraction Enhances Re-Usability of Code
 
@@ -2794,6 +2806,55 @@ package signal_analysis;
   endclass : harmonix
 endpackage: signal_analysis
 ```
+
+### OOP: Quiz 1
+
+1. What will the program display?
+  - The value of `o1.a = 10` because the `a` changing in the constructor is the one inside the function
+2. Did it display what you expected?
+  - No
+3. How will you fix this?
+  - Using `this` operator
+
+```verilog
+module test1;
+  class abc;
+    int a = 10;
+    function new(int a);
+      a = a;
+    endfunction
+  endclass
+
+  abc o1;
+  initial begin
+    o1 = new(5);
+    $display("a = %0d", o1.a);
+  end
+endmodule
+```
+
+### OOP: Quiz 2
+
+1. What will the program display?
+2. Why?
+
+```verilog
+module test1;
+  class abc;
+    int a = 10;
+  endclass
+
+  initial begin
+    abc o1 = new();
+    abc o1 = new();
+    
+    o1.a = 5;
+    o2.a = 50;
+    $display("a = %0d", o1.a);
+  end
+endmodule
+```
+
 
 ### Alternatives to Exhaustive Testing?
 
