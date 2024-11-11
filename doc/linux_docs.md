@@ -409,3 +409,31 @@ bash
 with `sh` you open the MINGW64 terminal inside the git installation
 
 <https://stackoverflow.com/questions/59895/how-do-i-get-the-directory-where-a-bash-script-is-located-from-within-the-script>
+
+
+## Symbolic link `ln`
+
+### Creating a Symbolic Link
+
+To create a symlink, you use the `ln` command with the `-s` option
+
+```bash
+ln -s /path/to/target /path/to/symlink
+```
+
+### Viewing Symbolic Links
+
+You can use the ls `-l` command to view symlinks:
+
+```bash
+ls -l /path/to/symlink
+```
+
+### Overwriting a Symbolic Link
+
+To overwrite a symlink, you can use the `sf` option
+
+```bash
+ln -sf /path/to/target /path/to/symlink
+```
+
