@@ -329,6 +329,13 @@ date +"%Y_%m_%d_%H:%M:%S"
 wget <url>
 ```
 
+```bash
+wget --mirror --page-requisites --convert-link -no-clober --no-parent --domain verificationacademy.com https://verificationacademy.com/cookbook/uvm-universal-verification-methodology/ 
+```
+
+
+
+
 ## unzip
 
 ```bash

@@ -1161,6 +1161,18 @@ Implemented with six building block classes
 
 Register model are created by scripts
 
+
+The register field models a collection of bits that are associated with a function within a register.
+
+A field will have a width and a bit offset position within the register. A field can have different access modes such as read/write, read only or write/only.
+
+A register contains one or more fields.
+
+A register block corresponds to a hardware block and contains one or more registers. A register block also contains one or more register maps.
+
+A memory region in the design is modeled by a `uvm_mem` which has a range, or size, and is contained within a register block and has a offset determined by a register map.
+
+
 ## Adapter
 
 Inherit from abstract base class `uvm_reg_adapter`
@@ -1193,6 +1205,22 @@ pure virtual function void bus2reg(uvm_sequence_item bus_item, ref uvm_reg_bus_o
 | `uvm_status_e`      | `status`  | `UVM_IS_OK`, `UVM_HAS_X`, `UVM_NOT_OK`                       |
 
 
+The UVM register model is design to facilitate productive verification of programmable hardware. When used effectively, it raises the level of stimulus abstraction and makes the resultant stimulus code straight-forward to reuse, wither when there is a change in the DUT register address map, or when the BUT block is reused as a sub-component.
+
+There are different register viewpoints:
+
+- The VIP developer
+- The Register Model writer
+- The Testbench Integrator
+- The Testbench User
+
+Verification Intellectual Property (VIP)
+
+
+
+Register Fields
+
+The bottom layer is the field which corresponds to one or more bits within a register. Each field definition is an instantiation of the `uvm_reg_field` class. Fields are contained within an `uvm_reg` class and they are constructed and then configured using the `configure()` method:
 
 
 # Easier UVM Doulos
