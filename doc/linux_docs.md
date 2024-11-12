@@ -437,3 +437,33 @@ To overwrite a symlink, you can use the `sf` option
 ln -sf /path/to/target /path/to/symlink
 ```
 
+## `mkdir`
+
+The `mkdir` (make directory) command is used to create new directories in Unix/Linux systems
+
+The basic syntax is:
+
+```bash
+mkdir [options] directory_name
+```
+
+Some common option are 
+
+- `-p` or `--parents`: Create parent directories as needed. If the specified directory already exists no error is shown
+- `-v` or `--verbose`: Display a message for each created directory
+
+Examples:
+
+```bash
+mkdir -p /path/to/new/directory
+```
+
+```bash
+mkdir -v new_directory
+```
+
+```bash
+mkdir -p -v /path/to/new/project
+```
+
+
