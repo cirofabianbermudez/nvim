@@ -25,4 +25,7 @@ flatpak list
 ```
 
 
+```bash
+flatpak run com.google.Chrome 
+```
 
