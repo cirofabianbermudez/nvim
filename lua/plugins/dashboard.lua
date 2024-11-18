@@ -1,5 +1,5 @@
 return { -- DONE
-  enabled = true,
+  enabled = false,
 	"nvimdev/dashboard-nvim",
   -- requires = {'nvim-tree/nvim-web-devicons'}
   lazy = false,
