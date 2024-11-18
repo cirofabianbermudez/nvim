@@ -11,9 +11,13 @@ return {
 	end,
 	cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
 	opts = {
-		highlight = { enable = true },
+		highlight = {
+			enable = false,
+			additional_vim_regex_highlighting = false,
+			use_languagetree = false,
+		},
 		indent = { enable = true },
-    -- disable = {"verilog", "systemverilog"},
+		-- disable = {"verilog", "systemverilog"},
 		ensure_installed = {
 			"bash",
 			"bibtex",
@@ -44,6 +48,19 @@ return {
 		},
 	},
 	config = function(_, opts)
-	  require("nvim-treesitter.configs").setup(opts)
+		require("nvim-treesitter.configs").setup(opts)
+
+    local function toggle_TS()
+      if vim.b.ts_highlight then
+          vim.cmd('TSBufDisable highlight')
+          vim.b.ts_highlight = false
+      else
+          vim.cmd('TSBufEnable highlight')
+          vim.b.ts_highlight = true
+      end
+    end
+
+     vim.keymap.set("n", "<leader>et", toggle_TS, {desc = "Toggle: Treesitter", noremap = true, silent = true })
+
 	end,
 }

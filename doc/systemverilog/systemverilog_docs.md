@@ -768,11 +768,16 @@ endpackage: signal_analysis
 ### OOP: Quiz 1
 
 1. What will the program display?
-  - The value of `o1.a = 10` because the `a` changing in the constructor is the one inside the function
+
+- The value of `o1.a = 10` because the `a` changing in the constructor is the one inside the function
+
 2. Did it display what you expected?
-  - No
+
+- No
+
 3. How will you fix this?
-  - Using `this` operator
+
+- Using `this` operator
 
 ```verilog
 module test1;
@@ -805,14 +810,13 @@ module test1;
   initial begin
     abc o1 = new();
     abc o1 = new();
-    
+
     o1.a = 5;
     o2.a = 50;
     $display("a = %0d", o1.a);
   end
 endmodule
 ```
-
 
 ### Alternatives to Exhaustive Testing?
 
@@ -2021,7 +2025,6 @@ endmodule: test1
 
 Answer: The code will compile, it will not throw any runtime errors, because the functions are `virtual`, the `print_a()` method from `xyz` is going to be used. It will not display nothing because the `%d` is missing. And if it were there, it will display zero, because it is not being randomize anywhere.
 
-
 ### Inheritance: Quiz 4
 
 1. Will this code compile without errors?
@@ -2057,7 +2060,6 @@ endmodule: test1
 ```
 
 Answer: The code will not compile because it is ilegal to assign a child handle to a parent handle without `$cast()`
-
 
 ### Inheritance: Quiz 5
 

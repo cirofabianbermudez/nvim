@@ -59,7 +59,12 @@ return { -- DONE
           ["ui-select"] = {
             require("telescope.themes").get_dropdown({})
           }
-        }
+        },
+        defaults = {
+          preview = {
+            treesitter = false,
+          }
+        },
       })
       require("telescope").load_extension("ui-select")
     end,
