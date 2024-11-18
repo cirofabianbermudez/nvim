@@ -25,4 +25,4 @@ return { -- DONE
 		vim.keymap.set("n", "<leader>ng", ":Neotree source=git_status toggle=true<CR>",                                           { desc = "Neotree: (Git)",      noremap = true, silent = true })
 		vim.keymap.set("n", "<leader>nb", ":Neotree source=buffers toggle=true<CR>",                                              { desc = "Neotree: (Buffer)",   noremap = true, silent = true })
 	end,
-} 
+}
