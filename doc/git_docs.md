@@ -172,7 +172,7 @@ git branch [branch-name]
 Switch to another branch and check it out into your working directory
 
 ```plain
-git checkout
+git checkout [branch-name]
 ```
 
 Merge the specified branch’s history into the current one
@@ -197,6 +197,20 @@ Delete a branch from remote
 
 ```plain
 git push origin --delete [branch-name] 
+```
+
+Change the branch name, move to the branch you want to change the name
+
+```plain
+git branch -m [new-branch-name]
+```
+
+Change the branch name in remote
+
+```plain
+git branch -m [new-branch-name]
+git push origin [new-branch-name]
+git push origin --delete [old-branch-name]
 ```
 
 ## Inspect and Compare
