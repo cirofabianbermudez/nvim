@@ -96,7 +96,7 @@ git remote add origin git@github.com:username/repo_name.git
 Push to the remote and set the default upstream
 
 ```plain
-git push -u origin main 
+git push -u origin main
 ```
 
 Retrieve an entire repository from a hosted location via URL
@@ -157,7 +157,7 @@ git commit -m “[descriptive_message]”
 
 Isolating work in branches, changing context, and integrating changes
 
-List your branches, a * will appear next to the currently active branch
+List your branches, a \* will appear next to the currently active branch
 
 ```plain
 git branch
@@ -190,13 +190,13 @@ git log
 Delete a branch locally
 
 ```plain
-git branch -d [branch-name] 
+git branch -d [branch-name]
 ```
 
 Delete a branch from remote
 
 ```plain
-git push origin --delete [branch-name] 
+git push origin --delete [branch-name]
 ```
 
 Change the branch name, move to the branch you want to change the name
@@ -523,7 +523,6 @@ git submodule status
 
 After adding the submodule, add the `.gitsubmodule` and the subdirectory to the staging area, make a commit and push the changes
 
-
 When cloning a project with submodules, by default you get the directories that contain submodules, but none of the files within them yet
 
 You must run two commands to initialize your local configuration file and to fetch all the data from that project and check out the appropriate commit listed in your superproject
@@ -539,7 +538,7 @@ of use the foolproof
 git submodule update --init --recursive
 ```
 
-To update the submodule go to the submodule directory and `git fetch` and `git merge` as any other repo, then you can go back to the main project and run `git diff --submodule` that the module was updated, If you commit at this point then you will lock the submodule into having the new code when other people update. 
+To update the submodule go to the submodule directory and `git fetch` and `git merge` as any other repo, then you can go back to the main project and run `git diff --submodule` that the module was updated, If you commit at this point then you will lock the submodule into having the new code when other people update.
 
 An easier way to do this is to run the following command that will go into your submodules and fetch and update for you
 
@@ -552,5 +551,3 @@ By default, the `git pull` command recursively fetches submodules changes, howev
 Note that to be on the safe side, you should run `git submodule update` with the `init` flag is case the MainProject commits you just pulled added new submodules, and with the `recursive` flag if any submodules have nested submodules
 
 If the upstream repository has changed the URL of the sibmodule in the `.gitmodules` file is one of the commits you pull. For example if the submodule project changes its hosting platform, `git submodule update` could fail. In order to remedy this situation, the `git submodule sync` command is required
-
-
