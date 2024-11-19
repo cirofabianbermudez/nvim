@@ -1,5 +1,6 @@
 return { -- DONE
   enabled = true,
+	cond = true,
 	"akinsho/bufferline.nvim",
   event = "VeryLazy",
 	-- dependencies = 'nvim-tree/nvim-web-devicons'}
@@ -7,8 +8,8 @@ return { -- DONE
 	  local bufferline = require("bufferline")
 		bufferline.setup({
 		  options = {
-         always_show_bufferline = false,
-				 style_preset = {
+        always_show_bufferline = false,
+        style_preset = {
 					bufferline.style_preset.no_italic,
 					bufferline.style_preset.no_bold,
 				},

@@ -1,5 +1,6 @@
 return { -- DONE
   enabled = false,
+  cond = false,
 	"folke/persistence.nvim",
 	event = "BufReadPre",
 	opts = {

@@ -1,5 +1,6 @@
 return { -- DONE
   enabled = false,
+  cond = false,
   'echasnovski/mini.pairs',
   version = '*',
 	event = "VeryLazy",

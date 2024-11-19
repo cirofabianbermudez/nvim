@@ -1,5 +1,6 @@
 return { -- DONE
 	enabled = true,
+  cond = true,
 	"stevearc/oil.nvim",
 	event = "VeryLazy",
 	opts = {

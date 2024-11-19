@@ -1,5 +1,6 @@
 return { -- DONE
   enabled = false,
+  cond = false,
 	"folke/noice.nvim",
 	event = "VeryLazy",
 	dependencies = {
@@ -42,5 +43,3 @@ return { -- DONE
     require("noice").setup(opts)
 	end,
 }
-
-

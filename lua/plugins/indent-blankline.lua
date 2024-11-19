@@ -1,31 +1,30 @@
 return { -- DONE
-  enabled = true,
+	enabled = true,
+	cond = true,
 	"lukas-reineke/indent-blankline.nvim",
-  event = "VeryLazy",
+	event = "VeryLazy",
 	opts = {
-    indent = {
-      char = "│",
-      tab_char = "│",
-    },
-    scope = {show_start = false, show_end = false},
-    exclude = {
-      filetypes = {
-        "help",
-        "alpha",
-        "dashboard",
-        "neo-tree",
-        "lazy",
-        "trouble",
-        "mason",
-        "toggleterm",
-        "lazyterm",
-      },
-    },
+		indent = {
+			char = "│",
+			tab_char = "│",
+		},
+		scope = { show_start = false, show_end = false },
+		exclude = {
+			filetypes = {
+				"help",
+				"alpha",
+				"dashboard",
+				"neo-tree",
+				"lazy",
+				"trouble",
+				"mason",
+				"toggleterm",
+				"lazyterm",
+			},
+		},
 	},
-  main = "ibl",
+	main = "ibl",
 	-- config = function(_, opts)
 	--   require("ibl").setup(opts)
 	-- end,
 }
-
-

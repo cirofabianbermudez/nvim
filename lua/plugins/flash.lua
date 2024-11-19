@@ -1,6 +1,6 @@
-
 return { -- DONE
 	enabled = false,
+	cond = false,
 	"folke/flash.nvim",
 	event = "VeryLazy",
 	opts = {

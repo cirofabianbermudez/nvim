@@ -1,5 +1,6 @@
 return { -- DONE
   enable = false,
+  cond = false,
   "dstein64/vim-startuptime",
   cmd = "StartupTime",
   config = function()

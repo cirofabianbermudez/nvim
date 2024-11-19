@@ -1,5 +1,6 @@
 return { -- DONE
   enabled = true,
+  cond = true,
   'echasnovski/mini.surround',
   version = '*',
 	event = "VeryLazy",
