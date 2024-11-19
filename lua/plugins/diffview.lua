@@ -8,4 +8,8 @@ return { -- DONE
 	config = function(_, opts)
 		require("diffview").setup(opts)
 	end,
+  -- :DiffviewFileHistory
+  -- :DiffviewFileHistory %
+  -- :DiffviewOpen
+  -- :DiffviewClose
 }
