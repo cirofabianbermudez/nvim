@@ -1,14 +1,11 @@
 # PopOS notes
 
-
 Install Neovim dependencies
-
 
 ```bash
 sudo apt update
 sudo apt upgrade -y
 ```
-
 
 This command is to install Node.js that is commonly used to install Linters and Formaters
 
@@ -42,8 +39,6 @@ List intalled flask programs using PopOS shop
 flatpak list
 ```
 
-
 ```bash
-flatpak run com.google.Chrome 
+flatpak run com.google.Chrome
 ```
-
