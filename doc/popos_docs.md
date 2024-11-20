@@ -63,7 +63,7 @@ sudo apt-get install -f
 Another way is to use `apt install`, this method automatically resolves dependencies
 
 ```bash
-sudo apt install your-package.deb
+sudo apt install ./your-package.deb
 ```
 
 If for some reason there are missing dependencies after installation use:
