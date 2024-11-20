@@ -34,7 +34,8 @@ return { -- DONE
 			terminal_colors = true,
 			styles = {
 				-- comments  = { fg = "#616E88",italic = false},
-				comments = { fg = "#A1AEC8", italic = false, bold = false },
+				-- comments = { fg = "#A1AEC8", italic = false, bold = false },
+				comments = { fg = "#8691a8", italic = false, bold = false },
 				keywords = { italic = false },
 				functions = { italic = false },
 				variables = { italic = false },
