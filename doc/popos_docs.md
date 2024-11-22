@@ -136,3 +136,14 @@ This ensures that Network Manager can handle `.ovpn` files.
 
 - After importing, toggle the VPN on from the same Network Settings menu or from the system tray.
 
+
+## VSCode
+
+https://askubuntu.com/questions/1093261/vs-code-not-showing-top-menu-bar-ubuntu-18-10
+
+File/Preferences/Settings
+
+window.titleBarStyle
+
+custom
+
