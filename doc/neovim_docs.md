@@ -1,9 +1,8 @@
 # Neovim notes
 
-|    |    |
-| -- | -- |
-|    |    |
-
+|     |     |
+| --- | --- |
+|     |     |
 
 ## Open Neovim with no plugins
 
@@ -21,5 +20,10 @@ Load a session `so session.vim`
 
 To open the history `q:`
 
+## Telescope
 
-
+| Shortcut   | Description           |
+| ---------- | --------------------- |
+| `Ctrl + v` | Open vertical split   |
+| `Ctrl + x` | Open horizontal split |
+| `Ctrl + q` | Open quick fix        |

@@ -466,4 +466,25 @@ mkdir -v new_directory
 mkdir -p -v /path/to/new/project
 ```
 
+## `curl`
 
+Check the weather
+
+```bash
+curl wttr.in/mexico
+curl wttr.in/puebla?1p
+ curl wttr.in/bari?1p
+```
+
+Generate a QR Code
+
+```bash
+curl qrenco.de/google.com
+```
+
+Check the IP
+
+```bash
+curl ifconfig.me
+curl ipinfo.io
+```
