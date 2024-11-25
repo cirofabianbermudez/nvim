@@ -1,6 +1,21 @@
 # PopOS notes
 
-Install Neovim dependencies
+## Options to be aware
+
+Show Windows Titles ON
+
+## Install Tmux
+
+
+## APT
+
+```bash
+apt show <apt-name>
+apt search <apt-name>
+apt-cache policy <apt-name>
+```
+
+## Install Neovim dependencies
 
 ```bash
 sudo apt update
@@ -46,7 +61,6 @@ flatpak run com.google.Chrome
 To install a program from the command line it is recommended to use `apt install`
 you can also use `apt-get install` but the first is more modern and easy to use
 
-
 ## Install a `.deb`
 
 To install a `.deb` package use the following command
@@ -54,6 +68,7 @@ To install a `.deb` package use the following command
 ```bash
 sudo dpkg -i your-packege.deb
 ```
+
 but sometimes this command can fail because of missing dependencies then you have to run
 
 ```bash
@@ -135,7 +150,6 @@ This ensures that Network Manager can handle `.ovpn` files.
 5. Connect to the VPN
 
 - After importing, toggle the VPN on from the same Network Settings menu or from the system tray.
-
 
 ## VSCode
 

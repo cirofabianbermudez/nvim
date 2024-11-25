@@ -488,3 +488,11 @@ Check the IP
 curl ifconfig.me
 curl ipinfo.io
 ```
+
+Open a manual page of a command
+
+```bash
+curl cheat.sh/ls
+curl cht.sh/ls
+```
+
