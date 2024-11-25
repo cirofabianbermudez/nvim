@@ -145,3 +145,8 @@ set -g window-status-current-format ' #I │ #W '
 set -g window-status-current-style fg=colour231,bg=colour240,bold
 ```
 
+## References
+
+https://willhbr.net/2024/03/06/tmux-conf-with-commentary/
+https://github.com/tmux/tmux
+https://github.com/gpakosz/.tmux/blob/master/.tmux.conf

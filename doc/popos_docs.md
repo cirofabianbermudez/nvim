@@ -161,3 +161,6 @@ window.titleBarStyle
 
 custom
 
+## References
+
+https://support.system76.com/articles/pop-keyboard-shortcuts/
