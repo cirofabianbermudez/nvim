@@ -7,7 +7,10 @@ This cheat sheet is based on the following sources:
 - <https://about.gitlab.com/images/press/git-cheat-sheet.pdf>
 - <https://git-scm.com/book/en/v2>
 
-Git is the free and open source distributed version control system that's responsible for everything GitHub related that happens locally on your computer. This cheat sheet features the most important and commonly used Git commands for easy reference.
+Git is the free and open source distributed version control system that's 
+responsible for everything GitHub related that happens locally on your computer.
+This cheat sheet features the most important and commonly used Git commands 
+for easy reference.
 
 - [Git/GitHub/GitLab notes](#gitgithubgitlab-notes)
   - [Setup](#setup)
@@ -427,15 +430,17 @@ Use `.gitkeep` to add empty directories in git
 
 Create, configure and manage SSH keys
 
-Create a new SSH key pair, use meaningful names like `id_ed25519_github` and enter a
-secure passphrase.
+Create a new SSH key pair, use meaningful names like `id_ed25519_github` and 
+enter a secure passphrase.
 
 ```bash
 cd ~/.ssh
 ssh-keygen -t ed25519 -C "your_email@example.com"
 ```
 
-Now you should have a SSH key-pair inside the `~/.ssh` directory, something like `id_ed25519_github` and `id_ed25519_github.pub`, your private and public keys.
+Now you should have a SSH key-pair inside the `~/.ssh` directory, something 
+like `id_ed25519_github` and `id_ed25519_github.pub`, your private and public 
+keys.
 
 Create a `~/.ssh/config` file
 
@@ -501,9 +506,11 @@ git submodule add git@github.com:username/repo_name.git path/directory/repo_name
 
 Then you can run `git status` to see that new `.gitmodules` file was created
 
-Make sure that the URL you use to add the submodule is a URL other people can clone
+Make sure that the URL you use to add the submodule is a URL other people can 
+clone
 
-From the root directory you can run the following command to see the hash of the submodule
+From the root directory you can run the following command to see the hash of 
+the submodule
 
 ```plain
 git diff --cached /path/repo_name
@@ -521,11 +528,15 @@ For old versions of git you can use
 git submodule status
 ```
 
-After adding the submodule, add the `.gitsubmodule` and the subdirectory to the staging area, make a commit and push the changes
+After adding the submodule, add the `.gitsubmodule` and the subdirectory to 
+the staging area, make a commit and push the changes
 
-When cloning a project with submodules, by default you get the directories that contain submodules, but none of the files within them yet
+When cloning a project with submodules, by default you get the directories that
+contain submodules, but none of the files within them yet
 
-You must run two commands to initialize your local configuration file and to fetch all the data from that project and check out the appropriate commit listed in your superproject
+You must run two commands to initialize your local configuration file and to 
+fetch all the data from that project and check out the appropriate commit 
+listed in your superproject
 
 ```plain
 git submodule init
@@ -538,16 +549,51 @@ of use the foolproof
 git submodule update --init --recursive
 ```
 
-To update the submodule go to the submodule directory and `git fetch` and `git merge` as any other repo, then you can go back to the main project and run `git diff --submodule` that the module was updated, If you commit at this point then you will lock the submodule into having the new code when other people update.
+To update the submodule go to the submodule directory and `git fetch` and
+`git merge` as any other repo, then you can go back to the main project and 
+run `git diff --submodule` that the module was updated, If you commit at this
+point then you will lock the submodule into having the new code when other
+people update.
 
-An easier way to do this is to run the following command that will go into your submodules and fetch and update for you
+An easier way to do this is to run the following command that will go into your
+submodules and fetch and update for you
 
 ```plain
 git submodule update --remote
 ```
 
-By default, the `git pull` command recursively fetches submodules changes, however, it does not update the submodules.
+By default, the `git pull` command recursively fetches submodules changes, 
+however, it does not update the submodules.
 
-Note that to be on the safe side, you should run `git submodule update` with the `init` flag is case the MainProject commits you just pulled added new submodules, and with the `recursive` flag if any submodules have nested submodules
+Note that to be on the safe side, you should run `git submodule update` with 
+the `init` flag is case the MainProject commits you just pulled added new 
+submodules, and with the `recursive` flag if any submodules have nested 
+submodules
 
-If the upstream repository has changed the URL of the sibmodule in the `.gitmodules` file is one of the commits you pull. For example if the submodule project changes its hosting platform, `git submodule update` could fail. In order to remedy this situation, the `git submodule sync` command is required
+If the upstream repository has changed the URL of the sibmodule in the 
+`.gitmodules` file is one of the commits you pull. For example if the
+submodule project changes its hosting platform, `git submodule update`
+could fail. In order to remedy this situation, the `git submodule sync` 
+command is required
+
+
+## Configs
+
+It is very useful to use this command to view the git root directory from 
+anywhere:
+
+```plain
+git rev-parse --show-toplevel
+```
+
+You can also create an alias for this command
+
+```plain
+git config --local --replace-all alias.root "rev-parse --show-toplevel"
+```
+
+This is use to add colors if there are not activated
+
+```plain
+git config --local --replace-all color.ui true
+```
