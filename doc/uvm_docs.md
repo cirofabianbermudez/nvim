@@ -1319,3 +1319,17 @@ perl easier_uvm_gel.pl arith.tpl
 ```
 
 The output is a `generated_tb` directory with all the code and a `easier_uvm_gen.log`
+
+
+
+
+## Register model exmaple using ATMEL 8831 SPI and PeakRDL-uvmm
+
+https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-8331-8-and-16-bit-AVR-Microcontroller-XMEGA-AU_Manual.pdf
+
+Page 273
+
+
+https://accellera.org/images/downloads/standards/systemrdl/SystemRDL_2.0_Jan2018.pdf
+
+You need to know the SystemRDL language
