@@ -496,3 +496,8 @@ curl cheat.sh/ls
 curl cht.sh/ls
 ```
 
+You can also use it to download files
+
+```bash
+curl -LO <some_url_file> 
+```

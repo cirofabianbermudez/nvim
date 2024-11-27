@@ -45,7 +45,7 @@ vim.opt.incsearch = true
 
 -- Optional configurations
 -- vim.opt.scrolloff = 8
-vim.opt.colorcolumn = "400"
+vim.opt.colorcolumn = "80"
 vim.opt.updatetime = 50
 
 -- Make macros compatible with <C-a>
