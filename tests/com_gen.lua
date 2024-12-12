@@ -1,5 +1,4 @@
 function gen_comment(config)
-
   -- Set fefault values if not provided in the config table
   local comment     = config.comment or "COMMENT"
   local separator   = config.separator or "="
@@ -23,7 +22,32 @@ function gen_comment(config)
   return formatted
 end
 
+function validate_arguments()
+  if #arg > 5 then
+    error("Too many argument provided.")
+  end
+end
+
+function display_help()
+  local help_message = [[
+Usage: lua main.lua [comment] [separator] [totalLength] [commentChar] [innerSpace]
+
+Options:
+  comment      The comment text to include (default: "COMMENT").
+  separator    The character used for the padding (default: "=").
+  totalLength  The total length of the comment line (default: 80).
+  commentChar  The character used to denote a comment (default: "#").
+  innerSpace   The number of spaces around the comment text (default: 1).
+  --help       Display this help message.
+]]
+  print(help_message)
+end
+
 function parse_arguments()
+  if arg[1] == "--help" then
+    return {help = true}
+  end
+
   return {
     comment     = arg[1] or "COMMENT",
     separator   = arg[2] or "=",
@@ -33,14 +57,15 @@ function parse_arguments()
   }
 end
 
-function validate_arguments()
-  if #arg > 5 then
-    error("Too many argument provided.")
-  end
-end
-
-
 function main()
+
+  -- Parse arguments
+  local args = parse_arguments() 
+
+  if args.help then
+    display_help()
+    os.exit(0)
+  end
 
   -- Validate command line arguments
   local status, err = pcall(validate_arguments)
@@ -50,9 +75,6 @@ function main()
     io.stderr:write("Usage: lua main.lua [comment] [separator] [totalLength] [commentChar] [innerSpace] \n")
     os.exit(1)
   end
-
-  -- Parse arguments
-  local args = parse_arguments() 
 
   -- Generate comment using the table
   local result = gen_comment(args)
