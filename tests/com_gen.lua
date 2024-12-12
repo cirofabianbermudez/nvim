@@ -7,7 +7,7 @@ function gen_comment(config)
   local innerSpace  = config.innerSpace  or 1
 
   -- Calculate padding
-  local padding = totalLength - #comment - #commentChar - innerSpace*2 - 1
+  local padding = totalLength - #comment - #commentChar*2 - innerSpace*2 - 2
   local leftPadding = math.floor(padding / 2)
   local rightPadding = padding - leftPadding
 
@@ -17,7 +17,8 @@ function gen_comment(config)
                     string.rep(" ",innerSpace) ..
                     comment ..
                     string.rep(" ",innerSpace) ..
-                    string.rep(separator, rightPadding)
+                    string.rep(separator, rightPadding) ..
+                    " " .. commentChar
   
   return formatted
 end
