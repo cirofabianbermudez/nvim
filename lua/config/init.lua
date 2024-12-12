@@ -8,6 +8,6 @@ else
   require("config.latex")
   require("config.neovide")
   require("config.systemverilog")
-  require("config.systemverilog")
   require("config.lazy")
+  require("config.comments")
 end
