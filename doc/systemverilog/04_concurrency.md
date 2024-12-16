@@ -210,7 +210,7 @@ join
 ```verilog
 module test;
   initial begin
-    for(int i = 0; i < 16; i++>) begin
+    for(int i = 0; i < 16; i++) begin
       send(i);
     end
   end
@@ -229,6 +229,15 @@ endmodule
 Simulation ends at time 0, Why?
 
 With the `fork`, `join_none`, child thread are queued, this happens 16 times, and they are expected to run at time `1ns` but because there is no blocking statement after the `for` loop then the `initial` block ends at time zero and the threads are never executed. There is nothing preventing the `initial` block from ending.
+
+It is important to note that the it is a good practice to put a `$finish` command at the end of the simulation,
+otherwise the behavior is not the expected, also keep in mind that the `send()` task in the example above is 
+using a `fork join_none` inside the task itself, which is considered a bad practice.
+
+Because `module` and `program` schedule in different regions, to be more specific
+`module` block will sample at active region and executes in the same region, 
+where as program block will sample in active region and executes in reactive region,
+some behaviors are not the same between them.
 
 ### Waiting for Child Threads to Finish
 
@@ -308,7 +317,7 @@ module test;
   initial begin
     for(int i = 0; i < 16; i++) begin
       fork
-        int index = i;   // local fork variable
+        automatic int index = i;   // local fork variable
         send(index);
       join_none
     end
