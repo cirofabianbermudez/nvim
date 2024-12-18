@@ -1333,3 +1333,24 @@ Page 273
 https://accellera.org/images/downloads/standards/systemrdl/SystemRDL_2.0_Jan2018.pdf
 
 You need to know the SystemRDL language
+
+
+
+
+
+
+
+## Personal notes
+
+`uvm_top` is the same as `uvm_root::get()`
+
+```plain
+uvm_root::get().print_topology();
+uvm_top.print_topology();
+```
+
+The UVM agent configuration object can be instantiated using the factory
+using the `create()` or using the `new()` method, the advantage or using
+the factory is that you have the possibility of overriding the object
+
+
