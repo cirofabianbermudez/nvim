@@ -6,12 +6,22 @@ Show Windows Titles ON
 
 ## Install Tmux
 
+```bash
+sudo apt install tmux
+```
 
 ## APT
 
+In short, for regular users and system administrators, apt is the go-to choice,
+while developers and script writers might prefer apt-get.
+
 ```bash
-apt show <apt-name>
-apt search <apt-name>
+apt update
+apt upgrade 
+apt install <package>
+apt search <package>
+apt search <package>
+apt show <package>
 apt-cache policy <apt-name>
 ```
 
@@ -151,6 +161,15 @@ This ensures that Network Manager can handle `.ovpn` files.
 
 - After importing, toggle the VPN on from the same Network Settings menu or from the system tray.
 
+
+## Install TeX Live
+
+```bash
+sudo apt-get install texlive-full
+sudo apt-get install texmaker
+```
+
+
 ## VSCode
 
 https://askubuntu.com/questions/1093261/vs-code-not-showing-top-menu-bar-ubuntu-18-10
@@ -160,6 +179,17 @@ File/Preferences/Settings
 window.titleBarStyle
 
 custom
+
+## Install TeXLive
+
+```bash
+sudo apt-get install texlive-full
+sudo apt-get install texmaker
+```
+
+press enter like crazy if texlive installations gets stuck
+
+https://superuser.com/questions/358749/how-to-disable-ctrlshiftu
 
 ## References
 
