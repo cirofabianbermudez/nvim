@@ -14,6 +14,12 @@ RTL - Register Transfer Level
 DUT - Design Under Test
 OOP - Object Oriented Programming
 CRT - Constrained Random Tests
+ATM - Asynchronous Transfer Mode
+BFM - Bus Functional Models
+VIP - Verification IP
+APB - AMBA Peripheral Bus
+AMBA - Advanced Microcontrolles BUs Architecture
+DMA - Direct Memory Access
 
 - "Bugs are good"
 - Always keep track of the details of each bug found.
@@ -170,9 +176,124 @@ for only the few features that are very unlikely to be reached by random tests.
 
 ## What Should You Randomize?
 
-When you think of randomizing the stimulus to a design, you might fi rst pick
-the data fi elds. These values are is the easiest to create — just call `$random()`. The
+When you think of randomizing the stimulus to a design, you might first pick
+the data fields. These values are is the easiest to create, just call `$random()`. The
 problem is that this choice gives a very low payback in terms of bugs found. The
 primary types of bugs found with random data are data path errors, perhaps with
-bit-level mistakes. You need to fi nd bugs in the control logic, source of the most
+bit-level mistakes. You need to find bugs in the control logic, source of the most
 devious problems.
+
+Think broadly about all design inputs, such as the following.
+
+- Device configuration
+- Environment configuration
+- Input data
+- Protocol exceptions
+- Errors and violations
+- Delays
+
+## Device and Environment Configuration
+
+What is the most common reason why bugs are missed during testing of the RTL
+design? Not enough different configurations are tried.
+
+In the real world, your device operates in an environment containing other components.
+When you are verifying the DUT, it is connected to a testbench that mimics this
+environment. You should randomize the entire environment configuration, including
+the length of the simulation, number of devices, and how they are configured.
+Of course you need to create constraints to make sure the configuration is legal.
+Other environment parameters include test length, error injection rates, and delay
+modes.
+
+## Protocol Exceptions, Errors and Violations
+
+If something can go wrong in the real hardware, you should try to simulate it.
+Look at all the errors that can occur. What happens if a bus transaction does not complete?
+If an invalid operation is encountered? Does the design specification state that two
+signals are mutually exclusive? Drive them both and make sure the device continues
+to operate properly.
+
+Just as you are trying to provoke the hardware with ill-formed commands,
+you should also try to catch these occurrences. For example, recall those mutually
+exclusive signals. You should add checker code to look for these violations. Your
+code should at least print a warning message when this occurs, and preferably
+generate an error and wind down the test. 
+
+It is frustrating to spend hours tracking back through code trying to find the
+root of a malfunction, especially when you could have caught it close to the
+source with a simple assertion.
+
+Just make sure that you can disable the code that stops simulation on error so that
+you can easily test error handling.
+
+
+## Delay and synchronization
+
+How fast should your testbench send in stimulus? You should pick random delays
+to help catch protocol bugs. A test with the shortest delays is easy to write, but won’t
+create all possible stimulus combinations. Subtle bugs around boundary conditions
+are often revealed when realistic delays are chosen.
+
+## Parallel Random Testing
+
+How should you run the tests? A directed test has a testbench that produces a unique
+set of stimulus and response vectors. To change the stimulus, you need to change the
+test. A random test consists of the testbench code plus a random seed. If you run the
+same test 50 times, each time with a unique seed, you will get 50 different sets of
+stimuli. Running with multiple seeds broadens the coverage of your test and lever-
+ages your work.
+
+You need to choose a unique seed for each simulation.
+
+You need to plan how to organize your files to handle multiple
+simulations. Each job creates a set of output files, such as log files
+and functional coverage data. You can run each job in a different
+directory, or you can try to give a unique name to each file. The easiest
+approach is to append the random seed value to the directory name.
+
+## Functional Coverage
+
+The process of measuring and using functional coverage consists of several
+steps. First, you add code to the testbench to monitor the stimulus going into the
+device, and its reaction and response, to determine what functionality has been
+exercised. Run several simulations, each with a different seed. Next, merge the
+results from these simulations into a report. Lastly, you need to analyze the results
+and determine how to create new stimulus to reach untested conditions and logic.
+
+## Feedback from Functional Coverage to Stimulus
+
+A random test evolves using feedback. The initial test can be run with many different
+seeds, thus creating many unique input sequences. Eventually the test, even with
+a new seed, is less likely to generate stimulus that reaches areas of the design space.
+As the functional coverage asymptotically approaches its limit, you need to change
+the test to find new approaches to reach uncovered areas of the design. This is
+known as “coverage-driven verification”.
+
+**Typical hardware teams need more than two verification engineers for every designer.**
+
+
+## Maximum Code Reuse
+
+The real work is put into constructing the testbench, which contains all the lower
+testbench layers: scenario, functional, command, and signal. This testbench code
+is used by all the tests, so it remains generic.
+
+## Conclusion
+
+The continuous growth in complexity of electronic designs requires a modern, 
+systematic, and automated approach to creating testbenches. The cost of fixing a bug
+grows by tenfold as a project moves from each step of specification to RTL coding,
+gate synthesis, fabrication, and finally into the user’s hands. Directed tests only test
+one feature at a time and cannot create the complex stimulus and configurations that
+the device would be subjected to in the real world. To produce robust designs, you
+must use constrained-random stimulus combined with functional coverage to create
+the widest possible range of stimuli
+
+
+You can use the logic type to find netlist bugs as this type can
+only have a single driver. Rather than trying to choose between
+reg and wire , declare all your signals as logic , and you’ll get a
+compilation error if it has multiple drivers. Of course, any signal
+that you do want to have multiple drivers, such as a bidirectional
+bus, should be declared with a net type such as wire or tri .
+
