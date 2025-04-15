@@ -195,3 +195,11 @@ xelab
 ```plain
 
 ```
+
+
+## References
+
+[Vivado Design Suite Guide: Logic Simulation (UG900)](https://docs.amd.com/r/en-US/ug900-vivado-logic-simulation/Overview)
+[Vivado Design Suite Tutorial: Logic Simulation (UG937)](https://docs.amd.com/r/en-US/ug937-vivado-design-suite-simulation-tutorial/Vivado-Simulator-Overview)
+[UVM Support in Vivado Simulator](https://adaptivesupport.amd.com/s/article/1070861?language=en_US)
+[Vivado Design Suite Tcl Command Reference Guide (UG835)](https://docs.amd.com/r/en-US/ug835-vivado-tcl-commands/General-Tcl-Syntax-Guidelines)
