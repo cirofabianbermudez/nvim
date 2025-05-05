@@ -6,3 +6,10 @@ testing/
 *.bak
 *.txt
 session.vim
+
+# C++
+Makefile
+/bin
+/obj
+*.o
+*.exe
