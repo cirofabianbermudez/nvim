@@ -63,6 +63,22 @@ In case the Tcl package is not installed on your Linux system, use:
 sudo apt-get install tcl tcllib
 ```
 
+Sometimes with newer OS some critial header files for the C standard library
+are missing. Vivado needs some of this libraries, in particular `bits/libc-header-start.h`,
+This is a common issue on Ubuntu-based systems (including Pop!\_OS). To solve this use:
+
+```bash
+sudo apt update
+sudo apt install gcc-multilib
+```
+
+Optionaly if this does not not solve the problem
+
+```bash
+sudo apt install libc6-dev-i386
+```
+
+
 ## Running the Vivado Simulator in Batch Mode
 
 To run Vivado Simulator in batch mode, the simulator relies on three processes, 
