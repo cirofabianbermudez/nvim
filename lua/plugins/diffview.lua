@@ -1,6 +1,6 @@
 return { -- DONE
-	enabled = true,
-  cond = true,
+	enabled = false,
+  cond = false,
 	"sindrets/diffview.nvim",
 	event = "VeryLazy",
 	opts = {

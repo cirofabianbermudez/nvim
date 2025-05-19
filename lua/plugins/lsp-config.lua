@@ -1,7 +1,7 @@
 return { -- DONE
 	{
-		enabled = true,
-		cond = true,
+		enabled = false,
+		cond = false,
 		"williamboman/mason.nvim",
 		dependencies = {
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -50,8 +50,8 @@ return { -- DONE
 		end,
 	},
 	{
-		enable = true,
-		cond = true,
+		enable = false,
+		cond = false,
 		"mfussenegger/nvim-lint",
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
@@ -97,8 +97,8 @@ return { -- DONE
 		end,
 	},
 	{
-		enable = true,
-		cond = true,
+		enable = false,
+		cond = false,
 		"stevearc/conform.nvim",
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
