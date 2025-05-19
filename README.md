@@ -16,13 +16,7 @@ This is my personal [Neovim](https://neovim.io/) configuration, it can be used i
 
 I think these are the bare minimum plugins need it to have a very nice experience using Neovim, other functionally can be accomplish setting up internal variables or writing remaps.
 
-After installation, inside Neovim run this command to see the custom remaps:
-
-```bash
-:help customide.cheat
-```
-
-of see it [here](doc/customide.txt).
+After installation, press the `<space>` key to access the **Which-key** menu:
 
 ## Installation
 
@@ -53,7 +47,7 @@ sccop install ripgrep
 Install [Treesitter](https://github.com/nvim-treesitter/nvim-treesitter) dependencies, a C compiler is required:
 
 ```bash
-scoop install mingw-winlibs-llvm-ucrt
+scoop install mingw-winlibs-llvm
 ```
 
 or
@@ -73,6 +67,7 @@ mkdir -p ~/bin
 mv nvim-linux64 ~/bin
 rm -rf nvim-linux64.tar.gz
 ```
+
 add Neovim to the PATH in `~/.bashrc`:
 
 ```bash
@@ -114,7 +109,6 @@ sudo apt-get install xclip
 
 this allows to copy and paste outside Neovim.
 
-
 ## Fonts
 
 For Windows you can install the font with the following command:
@@ -137,7 +131,7 @@ rm ~/.fonts/Hack.zip
 In both cases you have to to select the font Hack Nerd Font Mono in the Terminal settings.
 
 > [!NOTE]  
-> If you want to install the fonts manually there is a `fonts` directory in this repository containing a `Hack.zip` file. For Windows you can decompress and install the font as any other. For Linux you have to create a `~/.fonts` directory and put the fonts there and restart the terminal. 
+> If you want to install the fonts manually there is a `fonts` directory in this repository containing a `Hack.zip` file. For Windows you can decompress and install the font as any other. For Linux you have to create a `~/.fonts` directory and put the fonts there and restart the terminal.
 
 Finally clone the repository in `C:\Users\username\AppData\Local\nvim` for Windows or in `/home/username/.config/nvim` for Linux:
 
@@ -151,7 +145,7 @@ Open Neovim and let lazy.nvim install all the plugins:
 nvim
 ```
 
-##  Lockfile
+## Lockfile
 
 After every **update**, the local lockfile is updated with the installed revisions. It is recommended to have this file under version control.
 
@@ -162,47 +156,6 @@ If you are on another machine, you can do `:Lazy restore`, to update all your pl
 ## Spell check
 
 Inside this repository there is a `spell` directory that contains the `*.spl` and `.sug` files for English and Spanish in case you experience some problems while running the `setlocal spell spelllang=es` vim command.
-
-## File tree
-
-This is the current file tree of the project:
-
-```bash
-├── README.md
-├── doc/
-│   ├── customide.txt
-│   ├── git_cheatsheet.txt
-│   └── tags
-├── fonts/
-│   └── Hack.zip
-├── init.lua
-├── lua/
-│   ├── core/
-│   │   ├── formaters.lua
-│   │   ├── init.lua
-│   │   ├── lazy.lua
-│   │   ├── markdown.lua
-│   │   ├── remap.lua
-│   │   └── set.lua
-│   └── plugins/
-│       ├── colorscheme.lua
-│       ├── lsp.lua
-│       ├── lualine.lua
-│       ├── neotree.lua
-│       ├── oil.lua
-│       ├── telescope.lua
-│       └── treesitter.lua
-├── scripts/
-│   ├── install_formaters.sh
-│   ├── install_formaters_wind.sh
-│   ├── tree.sh
-│   └── tree_wind.sh
-└── spell/
-    ├── en.utf-8.spl
-    ├── en.utf-8.sug
-    ├── es.utf-8.spl
-    └── es.utf-8.sug
-```
 
 ## Extras
 
@@ -223,10 +176,8 @@ Upgrading an existing installation
 winget list --name PowerShell --upgrade-available
 ```
 
-
 ## Project status
 
 - [x] This configuration was tested on a Windows 10/11 machine using [Powershell](https://github.com/PowerShell/PowerShell) and [Terminal](https://github.com/microsoft/terminal).
 
 - [x] This configuration was tested on a WSL Ubuntu 22.04.4 LTS using [Terminal](https://github.com/microsoft/terminal).
-
