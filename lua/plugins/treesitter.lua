@@ -46,6 +46,7 @@ return {
 			"vimdoc",
 			"xml",
 			"yaml",
+      "typst",
 		},
 	},
 	config = function(_, opts)
