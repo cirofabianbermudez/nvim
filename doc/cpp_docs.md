@@ -1,4 +1,4 @@
-# C programming notes
+# C++ programming notes
 
 ## Compilation Flags
 
@@ -17,3 +17,23 @@
 | `-l <file>`                | Specifies the name of the library to link against.                                               |
 
 > **Warning:**  for `-I`, `-L`, `-l` if an error occurs remove the blank.
+
+## lvalues and rvalue
+
+
+## References
+
+### Books
+
+[C++ Core Guidelines - Bjarne Stroustrup](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
+
+[Competitive Programmer's Handbook - Antti Laaksonen](https://cses.fi/book/book.pdf)
+
+[Effictive Modern C++ - Scoot Meyers](https://ananyapam7.github.io/resources/C++/Scott_Meyers_Effective_Modern_C++.pdf)
+
+### Websites
+
+[learncpp.com](https://www.learncpp.com/)
+
+[cppreference.com](https://en.cppreference.com/)
+

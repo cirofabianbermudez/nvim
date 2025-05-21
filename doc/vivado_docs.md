@@ -235,3 +235,5 @@ xelab
 [UVM Support in Vivado Simulator](https://adaptivesupport.amd.com/s/article/1070861?language=en_US)
 
 [Vivado Design Suite Tcl Command Reference Guide (UG835)](https://docs.amd.com/r/en-US/ug835-vivado-tcl-commands/General-Tcl-Syntax-Guidelines)
+
+[AMD Technical Information Portal](https://docs.amd.com/)
