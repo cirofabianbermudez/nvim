@@ -9,7 +9,7 @@ session.vim
 
 # C++
 Makefile
-/bin
-/obj
+**/bin
+**/obj
 *.o
 *.exe
