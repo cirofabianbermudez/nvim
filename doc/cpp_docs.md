@@ -1,5 +1,23 @@
 # C++ programming notes
 
+## Installation
+
+### Linux
+
+```bash
+sudo apt update
+sudo apt install build-essential
+```
+
+### Windows
+
+
+```powershell
+scoop bucket add versions
+scoop install versions/mingw-winlibs-llvm-msvcrt
+```
+
+
 ## Compilation Flags
 
 | Flag                       | Description                                                                                      |
