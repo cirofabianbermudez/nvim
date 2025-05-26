@@ -4,10 +4,24 @@
 
 ### Linux
 
+Version 1
+
 ```bash
 sudo apt update
 sudo apt install build-essential
 ```
+
+Version 2
+
+```bash
+sudo apt install software-properties-common
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+sudo apt update
+sudo apt install gcc-13 g++-13
+```
+
+create an alias in `~/.bashrc`, in Makefiles remember to use g++-13
+
 
 ### Windows
 
