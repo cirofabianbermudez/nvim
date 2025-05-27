@@ -182,6 +182,10 @@ find . -mtime +5 -type f
 find . -type f -name '*.o' -exec ls -lh {} +
 ```
 
+```bash
+find . -type f -name "Makefile" ! -path ./template/Makefile -exec cp template/Makefile {} \;
+```
+
 ## grep
 
 ```plain
