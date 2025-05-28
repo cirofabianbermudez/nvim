@@ -50,6 +50,27 @@ scoop install versions/mingw-winlibs-llvm-msvcrt
 
 > **Warning:**  for `-I`, `-L`, `-l` if an error occurs remove the blank.
 
+
+## Data Structures
+
+| Data Structure            | Header            | Category              | Description                                 |
+| ------------------------- | ----------------- | --------------------- | ------------------------------------------- |
+| `std::vector<T>`          | `<vector>`        | Sequence              | Dynamic array; contiguous storage.          |
+| `std::deque<T>`           | `<deque>`         | Sequence              | Double-ended queue; fast insert/erase ends. |
+| `std::list<T>`            | `<list>`          | Sequence              | Doubly-linked list.                         |
+| `std::forward_list<T>`    | `<forward_list>`  | Sequence              | Singly-linked list (lower overhead).        |
+| `std::array<T, N>`        | `<array>`         | Sequence              | Fixed-size array; stack-allocated.          |
+| `std::string`             | `<string>`        | Sequence              | Dynamic array of characters.                |
+| `std::bitset<N>`          | `<bitset>`        | Sequence              | Fixed-size sequence of bits.                |
+| `std::set<T>`             | `<set>`           | Associative           | Sorted unique keys.                         |
+| `std::map<K,V>`           | `<map>`           | Associative           | Sorted key→value pairs.                     |
+| `std::unordered_set<T>`   | `<unordered_set>` | Unordered associative | Hash-based unique keys.                     |
+| `std::unordered_map<K,V>` | `<unordered_map>` | Unordered associative | Hash-based key→value pairs.                 |
+| `std::stack<T>`           | `<stack>`         | Container adaptor     | LIFO adaptor (default `deque`).             |
+| `std::queue<T>`           | `<queue>`         | Container adaptor     | FIFO adaptor (default `deque`).             |
+| `std::priority_queue<T>`  | `<queue>`         | Container adaptor     | Heap-based max-priority queue.              |
+
+
 ## lvalues and rvalue
 
 
