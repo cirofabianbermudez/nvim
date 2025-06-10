@@ -4,7 +4,8 @@
 ```bash
 python3 -m venv .venv
 python3 -m pip install --upgrade pip
-python3 -m pip index version Jinja2
+python3 -m pip index versions Jinja2
+python3 -m pip install -e .
 ```
 
 ## Modern projects in Python
