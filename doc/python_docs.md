@@ -1,5 +1,15 @@
 # Python notes
 
+## Installation
+
+### Linux
+
+```bash
+sudo apt update
+sudo apt install python3-pip
+sudo apt install python3-venv
+```
+
 
 ```bash
 python3 -m venv .venv

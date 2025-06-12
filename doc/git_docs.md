@@ -597,3 +597,45 @@ This is use to add colors if there are not activated
 ```plain
 git config --local --replace-all color.ui true
 ```
+
+## git-crypt
+
+```bash
+sudo apt-get install git-crypt
+```
+
+Inside a git repository in the root:
+
+```bash
+git-crypt init
+touch .gitattributes
+```
+
+and inside `.gitattributes` put somethins like this
+
+```plain
+important.txt filter=git-crypt diff=git-crypt
+.gitattributes !filter !diff
+```
+
+Add the changes:
+
+```bash
+git add .gitattributes
+git commit -m "feat: add attributes to encrypt"
+```
+
+add the file you want to keep secure and then:
+
+```bash
+echo "this is important" > important.txt
+git-crypt status
+git-crypt status -e
+git add important.txt
+git commit -m "feat: add important file"
+```
+
+check how it looks with
+```bash
+git-crypt lock
+```
