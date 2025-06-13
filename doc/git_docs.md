@@ -639,3 +639,78 @@ check how it looks with
 ```bash
 git-crypt lock
 ```
+
+## Git tags
+
+A tag is simply a pointer to a specific commit, most often used to mark release
+points. Unlike branches, tags don't move. You are permanently "bookmarking" that
+commit.
+
+
+### Listing tags
+
+```bash
+git tag -l
+git tag -l "v1.*"
+```
+
+### Creating tags
+
+```bash
+git tag v1.0.0
+git tag v1.0.0 -m "Realse version 1.0.0"
+```
+
+
+## Singing your commits
+
+
+### 1. Generate the key
+
+Select the following:
+
+- Select 1 for the first option
+- For key size enter 3072 or 4096
+- For how long the key should last should be 2y
+- For the comment put something meaningful regarding the PC
+
+```bash
+gpg --full-generate-key
+```
+
+### Seeing the keys
+
+```bash
+gpg --list-secret-keys --keyid-format=long
+```
+
+### Export the key
+
+```bash
+gpg --export --armor HZTX5CQ0Y3WCAI7V > ./gpg-key.pub
+```
+
+if you want you can export the `*.asc`
+
+```bash
+gpg --export-secret-keys --armor HZTX5CQ0Y3WCAI7V > ./gpg-key.asc
+```
+
+## Linking on GitHub
+
+Now we need to link it to Github. To do this we need to use the result of the 
+of the armor command. Copy your GPG key, beginning with 
+-----BEGIN PGP PUBLIC KEY BLOCK----- and ending with -----END PGP PUBLIC KEY BLOCK-----
+
+Go to settings in Github and then SSH and GPG Keys and create a new GPG Key. 
+Insert the GPG key, including the lines that show the beginning and the end of 
+the key block.
+
+Now we need to tell Git about the GPG signing key. Using your own GPG key ID 
+instead of the example one, run the line below
+
+```bash
+git config --global user.signingkey HZTX5CQ0Y3WCAI7V
+```
+
+https://endjin.com/blog/2022/12/how-to-sign-your-git-commits
