@@ -696,7 +696,7 @@ if you want you can export the `*.asc`
 gpg --export-secret-keys --armor HZTX5CQ0Y3WCAI7V > ./gpg-key.asc
 ```
 
-## Linking on GitHub
+### Linking on GitHub
 
 Now we need to link it to Github. To do this we need to use the result of the 
 of the armor command. Copy your GPG key, beginning with 
@@ -712,5 +712,21 @@ instead of the example one, run the line below
 ```bash
 git config --global user.signingkey HZTX5CQ0Y3WCAI7V
 ```
+
+### Enable Git sign
+
+This step is optional but to enable Git signing:
+
+```bash
+git config --global commit.gpgsign tru
+```
+
+But another way is to commit using the following command:
+
+```bash
+git commit -S -m "feat: some text"
+```
+
+the `-S` is used to specify that this commit is going to be sign.
 
 https://endjin.com/blog/2022/12/how-to-sign-your-git-commits
