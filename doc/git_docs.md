@@ -718,7 +718,13 @@ git config --global user.signingkey HZTX5CQ0Y3WCAI7V
 This step is optional but to enable Git signing:
 
 ```bash
-git config --global commit.gpgsign tru
+git config --global commit.gpgsign true
+```
+
+or per repo
+
+```bash
+git config commit.gpgsign true
 ```
 
 But another way is to commit using the following command:
@@ -728,5 +734,11 @@ git commit -S -m "feat: some text"
 ```
 
 the `-S` is used to specify that this commit is going to be sign.
+
+or to disable the signing use:
+
+```bash
+git commit --no-gpg-sign -m "Unsigned quick fix"
+```
 
 https://endjin.com/blog/2022/12/how-to-sign-your-git-commits
