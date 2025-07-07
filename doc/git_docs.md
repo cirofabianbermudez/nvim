@@ -741,7 +741,22 @@ or to disable the signing use:
 git commit --no-gpg-sign -m "Unsigned quick fix"
 ```
 
-https://endjin.com/blog/2022/12/how-to-sign-your-git-commits
+### Deleting a key
 
-for more documentation
+To deleate a key because it is old or because you forgot your password do the
+following:
+
+```bash
+## To delete the private
+gpg --list-secret-keys --keyid-format=long
+gpg --delete-secret-keys HZTX5CQ0Y3WCAI7V
+
+## To delete the public
+gpg --list-keys --keyid-format=long
+gpg --delete-keys HZTX5CQ0Y3WCAI7V
+```
+
+Then you can repeat all above steps to create other key.
+
+https://endjin.com/blog/2022/12/how-to-sign-your-git-commits
 
