@@ -505,3 +505,16 @@ You can also use it to download files
 ```bash
 curl -LO <some_url_file> 
 ```
+
+
+
+# X11 Forwarding
+
+Install Xming
+And with putty enable 
+
+
+nautilus
+thunar
+gedit
+
