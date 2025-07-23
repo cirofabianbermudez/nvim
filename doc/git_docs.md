@@ -656,10 +656,60 @@ git tag -l "v1.*"
 
 ### Creating tags
 
+You can create lightweight or annotated tags, the main difference is that the
+fist one is just a pointer to a specific commit. Annotated tags, however, are
+stored as full objects in the Git database.
+
 ```bash
+# Lightweight
 git tag v1.0.0
-git tag v1.0.0 -m "Realse version 1.0.0"
+
+# Annotated
+git tag -a v1.0.0 -m "Realse version 1.0.0"
+
+# Annotated insert long message
+git tag -a v1.0.0
 ```
+
+You can list the tags with
+
+```bash
+git tag
+```
+
+You can upload the tag to the repo with
+
+```bash
+# Upload one tag
+git push origin v1.0.0
+
+# Upload all tags
+git push --tags
+```
+
+You can delete a tag locally with
+
+```bash
+git tag -d v1.0.0
+```
+
+You can delete the tag in the repo with 
+
+
+```bash
+git push origin -d v1.0.0
+```
+
+This is the meaning of each number
+
+| Part    | When to increment                     | Example after change |
+| ------- | ------------------------------------- | -------------------- |
+| `MAJOR` | Breaking changes: old code won't work | `1.0.0` → `2.0.0`    |
+| `MINOR` | New features, but backward-compatible | `1.0.0` → `1.1.0`    |
+| `PATCH` | Bug fixes, small changes only         | `1.0.0` → `1.0.1`    |
+
+
+
 
 
 ## Singing your commits
