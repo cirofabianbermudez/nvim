@@ -232,6 +232,7 @@ make -f <filename>
 | `-k`      | Keep going when some targets can't be made.       |
 | `-h`      | Print help and exit.                              |
 | `-i`      | Adds a `-` to every command                       |
+| `-C`      | Change to the directory before doing anything     |
 
 ## Common Targets
 
