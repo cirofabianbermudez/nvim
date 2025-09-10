@@ -96,6 +96,12 @@ Add the remote to the project
 git remote add origin git@github.com:username/repo_name.git
 ```
 
+See remote information
+
+```plain
+git remote -v
+```
+
 Push to the remote and set the default upstream
 
 ```plain
