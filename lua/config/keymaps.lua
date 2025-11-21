@@ -143,6 +143,7 @@ vim.keymap.set("x", "<leader>P", '"_dP', opts )
 -- Delete without saving the content of the register
 vim.keymap.set("n", "<leader>d", '"_d', {desc = "Delete to void (n)", noremap = true, silent = true })
 vim.keymap.set("v", "<leader>d", '"_d', {desc = "Delete to void (v)", noremap = true, silent = true })
+vim.keymap.set("v", "<leader>D", '"+d', {desc = "Delete to system clipboard (v)", noremap = true, silent = true })
 
 -- Save to system clipboard registers "+ or "*  to copy "+y   to paste "+p
 vim.keymap.set("n", "<leader>y", '"+y', {desc = "Yank to system clipboard (n)", noremap = true, silent = true })

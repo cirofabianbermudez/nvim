@@ -51,6 +51,7 @@ vim.keymap.set("x", "<leader>P", '"_dP', opt)
 -- Delete without saving the content of the register
 vim.keymap.set("n", "<leader>d", '"_d', opt)
 vim.keymap.set("v", "<leader>d", '"_d', opt)
+vim.keymap.set("v", "<leader>D", '"+d', opt)
 
 -- Reload files
 vim.keymap.set("n", "<leader>0", "<cmd>lua require('vscode').action('workbench.action.reloadWindow')<CR>", opt)
