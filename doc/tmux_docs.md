@@ -44,6 +44,12 @@ Leader Button is `Ctrl + b`
 | `<leader> + &`           | Kill window                              |
 | `<leader> + x`           | Kill pane                                |
 
+
+To reload configuration
+```bash
+tmux source-file ~/.tmux.conf
+```
+
 ## Change size
 
 ```plain
