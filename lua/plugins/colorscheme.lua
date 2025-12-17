@@ -24,7 +24,7 @@ return { -- DONE
 		end,
 	},
 	{
-		enabled = true,
+		enabled = false,
 		cond = true,
 		"gbprod/nord.nvim",
 		lazy = false,
@@ -44,6 +44,20 @@ return { -- DONE
 		config = function(_, opts)
 			require("nord").setup(opts)
 			vim.cmd.colorscheme("nord")
+		end,
+	},
+	{
+		enabled = true,
+		cond = true,
+		"Mofiqul/vscode.nvim",
+		lazy = false,
+		priority = 1000,
+		opts = {
+			transparent = false,
+		},
+		config = function(_, opts)
+			require("vscode").setup(opts)
+			vim.cmd.colorscheme("vscode")
 		end,
 	},
 }
