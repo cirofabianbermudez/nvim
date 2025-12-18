@@ -101,8 +101,11 @@ Following types are not allowed for the variables used in a Boolean Expression:
 - event
 - real, shortreal, realtime
 - associative Arrays
-- handle
+- chandle
 
+
+it is always best to break down a property into smaller sequences to model
+complex properties/sequences.
 
 ## Concurrent assertions Webinar Doulos
 
