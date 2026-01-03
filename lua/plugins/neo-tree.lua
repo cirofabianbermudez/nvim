@@ -1,6 +1,6 @@
 return { -- DONE
-  enabled = true,
-  cond = true,
+  enabled = false,
+  cond = false,
 	"nvim-neo-tree/neo-tree.nvim",
 	event = "VeryLazy",
 	branch = "v3.x",

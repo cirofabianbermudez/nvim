@@ -1,176 +1,212 @@
+-- Keymaps
+
 -- Set leader key to <Space>
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- Options when running macros and remaps
-local opts = { noremap = true, silent = true }
+-- local opts = { noremap = true, silent = true }
+
+-- Remap function
+-- local function map(mode, lhs, rhs, desc)
+--   local options = opts
+--   if desc then
+--     options = vim.tbl_extend("force", opts, {desc = desc})
+--   end 
+--   vim.keymap.set(mode, lhs, rhs, options)
+-- end
+
+-- Load keymap functions
+local map = require("utils.keymap").map
 
 -- Easy write and quit
-vim.keymap.set("n", "<leader>w", ":w<CR>",  { desc = "Save File",      noremap = true, silent = true })
-vim.keymap.set("n", "<leader>q", ":q<CR>",  { desc = "Quit Neovim",    noremap = true, silent = true })
-vim.keymap.set("n", "<leader>Q", ":q!<CR>",  { desc = "Quit Neovim",    noremap = true, silent = true })
---vim.keymap.set("n", "<leader>W", ":wa<CR>", { desc = "Save all Files", noremap = true, silent = true })
+map("n", "<leader>w", ":w<CR>", "Save File")
+map("n", "<leader>q", ":q<CR>", "Quit Neovim")
+map("n", "<leader>W", ":wa<CR>", "Save All Files")
 
 -- Easy yank all or delete all
-vim.keymap.set("n", "<leader>ya", ":%y+<CR>",      { desc = "Yank All",        noremap = true, silent = true })
-vim.keymap.set("n", "<leader>yd", ":%y+ | %d<CR>", { desc = "Yank All/Delete", noremap = true, silent = true })
-vim.keymap.set("n", "Y", "y$",                     { desc = "Yank till EOL",   noremap = true, silent = true })
-vim.keymap.set("n", "<leader>yl", '_v$<left>"+y',  { desc = "Yank line NCR",   noremap = true, silent = true }) 
+map("n", "Y", "y$", "Yank till EOL")
+map("n", "<leader>ya", ":%y+<CR>", "Yank All")
+map("n", "<leader>yd", ":%y+ | %d<CR>", "Yank All/Delete")
 
--- tmux-navigation
-vim.keymap.set("n", "<C-h>", "<C-w>h", opts )
-vim.keymap.set("n", "<C-j>", "<C-w>j", opts )
-vim.keymap.set("n", "<C-k>", "<C-w>k", opts )
-vim.keymap.set("n", "<C-l>", "<C-w>l", opts )
+-- Tmux-navigation
+map("n", "<C-h>", "<C-w>h")
+map("n", "<C-j>", "<C-w>j")
+map("n", "<C-k>", "<C-w>k")
+map("n", "<C-l>", "<C-w>l")
 
 -- Easy motion if wrap lines
-vim.keymap.set("n", "<A-j>", "gj", opts )
-vim.keymap.set("n", "<A-k>", "gk", opts )
-vim.keymap.set("n", "<A-h>", "h",  opts )
-vim.keymap.set("n", "<A-l>", "l",  opts )
+map("n", "<A-j>", "gj")
+map("n", "<A-k>", "gk")
+map("n", "<A-h>", "h")
+map("n", "<A-l>", "l")
 
 -- Resize window using <ctrl> arrow keys
-vim.keymap.set("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase Window Height" })
-vim.keymap.set("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease Window Height" })
-vim.keymap.set("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Width" })
-vim.keymap.set("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window Width" })
+map("n", "<C-Up>", "<cmd>resize +2<CR>")             -- Increase Window Height
+map("n", "<C-Down>", "<cmd>resize -2<CR>")           -- Decrease Window Height
+map("n", "<C-Right>", "<cmd>vertical resize +2<CR>") -- Increase Window Width
+map("n", "<C-Left>", "<cmd>vertical resize -2<CR>")  -- Decrease Window Width
 
 -- Reload files
-vim.keymap.set("n", "<leader>0", ":e | :echo expand('%:p')<CR>",         { desc= "Reload file",         noremap = true, silent = true })
-vim.keymap.set("n", "<leader>h", ":!start explorer /select,%:p<CR><CR>", { desc = "Open File Explorer" ,noremap = true, silent = true })
+map("n", "<leader>0", ":e | :echo expand('%:p')<CR>", "Reload file")
 
--- Open terminal
-vim.keymap.set("n", "<leader>;", ":! wt -d " .. vim.fn.expand("%:p:h") .. "<CR><CR>", { desc = "Open Terminal" ,noremap = true, silent = true })
+-- OS checking
+local sys = vim.loop.os_uname().sysname
+local is_linux   = sys == "Linux"
+local is_macos   = sys == "Darwin"
+local is_windows = sys == "Windows_NT"
+
+local function current_dir()
+  local dir = vim.fn.expand("%:p:h")
+  if dir == "" then
+    dir = vim.loop.cwd()
+  end
+  return dir
+end
+
+-- Open file explorer / terminal
+if is_linux then
+  map("n", "<leader>h", function()
+    vim.fn.jobstart({ "nautilus", current_dir() }, { detach = true })
+  end, "Open File Explorer")
+
+  map("n", "<leader>;", function()
+    vim.fn.jobstart({ "gnome-terminal", "--working-directory=" .. current_dir() }, { detach = true })
+  end, "Open Terminal")
+elseif is_macos then
+  map("n", "<leader>h", function()
+    vim.fn.jobstart({ "open", current_dir() }, { detach = true })
+  end, "Open File Explorer")
+
+  map("n", "<leader>;", function()
+    vim.fn.jobstart({ "open", "-a", "Terminal", current_dir() }, { detach = true })
+  end, "Open Terminal")
+elseif is_windows then
+  map("n", "<leader>h", function()
+    vim.fn.jobstart({ "cmd.exe", "/c", "start", "", current_dir() }, { detach = true })
+  end, "Open File Explorer")
+
+  map("n", "<leader>;", function()
+    vim.fn.jobstart({ "wt", "-d", current_dir() }, { detach = true })
+  end, "Open Terminal")
+end
 
 -- See file current path
--- vim.keymap.set("n", "<leader>?", ":echo expand('%:p')<CR>", opt)
+map("n", "<leader>?", ":echo expand('%:p')<CR>", "See current path")
 
 -- Easy move between buffers
--- vim.keymap.set("n", "<leader>o", ":bn<CR>")
--- vim.keymap.set("n", "<leader>i", ":bp<CR>")
--- vim.keymap.set("n", "<leader>c", ":bd<CR>")
+-- map("n", "<leader>o", ":bn<CR>")
+-- map("n", "<leader>i", ":bp<CR>")
+-- map("n", "<leader>c", ":bd<CR>")
 
 -- Easy move between tabs
--- vim.keymap.set("n", "<leader>O", ":tabnext<CR>")
--- vim.keymap.set("n", "<leader>I", ":tabprevious<CR>")
+-- map("n", "<leader>O", ":tabnext<CR>")
+-- map("n", "<leader>I", ":tabprevious<CR>")
 
 --  Normal tab function
-vim.keymap.set("x", "<Tab>", ">",   opts )
-vim.keymap.set("x", "<S-Tab>", "<", opts )
-
--- Solve lack of < > keys in spanish keyboard
--- vim.keymap.set("i", "<C-j>", "<", opt)
--- vim.keymap.set("i", "<C-l>", ">", opt)
+map("x", "<Tab>", ">")
+map("x", "<S-Tab>", "<")
 
 -- Toggle line wrap
-vim.keymap.set("n", "<leader>ew", ":set wrap!<CR>", { desc = "Toggle Wrap" ,noremap = true, silent = true })
+map("n", "<leader>tw", ":set wrap!<CR>", "Toggle Wrap")
 
 -- Toggle relative numbers
-vim.keymap.set("n", "<leader>er", ":set relativenumber!<CR>", { desc = "Toggle Relative Numbers", noremap = true, silent = true })
-
--- Enable/Disable Auto-comments,  check nvim/after/ftplugin/format.lua
-local comments_on = false
-function Toggle_comments()
-	if not comments_on then
-		print("Auto-comments enable.")
-		vim.cmd("setlocal formatoptions=cro")
-	else
-		print("Auto-comments disable.")
-		vim.cmd("setlocal formatoptions-=cro")
-	end
-	comments_on = not comments_on
-end
-
-vim.api.nvim_set_keymap("n", "<leader>ec", "<cmd>lua Toggle_comments()<cr>", { desc = "Toggle Auto-Comments", noremap = true, silent = true })
+map("n", "<leader>tr", ":set relativenumber!<CR>", "Toggle Relative Numbers")
 
 -- Show hidden characters
-vim.cmd("set listchars=tab:>-,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»")
-local hidden_on = false
-function Toggle_hidden()
-	if not hidden_on then
-		print("Hidden characters enable.")
-		vim.cmd("set list")
-	else
-		print("Hidden characters disable.")
-		vim.cmd("set list!")
-	end
-	hidden_on = not hidden_on
-end
+map("n", "<leader>th", function()
+  vim.opt.list = not vim.opt.list:get()
 
-vim.api.nvim_set_keymap("n", "<leader>eh", "<cmd>lua Toggle_hidden()<CR>", { desc = "Toggle Hidden Chars", noremap = true, silent = true })
+  if vim.opt.list:get() then
+    vim.opt.listchars = {
+      tab = ">-",
+      space = "·",
+      nbsp = "␣",
+      trail = "•",
+      eol = "¶",
+      precedes = "«",
+      extends = "»",
+    }
+  end
 
--- Spell check        z=
-local spell_on = false
-function Toggle_spell()
-	if not spell_on then
-		print("Spellcheck enable English. For spanish use setlocal spelllang=es")
-		vim.cmd("setlocal spell spelllang=en_us")
-	else
-		print("Spellcheck disable.")
-		vim.cmd("setlocal nospell")
-	end
-	spell_on = not spell_on
-end
+  vim.notify("Listchars: " .. (vim.opt.list:get() and "ON" or "OFF"))
+end, "Toggle listchars")
 
-vim.api.nvim_set_keymap("n", "<leader>es", "<cmd>lua Toggle_spell()<CR>", {desc = "Toogle Spell Check", noremap = true, silent = true })
+-- Toggle spell check
+map("n", "<leader>ts", function()
+  vim.opt.spell = not vim.opt.spell:get()
+  if vim.opt.spell:get() then
+    vim.opt.spelllang = { "en_us" }
+  end
+  vim.notify("Spell: " .. (vim.opt.spell:get() and "ON" or "OFF"))
+end, "Toggle spell")
 
 -- ===========================
 --    ThePrimeagen Keymaps
 -- ===========================
 
+-- Netrw configurations
+-- vim.g.netrw_keepdir = 0
+-- vim.g.netrw_winsize = 30
+-- vim.g.netrw_banner = 0
+-- vim.g.netrw_list_hide = [[\(^\|\s\s\)\zs\.\S\+]]
+-- vim.g.netrw_localcopydircmd = "cp -r"
+
 -- To use built-in vim explorer
-vim.keymap.set("n", "<leader>nn", vim.cmd.Ex,                        {desc = "Open Netrw",       noremap = true, silent = true })
-vim.keymap.set("n", "<leader>nm", ":Lex<CR>:vertical resize 30<CR>", {desc = "Open Netrw Split", noremap = true, silent = true })
+-- map("n", "<leader>nt", function()
+--   vim.cmd("Lexplore" .. current_dir())
+-- end, "Open Netrw")
+--
+-- map("n", "<leader>nn", function()
+--   vim.cmd("Lexplore")
+-- end, "Open Netrw")
 
 -- Move with indexing included
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", opts )
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", opts )
+map("v", "J", ":m '>+1<CR>gv=gv")
+map("v", "K", ":m '<-2<CR>gv=gv")
 
--- Append with with cursos not moving
-vim.keymap.set("n", "J", "mzJ`z", opts )
+-- Append with with cursor not moving
+map("n", "J", "mzJ`z")
 
 -- Move up and down keeping the cursor in the middle
-vim.keymap.set("n", "<C-d>", "<C-d>zz", opts )
-vim.keymap.set("n", "<C-u>", "<C-u>zz", opts )
+map("n", "<C-d>", "<C-d>zz")
+map("n", "<C-u>", "<C-u>zz")
 
 -- Keep search terms in the middle
-vim.keymap.set("n", "n", "nzzzv", opts )
-vim.keymap.set("n", "N", "Nzzzv", opts )
+map("n", "n", "nzzzv")
+map("n", "N", "Nzzzv")
 
 -- Paste without losing the content of the register
-vim.keymap.set("x", "<leader>P", '"_dP', opts )
+map("x", "<leader>P", '"_dP')
 
 -- Delete without saving the content of the register
-vim.keymap.set("n", "<leader>d", '"_d', {desc = "Delete to void (n)", noremap = true, silent = true })
-vim.keymap.set("v", "<leader>d", '"_d', {desc = "Delete to void (v)", noremap = true, silent = true })
-vim.keymap.set("v", "<leader>D", '"+d', {desc = "Delete to system clipboard (v)", noremap = true, silent = true })
+map("n", "<leader>d", '"_d', "Delete to void (n)")
+map("v", "<leader>d", '"_d', "Delete to void (v)")
+map("n", "<leader>D", '"+d', "Delete to system clipboard (n)")
+map("v", "<leader>D", '"+d', "Delete to system clipboard (v)")
 
 -- Save to system clipboard registers "+ or "*  to copy "+y   to paste "+p
-vim.keymap.set("n", "<leader>y", '"+y', {desc = "Yank to system clipboard (n)", noremap = true, silent = true })
-vim.keymap.set("v", "<leader>y", '"+y', {desc = "Yank to system clipboard (v)", noremap = true, silent = true })
+map("n", "<leader>y", '"+y', "Yank to system clipboard (n)")
+map("v", "<leader>y", '"+y', "Yank to system clipboard (v)")
 
 -- Paste from system clipboard
-vim.keymap.set("n", "<leader>p", '"+p', {desc = "Paste from system clipboard (n)", noremap = true, silent = true })
-vim.keymap.set("v", "<leader>p", '"+p', {desc = "Paste from system clipboard (v)", noremap = true, silent = true })
+map("n", "<leader>p", '"+p', "Paste from system clipboard (n)")
+map("v", "<leader>p", '"+p', "Paste from system clipboard (v)")
 
 -- Replace shortcut  i ignore case  I case sensitive   c ask for confirmation
-vim.keymap.set("n", "<leader>ra", ":%s//gci<left><left><left><left>", {desc = "Replace asking" })
-vim.keymap.set("n", "<leader>re", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], {desc = "Replace in the entire file "})
-
--- Terminal Esc
-vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>t", ":vsplit | terminal pwsh<CR>", { noremap = true, silent = true })
+map("n", "<leader>ra", ":%s//gci<left><left><left><left>", "Replace asking")
+map("n", "<leader>re", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], "Replace in the entire file")
 
 -- Save cursor
-vim.keymap.set("n", "<leader>sb", "mA",  { desc = "Save cursor position",  noremap = true, silent = true })
-vim.keymap.set("n", "<leader>sm", "'A",  { desc = "Load cursor position ",  noremap = true, silent = true })
+map("n", "<leader>sb", "mA", "Save cursor position")
+map("n", "<leader>sm", "'A", "Load cursor position")
 
 -- Harpoon like movement mark with mQ mW mE mR mT
--- vim.keymap.set("n", "<leader>1", "'Q", opt)
--- vim.keymap.set("n", "<leader>2", "'W", opt)
--- vim.keymap.set("n", "<leader>3", "'E", opt)
--- vim.keymap.set("n", "<leader>4", "'R", opt)
--- vim.keymap.set("n", "<leader>5", "'T", opt)
+map("n", "<leader>1", "'Q")
+map("n", "<leader>2", "'W")
+map("n", "<leader>3", "'E")
+map("n", "<leader>4", "'R")
+map("n", "<leader>5", "'T")
 
 -- Fast mask
 -- vim.keymap.set("n", "<C-m>", "mA", opt)

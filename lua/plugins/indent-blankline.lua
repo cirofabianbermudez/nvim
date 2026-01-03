@@ -1,8 +1,8 @@
 return { -- DONE
 	enabled = true,
-	cond = true,
 	"lukas-reineke/indent-blankline.nvim",
-	event = "VeryLazy",
+  event = "VeryLazy",
+	main = "ibl",
 	opts = {
 		indent = {
 			char = "│",
@@ -23,8 +23,5 @@ return { -- DONE
 			},
 		},
 	},
-	main = "ibl",
-	-- config = function(_, opts)
-	--   require("ibl").setup(opts)
-	-- end,
 }
+

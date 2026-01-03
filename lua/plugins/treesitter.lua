@@ -13,7 +13,7 @@ return {
 	cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
 	opts = {
 		highlight = {
-			enable = false,
+			enable = true,
 			additional_vim_regex_highlighting = false,
 			use_languagetree = false,
 		},
@@ -52,17 +52,17 @@ return {
 	config = function(_, opts)
 		require("nvim-treesitter.configs").setup(opts)
 
-		local function toggle_TS()
-			if vim.b.ts_highlight then
-				vim.cmd("TSBufDisable highlight")
-				vim.b.ts_highlight = false
-        print("Disable Treesitter")
-			else
-				vim.cmd("TSBufEnable highlight")
-				vim.b.ts_highlight = true
-        print("Enable Treesitter")
-			end
-		end
-		vim.keymap.set("n", "<leader>et", toggle_TS, { desc = "Toggle: Treesitter", noremap = true, silent = true })
+		-- local function toggle_TS()
+		-- 	if vim.b.ts_highlight then
+		-- 		vim.cmd("TSBufDisable highlight")
+		-- 		vim.b.ts_highlight = false
+		--       print("Disable Treesitter")
+		-- 	else
+		-- 		vim.cmd("TSBufEnable highlight")
+		-- 		vim.b.ts_highlight = true
+		--       print("Enable Treesitter")
+		-- 	end
+		-- end
+		-- vim.keymap.set("n", "<leader>et", toggle_TS, { desc = "Toggle: Treesitter", noremap = true, silent = true })
 	end,
 }
