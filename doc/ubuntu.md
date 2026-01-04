@@ -115,3 +115,9 @@ wget https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1
 wget https://github.com/neovim/neovim/releases/download/v0.11.5/nvim-linux-x86_64.tar.gz
 ```
 
+## Install MEGA
+
+```bash
+wget https://mega.nz/linux/repo/xUbuntu_22.04/amd64/megasync-xUbuntu_22.04_amd64.deb && sudo apt install "$PWD/megasync-xUbuntu_22.04_amd64.deb"
+```
+
