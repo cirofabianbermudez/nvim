@@ -4,20 +4,10 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- Options when running macros and remaps
--- local opts = { noremap = true, silent = true }
-
--- Remap function
--- local function map(mode, lhs, rhs, desc)
---   local options = opts
---   if desc then
---     options = vim.tbl_extend("force", opts, {desc = desc})
---   end 
---   vim.keymap.set(mode, lhs, rhs, options)
--- end
-
--- Load keymap functions
+-- Load utils
+local plat = require("utils.platform")
 local map = require("utils.keymap").map
+local path = require("utils.path")
 
 -- Easy write and quit
 map("n", "<leader>w", ":w<CR>", "Save File")
@@ -50,45 +40,37 @@ map("n", "<C-Left>", "<cmd>vertical resize -2<CR>")  -- Decrease Window Width
 -- Reload files
 map("n", "<leader>0", ":e | :echo expand('%:p')<CR>", "Reload file")
 
--- OS checking
-local sys = vim.loop.os_uname().sysname
-local is_linux   = sys == "Linux"
-local is_macos   = sys == "Darwin"
-local is_windows = sys == "Windows_NT"
-
-local function current_dir()
-  local dir = vim.fn.expand("%:p:h")
-  if dir == "" then
-    dir = vim.loop.cwd()
-  end
-  return dir
-end
-
 -- Open file explorer / terminal
-if is_linux then
+if plat.is_linux then
+
   map("n", "<leader>h", function()
-    vim.fn.jobstart({ "nautilus", current_dir() }, { detach = true })
+    vim.fn.jobstart({ "nautilus", path.current_dir() }, { detach = true })
   end, "Open File Explorer")
 
   map("n", "<leader>;", function()
-    vim.fn.jobstart({ "gnome-terminal", "--working-directory=" .. current_dir() }, { detach = true })
+    vim.fn.jobstart({ "gnome-terminal", "--working-directory=" .. path.current_dir() }, { detach = true })
   end, "Open Terminal")
-elseif is_macos then
+
+elseif plat.is_macos then
+
   map("n", "<leader>h", function()
-    vim.fn.jobstart({ "open", current_dir() }, { detach = true })
+    vim.fn.jobstart({ "open", path.current_dir() }, { detach = true })
   end, "Open File Explorer")
 
   map("n", "<leader>;", function()
-    vim.fn.jobstart({ "open", "-a", "Terminal", current_dir() }, { detach = true })
+    vim.fn.jobstart({ "open", "-a", "Terminal", path.current_dir() }, { detach = true })
   end, "Open Terminal")
-elseif is_windows then
+
+elseif plat.is_windows then
+
   map("n", "<leader>h", function()
-    vim.fn.jobstart({ "cmd.exe", "/c", "start", "", current_dir() }, { detach = true })
+    vim.fn.jobstart({ "cmd.exe", "/c", "start", "", path.current_dir() }, { detach = true })
   end, "Open File Explorer")
 
   map("n", "<leader>;", function()
-    vim.fn.jobstart({ "wt", "-d", current_dir() }, { detach = true })
+    vim.fn.jobstart({ "wt", "-d", path.current_dir() }, { detach = true })
   end, "Open Terminal")
+
 end
 
 -- See file current path
@@ -141,25 +123,16 @@ map("n", "<leader>ts", function()
   vim.notify("Spell: " .. (vim.opt.spell:get() and "ON" or "OFF"))
 end, "Toggle spell")
 
+-- See last modification date
+
+map("n", "<leader>lm", function()
+  vim.notify("STATS: " .. require("utils.keymap").file_last_modified())
+end, "See last modified date")
+
+
 -- ===========================
 --    ThePrimeagen Keymaps
 -- ===========================
-
--- Netrw configurations
--- vim.g.netrw_keepdir = 0
--- vim.g.netrw_winsize = 30
--- vim.g.netrw_banner = 0
--- vim.g.netrw_list_hide = [[\(^\|\s\s\)\zs\.\S\+]]
--- vim.g.netrw_localcopydircmd = "cp -r"
-
--- To use built-in vim explorer
--- map("n", "<leader>nt", function()
---   vim.cmd("Lexplore" .. current_dir())
--- end, "Open Netrw")
---
--- map("n", "<leader>nn", function()
---   vim.cmd("Lexplore")
--- end, "Open Netrw")
 
 -- Move with indexing included
 map("v", "J", ":m '>+1<CR>gv=gv")

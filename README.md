@@ -6,12 +6,13 @@ This is my personal [Neovim](https://neovim.io/) configuration, it can be used i
 
 - [which-key.nvim](https://github.com/folke/which-key.nvim)
 - [indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim)
-
-- [bufferline.nvim](https://github.com/akinsho/bufferline.nvim)
-- Colorscheme ([nord.nvim](https://github.com/gbprod/nord.nvim))
-- [Lualine](https://github.com/nvim-lualine/lualine.nvim)
 - [Oil](https://github.com/stevearc/oil.nvim)
 - [Telescope](https://github.com/nvim-telescope/telescope.nvim)
+- [Lualine](https://github.com/nvim-lualine/lualine.nvim)
+- Colorscheme ([nord.nvim](https://github.com/gbprod/nord.nvim))
+- [bufferline.nvim](https://github.com/akinsho/bufferline.nvim)
+
+
 - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
 
 I think these are the bare minimum plugins need it to have a very nice experience using Neovim, other functionally can be accomplish setting up internal variables or writing remaps.

@@ -1,3 +1,5 @@
+local map = require("utils.keymap").map
+
 return { -- DONE
 	enabled = true,
   cond = true,
@@ -10,10 +12,34 @@ return { -- DONE
   end,
 	opts = {
 		default_file_explorer = true,
+    float = {
+      padding = 10,
+    },
+    keymaps = {
+
+      ["gd"] = {
+        desc = "Toggle file detail view",
+        callback = function()
+          detail = not detail
+          if detail then
+            require("oil").set_columns({ "icon", "permissions", "size", "mtime" })
+          else
+            require("oil").set_columns({ "icon" })
+          end
+        end,
+      },
+
+    },
 	},
 	config = function(_, opts)
 		require("oil").setup(opts)
-		vim.keymap.set("n", "<leader>-", "<cmd>Oil<CR>", { desc = "Oil: Open cwd", noremap = true, silent = true })
+
+		map("n", "<leader>nn", "<cmd>Oil<CR>", "Oil: Open cwd")
+
+		map("n", "<leader>nt", function() 
+      require("oil").toggle_float()
+    end, "Oil: Open float")
+
 	end,
 }
 

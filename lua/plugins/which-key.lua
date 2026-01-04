@@ -42,7 +42,8 @@ return { -- DONE
     spec = {
       {
         mode = { "n", "v" }, 
-        { "<leader>-", group = "Oil"},
+        { "<leader>l", group = "Stats"},
+        { "<leader>n", group = "Oil"},
         { "<leader>f", group = "Telescope"},
         { "<leader>t", group = "Toggle"},
         { "<leader>y", group = "Yank"},
