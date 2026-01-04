@@ -17,9 +17,3 @@ module test (
 endmodule
 
 
-
-
-
-
-
-

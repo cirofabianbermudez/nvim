@@ -1,0 +1,3 @@
+-- Python
+vim.treesitter.start()
+

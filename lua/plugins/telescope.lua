@@ -6,7 +6,7 @@ return { -- DONE
   {
     enabled = true,
     "nvim-telescope/telescope.nvim",
-    tag = '0.2.1',
+    tag = "v0.2.1",
     dependencies = { "nvim-lua/plenary.nvim" },
     event = "VeryLazy",
     opts = {},
@@ -68,23 +68,5 @@ return { -- DONE
       -- map("n", "<leader>fl", diagnostics_current,   "Telescope: Diagnostics")
     end,
   },
-  {
-    enabled = true,
-    "nvim-telescope/telescope-ui-select.nvim",
-    config = function()
-      require("telescope").setup({
-        extensions = {
-          ["ui-select"] = {
-            require("telescope.themes").get_dropdown({})
-          }
-        },
-        defaults = {
-          preview = {
-            treesitter = false,
-          }
-        },
-      })
-      require("telescope").load_extension("ui-select")
-    end,
-  },
 }
+

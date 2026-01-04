@@ -1,0 +1,3 @@
+-- SystemVerilog
+vim.treesitter.start()
+

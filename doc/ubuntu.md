@@ -60,5 +60,10 @@ go env
 go build hello.go
 go install hello.go
 go run hello.go
-``
+```
+
+## Install Rust
+
+
+
 
