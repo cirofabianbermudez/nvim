@@ -1,0 +1,3 @@
+-- Makefile
+vim.treesitter.start()
+

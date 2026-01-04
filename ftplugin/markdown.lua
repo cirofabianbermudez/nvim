@@ -1,0 +1,3 @@
+-- Markdown
+vim.treesitter.start()
+

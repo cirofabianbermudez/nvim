@@ -1,31 +1,6 @@
 return { -- DONE
 	{
 		enabled = false,
-		cond = false,
-		"catppuccin/nvim",
-		lazy = false,
-		priority = 1000,
-		opts = {
-			flavour = "auto", -- latte, frape, macchiato, mocha
-			show_end_of_buffer = true,
-			term_colors = true,
-			no_italic = true,
-			no_bold = true,
-			no_underline = true,
-			custom_highlights = function(colors)
-				return {
-					-- Comment = {fg = colors.flamingo},
-				}
-			end,
-		},
-		config = function(_, opts)
-			require("catppuccin").setup(opts)
-			vim.cmd.colorscheme("catppuccin")
-		end,
-	},
-	{
-		enabled = false,
-		cond = true,
 		"gbprod/nord.nvim",
 		lazy = false,
 		priority = 1000,
@@ -48,7 +23,6 @@ return { -- DONE
 	},
 	{
 		enabled = true,
-		cond = true,
 		"Mofiqul/vscode.nvim",
 		lazy = false,
 		priority = 1000,

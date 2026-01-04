@@ -1,5 +1,32 @@
 # Ubuntu notes
 
+## Install a program
+
+
+### Check if installation is possible
+
+```bash
+apt search <package-name>
+apt show <package-name>
+apt policy <package-name>
+```
+
+### Install
+
+```bash
+sudo apt update
+sudo apt install <package-name>
+```
+
+### Uninstall
+
+```bash
+sudo apt remove <package-name>
+sudo apt purge <package-name>
+sudo apt autoremove
+```
+
+
 
 ## Install VS Code
 
@@ -30,24 +57,27 @@ export PATH=~/bin/nvim-linux64/bin:$PATH
 
 From the app center look for GNOME Tweaks, then open Tweaks.
 
+```bash
 sudo apt update
 sudo apt install ripgrep
 sudo apt install fd-find
 sudo apt install xclip
 sudo apt install build-essential
 sudo apt install git
+```
 
 
 ## Install go
 
 ```bash
 cd ~/Downloads
+sudo rm -rf /usr/local/go 
 wget https://go.dev/dl/go1.25.5.linux-amd64.tar.gz
-tar -C /usr/local -xzf go1.25.5.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.25.5.linux-amd64.tar.gz
 
 ```
 
-in your ~/.bashrc
+in your `~/.bashrc`
 
 ```bash
 export GOROOT=/usr/local/go
@@ -55,8 +85,7 @@ export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
 go version
-go env
-
+g env
 go build hello.go
 go install hello.go
 go run hello.go
@@ -65,5 +94,25 @@ go run hello.go
 ## Install Rust
 
 
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
 
+Check if this was added to your `~/.bashrc` and `~/.profile`
+
+```bash
+. "$HOME/.cargo/env"
+```
+
+
+This are the last versions of `fd`, `ripgrep`, and `fzf` for the IDE
+
+
+```bash
+git clone https://github.com/rupa/z.git
+wget https://github.com/junegunn/fzf/releases/download/v0.67.0/fzf-0.67.0-linux_amd64.tar.gz
+wget https://github.com/sharkdp/fd/releases/download/v10.3.0/fd-v10.3.0-x86_64-unknown-linux-gnu.tar.gz
+wget https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-unknown-linux-musl.tar.gz
+wget https://github.com/neovim/neovim/releases/download/v0.11.5/nvim-linux-x86_64.tar.gz
+```
 

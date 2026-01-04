@@ -30,4 +30,3 @@ function IsDir(name)
 	lfs.chdir(cd)
 	return is
 end
-

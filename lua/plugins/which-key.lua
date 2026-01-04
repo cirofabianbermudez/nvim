@@ -43,6 +43,7 @@ return { -- DONE
       {
         mode = { "n", "v" }, 
         { "<leader>l", group = "Stats"},
+        { "<leader>b", group = "Buffer"},
         { "<leader>n", group = "Oil"},
         { "<leader>f", group = "Telescope"},
         { "<leader>t", group = "Toggle"},

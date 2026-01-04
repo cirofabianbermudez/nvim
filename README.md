@@ -15,7 +15,9 @@ This is my personal [Neovim](https://neovim.io/) configuration, it can be used i
 
 - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
 
-I think these are the bare minimum plugins need it to have a very nice experience using Neovim, other functionally can be accomplish setting up internal variables or writing remaps.
+I think these are the bare minimum plugins need it to have a very nice
+experience using Neovim, other functionally can be accomplish setting up
+internal variables or writing remaps.
 
 After installation, press the `<space>` key to access the **Which-key** menu:
 
@@ -97,7 +99,8 @@ alias fd='fdfind'
 Install [Treesitter](https://github.com/nvim-treesitter/nvim-treesitter) dependencies, a C compiler is required:
 
 ```bash
-sudo apt-get install gcc
+sudo apt install -y build-essential
+sudo apt install -y clang llvm libclang-dev
 ```
 
 Usually this step is optional because most Linux distributions already comes with a C compiler.
