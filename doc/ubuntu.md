@@ -121,3 +121,8 @@ wget https://github.com/neovim/neovim/releases/download/v0.11.5/nvim-linux-x86_6
 wget https://mega.nz/linux/repo/xUbuntu_22.04/amd64/megasync-xUbuntu_22.04_amd64.deb && sudo apt install "$PWD/megasync-xUbuntu_22.04_amd64.deb"
 ```
 
+## 7z
+
+```bash
+sudo apt install p7zip-full
+```
