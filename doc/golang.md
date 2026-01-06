@@ -242,12 +242,18 @@ If you do this with a constant or literal index, it is a compile-time error. An
 out-of-bounds read or write with a variable index compiles but fails at runtime
 with a panic 
 
-
-Finally, the built-in function len takes in an array and returns its length:
+Finally, the built-in function `len` takes in an array and returns its length:
 
 ```go
 fmt.Println(len(x))
 ```
+
+> Note: arrays in Go are rarely used explicitly. This is because they come with
+> an unusual limitation. Go considers the size of the array to be part of the
+> type of the array. This makes an array that's declared to be `[3]int` a
+> different type from an array that's declared to be `[4]int`. This alsomeans
+> that you cannot use a variable to specify the size of an array, because types
+> must be resolved at compile time, not at run time.
 
 > Note: you can’t use a type conversion to directly convert arrays of different sizes
 to identical types. 
@@ -259,7 +265,19 @@ you need ahead of time.
 Slices
 
 Most of the time, when you want a data structure that holds a sequence of
-values, a slice is what you should use.
+values, a slice is what you should use. You can grow slices as needed. This is
+because the length os a slice is not part of its type.
+
+You don't specify the size of the slice when you declare it
+
+```go
+var x = []int{10, 20, 30}
+```
+
+> Note: Using `[...]` makes an array. Using `[]` makes a slice
+
+
+
 
 
 

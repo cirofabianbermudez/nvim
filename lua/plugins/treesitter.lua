@@ -15,6 +15,7 @@ return { -- DONE
       "markdown",
       "markdown_inline",
       "python",
+      "go",
       "gnuplot",
       "python",
       "lua",
