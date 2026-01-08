@@ -198,3 +198,8 @@ https://docs.python.org/3/howto/argparse.html
 https://docs.python.org/3/library/argparse.html#default
 https://packaging.python.org/en/latest/tutorials/packaging-projects/
 
+https://realpython.com/python-uv/
+https://realpython.com/python-pyproject-toml/
+http://realpython.com/pytest-python-testing/
+
+
