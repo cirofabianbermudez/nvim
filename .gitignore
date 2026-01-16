@@ -1,0 +1,20 @@
+# Directories
+scripts/formaters/
+testing/
+
+# Documentation directories
+docs/dec/
+docs/snps/
+
+# Files
+*.bak
+*.txt
+session.vim
+
+# C++
+Makefile
+**/bin
+**/obj
+*.o
+*.exe
+

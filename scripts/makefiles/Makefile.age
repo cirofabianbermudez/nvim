@@ -1,0 +1,134 @@
+##=============================================================================
+## [Filename]       Makefile.age
+## [Project]        -
+## [Author]         Ciro Bermudez - cirofabian.bermudez@gmail.com
+## [Language]       GNU Makefile
+## [Created]        Jan 2026
+## [Modified]       -
+## [Description]    Makefile for age encryp and decrypt
+## [Notes]          -
+## [Status]         stable
+## [Revisions]      -
+##=============================================================================
+
+# ===============================  VARIABLES  =================================
+
+# Directories
+GIT_DIR     := $(shell git rev-parse --show-toplevel)
+DOCS_DIR    := $(GIT_DIR)/docs
+PLAIN_DIR   := $(DOCS_DIR)/plain
+ENC_DIR     := $(DOCS_DIR)/enc
+DEC_DIR     := $(DOCS_DIR)/dec
+
+# Files
+FILE     ?= 
+FILENAME = $(notdir $(FILE))
+BASENAME = $(basename $(FILENAME))
+
+DIR       ?= 
+DIRCLEAN   = $(patsubst %/,%,$(DIR))
+DIRPARENT  = $(dir $(abspath $(DIRCLEAN)))
+DIRNAME    = $(notdir $(DIRCLEAN:.tar.gz.age=))
+
+# Colors
+C_RED := \033[31m
+C_GRE := \033[32m
+C_BLU := \033[34m
+C_LBL := \033[36m
+C_YEL := \033[33m
+C_ORA := \033[38;5;214m
+NC    := \033[0m 
+
+# ================================  CONTROL  ==================================
+
+ifeq ($(strip $(GIT_DIR)),)
+$(error Not inside a git repository)
+endif
+
+# ================================  TARGETS  ==================================
+
+SHELL         := bash
+.DEFAULT_GOAL := all
+
+.PHONY: all
+all: help
+#______________________________________________________________________________
+
+
+.PHONY: vars
+vars: ## Print Makefile variables
+	@echo -e "$(C_ORA)Directory variables$(NC)"
+	@echo "GIT_DIR     = $(GIT_DIR)"
+	@echo "DOCS_DIR    = $(DOCS_DIR)"
+	@echo "PLAIN_DIR   = $(PLAIN_DIR)"
+	@echo "ENC_DIR     = $(ENC_DIR)"
+	@echo "DEC_DIR     = $(DEC_DIR)"
+	@echo ""
+	@echo -e "$(C_ORA)File variables$(NC)"
+	@echo "FILE        = $(FILE)"
+	@echo "FILENAME    = $(FILENAME)"
+	@echo "BASENAME    = $(BASENAME)"
+	@echo "DIR         = $(DIR)"
+	@echo "DIRCLEAN    = $(DIRCLEAN)"
+	@echo "DIRPARENT   = $(DIRPARENT)"
+	@echo "DIRNAME     = $(DIRNAME)"
+#______________________________________________________________________________
+
+.PHONY: check-%
+check-%:
+	@test -n "$($*)" || (echo "Error: $* is required"; exit 1)
+#______________________________________________________________________________
+
+.PHONY: enc
+enc: check-FILE ## Encrypt FILE with a passphrase
+	mkdir -p $(ENC_DIR)
+	age -p -o "$(ENC_DIR)/$(FILENAME).age" "$(FILE)"
+	@echo "$(FILE) successfully encrypted"
+	@echo "Saved in $(ENC_DIR)/$(FILENAME).age"
+#______________________________________________________________________________
+
+.PHONY: dec
+dec: check-FILE ## Decript FILE
+	mkdir -p $(DEC_DIR)
+	age -d -o "$(DEC_DIR)/$(BASENAME)" "$(FILE)"
+	@echo "$(FILE) successfully deencrypted"
+	@echo "Saved in $(DEC_DIR)/$(BASENAME)"
+#______________________________________________________________________________
+
+.PHONY: enc-dir
+enc-dir: check-DIR ## Encrypt with a passphrase DIR
+	mkdir -p $(ENC_DIR)
+	tar -czf - -C "$(DIRPARENT)" "$(DIRNAME)" | age -p > "$(ENC_DIR)/$(DIRNAME).tar.gz.age"
+	@echo "$(DIRNAME) successfully encrypted"
+	@echo "Saved in $(ENC_DIR)/$(DIRNAME).tar.gz.age"
+#______________________________________________________________________________
+
+.PHONY: dec-dir
+dec-dir: check-DIR ## Decript input DIR
+	mkdir -p $(DEC_DIR)
+	age -d "$(DIR)" | tar -xzf - -C "$(DEC_DIR)"
+	@echo "$(DIR) successfully decrypted"
+	@echo "Saved in $(DEC_DIR)/$(DIRNAME)"
+#______________________________________________________________________________
+
+
+.PHONY: clean
+clean: ## Delete input FILE
+	rm -rf $(DEC_DIR)
+#______________________________________________________________________________
+
+.PHONY: help
+help: ## Displays help message
+	@echo "======================================================================"
+	@echo "Usage: make <target> <variables>"
+	@echo "======================================================================"
+	@echo "--------------------------- Targets ----------------------------------"
+	@grep -h -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "- make $(C_LBL)%-10s$(NC) %s\n", $$1, $$2}'
+	@echo "--------------------------- Variables -------------------------------"
+	@echo "  FILE             : Name of the file to encrypt or decrypt"
+	@echo "  DIR              : Name of the directory to encrypt or decrypt"
+	@echo "-------------------------- Variable Values --------------------------"
+	@echo "  FILE             : $(FILE)"
+	@echo "  DIR              : $(DIR)"
+#______________________________________________________________________________
+
