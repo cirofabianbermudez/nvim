@@ -5,12 +5,6 @@ vim.g.maplocalleader = " "
 -- Options when running macros and remaps
 local opts = { noremap = true, silent = true }
 
--- Easy yank all or delete all
-vim.keymap.set("n", "Y", "y$", { desc = "Yank till EOL", noremap = true, silent = true })
-
--- See file current path
-vim.keymap.set("n", "<leader>?", ":echo expand('%:p')<CR>", opt)
-
 --  Normal tab function
 vim.keymap.set("x", "<Tab>", ">",   opts )
 vim.keymap.set("x", "<S-Tab>", "<", opts )

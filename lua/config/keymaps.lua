@@ -15,7 +15,6 @@ map("n", "<leader>q", ":q<CR>", "Quit Neovim")
 map("n", "<leader>W", ":wa<CR>", "Save All Files")
 
 -- Easy yank all or delete all
-map("n", "Y", "y$", "Yank till EOL")
 map("n", "<leader>ya", ":%y+<CR>", "Yank All")
 map("n", "<leader>yd", ":%y+ | %d<CR>", "Yank All/Delete")
 
