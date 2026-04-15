@@ -812,6 +812,60 @@ gpg --list-keys --keyid-format=long
 gpg --delete-keys HZTX5CQ0Y3WCAI7V
 ```
 
+## GitHub CLI
+
+Basic configuration
+
+```bash
+gh config set editor nvim
+gh config set git_protocol ssh
+```
+
+Useful to know
+
+```bash
+gh browse
+```
+
+PR
+
+```bash
+gh pr status
+gh pr list
+gh pr view 123
+```
+
+
+```bash
+git push -u origin my-branch
+gh pr create
+
+gh pr create \
+  --base main \
+  --head my-branch \
+  --title "Add UART monitor" \
+  --body "Implements monitor and basic smoke test."
+
+gh pr checkout 123
+```
+
+```bash
+gh issue list
+gh issue view 45
+gh issue create
+
+gh issue create \
+  --title "UVM scoreboard mismatch on reset" \
+  --body "Observed after async reset deassertion." \
+  --label bug \
+  --assignee @me
+```
+
+
+```bash
+gh release create v1.0.0 build/app.tar.gz
+```
+
 Then you can repeat all above steps to create other key.
 
 https://endjin.com/blog/2022/12/how-to-sign-your-git-commits
