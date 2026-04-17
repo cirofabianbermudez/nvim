@@ -149,37 +149,24 @@ nvim
 
 ## Lockfile
 
-After every **update**, the local lockfile is updated with the installed revisions. It is recommended to have this file under version control.
+After every **update**, the local lockfile is updated with the installed
+revisions. It is recommended to have this file under version control.
 
-If you use your Neovim config on multiple machines, using the lockfile, you can ensure that the same version of every plugin is installed.
+If you use your Neovim config on multiple machines, using the lockfile, you can
+ensure that the same version of every plugin is installed.
 
-If you are on another machine, you can do `:Lazy restore`, to update all your plugins to the version from the lockfile.
+If you are on another machine, you can do `:Lazy sync`, to update all your
+plugins to the version from the lockfile.
+
+If accidentaly you update with `:Lazy update` use `:Lazy restore`.
 
 ## Spell check
 
-Inside this repository there is a `spell` directory that contains the `*.spl` and `.sug` files for English and Spanish in case you experience some problems while running the `setlocal spell spelllang=es` vim command.
-
-## Extras
-
-### Installing and Upgrading Powershell
-
-Search for the latest version of [PowerShell](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.4)
-```powershell
-winget search Microsoft.PowerShell
-```
-
-Install PowerShell
-```powershell
-winget install --id Microsoft.Powershell --source winget
-```
-
-Upgrading an existing installation
-```powershell
-winget list --name PowerShell --upgrade-available
-```
+Inside this repository there is a `spell` directory that contains the `*.spl`
+and `.sug` files for English and Spanish in case you experience some problems
+while running the `setlocal spell spelllang=es` vim command.
 
 ## Project status
 
-- [x] This configuration was tested on a Windows 10/11 machine using [Powershell](https://github.com/PowerShell/PowerShell) and [Terminal](https://github.com/microsoft/terminal).
+Working
 
-- [x] This configuration was tested on a WSL Ubuntu 22.04.4 LTS using [Terminal](https://github.com/microsoft/terminal).
