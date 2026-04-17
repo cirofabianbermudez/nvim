@@ -866,6 +866,18 @@ gh issue create \
 gh release create v1.0.0 build/app.tar.gz
 ```
 
+gh codespace list
+gh auth refresh -h github.com -s codespac
+gh codespace ssh -c reimagined-meme-9jrxvjpgv6w2xvgr
+gh codespace stop
+
+
+
+
+
+
+
+
 Then you can repeat all above steps to create other key.
 
 https://endjin.com/blog/2022/12/how-to-sign-your-git-commits
