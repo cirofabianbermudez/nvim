@@ -873,7 +873,21 @@ gh codespace stop
 
 
 
+There is a file calles `~/.gitconfig` where all the global configurations are
+saved.
 
+also new command I just learned
+
+```bash
+git config set --global user.name cirofabianbermudez
+git config get --global user.name 
+
+git config set --global user.email cirofabian.bermudez@gmail.com
+git config get --global user.email
+
+git config set --global init.defaultBranch master
+git config get --global init.defaultBranch
+```
 
 
 
