@@ -249,3 +249,13 @@ activity monitor in macos
 
  in macos is o and then mem
  or top -o mem
+
+
+To check architecture 
+uname -m
+uname -a
+lscpu
+
+set a password
+
+sudo passwd ubuntu
