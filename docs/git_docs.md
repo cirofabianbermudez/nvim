@@ -889,7 +889,73 @@ git config set --global init.defaultBranch master
 git config get --global init.defaultBranch
 ```
 
+for local configurations you can do something like
 
+```bash
+git config set webflyx.ceo "ThePrimeagen"
+```
+
+Then then see them with
+
+```bash
+git config list --local
+
+```
+
+Funy enough, there are saved in `.git/config`
+
+
+git config get <key>
+
+
+git config unset <key>
+
+
+
+git log --oneline --graph --all
+git --no-pager log --oneline --graph --parents
+git config --global core.editor "nvim"
+
+git switch -c update_dune 12ba41f
+
+In the feature branch do
+
+```bash
+git rebase main
+```
+
+to sync with main without the need of a merge commit
+
+git push --force-with-lease
+
+to push 
+
+```bash
+git reset --soft COMMITHASH
+```
+you keep the changes in the stagging area
+
+
+```bash
+git reset --hard COMMITHASH
+```
+
+git remote add <name> <uri>
+git remote remove <name>
+git remote -v
+
+
+git log remote/branch
+
+git config set --global pull.rebase true
+
+GitHub CLI
+
+```bash
+gh auth login
+```
+
+gh repo create
 
 
 Then you can repeat all above steps to create other key.
