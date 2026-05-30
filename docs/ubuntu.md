@@ -13,12 +13,24 @@ apt policy <package-name>
 
 ### Install
 
+Using the package manager:
+
 ```bash
 sudo apt update
 sudo apt install <package-name>
 ```
 
+Using a `.deb`
+
+```bash
+sudo apt install ./package-name.deb
+# If dependencies are missing, fix them with
+sudo apt -f install
+```
+
 ### Uninstall
+
+From package manager
 
 ```bash
 sudo apt remove <package-name>
@@ -26,7 +38,10 @@ sudo apt purge <package-name>
 sudo apt autoremove
 ```
 
-
+```bash
+# See how APT sees it
+apt list --installed | grep package
+```
 
 ## Install VS Code
 
