@@ -172,5 +172,10 @@ sudo umount /dev/sda1 /dev/sda3
 sudo dd if=~/Downloads/ubuntu-*.iso of=/dev/sda bs=4M status=progress oflag=sync
 ```
 
+4. Eject the USB
+
+```bash
+sudo eject /dev/sda
+```
 
 
