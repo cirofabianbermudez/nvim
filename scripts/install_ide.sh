@@ -39,8 +39,12 @@ install_neovim() {
   # https://github.com/neovim/neovim
   local version="$1"
   local install_dir="$HOME/.local/bin"
+  if [[ -d "$install_dir/nvim" ]]; then
+    info "Neovim already installed, skipping"
+    return 0
+  fi
   mkdir -p "$install_dir"
-  wget -P "$install_dir" https://github.com/neovim/neovim/releases/download/v${version}/nvim-linux-x86_64.tar.gz
+  wget -qP "$install_dir" https://github.com/neovim/neovim/releases/download/v${version}/nvim-linux-x86_64.tar.gz
   tar -xzf "$install_dir/nvim-linux-x86_64.tar.gz" -C "$install_dir"
   mv "$install_dir/nvim-linux-x86_64" "$install_dir/nvim"
   rm -f "$install_dir/nvim-linux-x86_64.tar.gz"
@@ -54,8 +58,12 @@ install_ripgrep() {
   # https://github.com/burntsushi/ripgrep
   local version="$1"
   local install_dir="$HOME/.local/bin"
+  if [[ -d "$install_dir/ripgrep" ]]; then
+    info "ripgrep already installed, skipping"
+    return 0
+  fi
   mkdir -p "$install_dir"
-  wget -P "$install_dir" https://github.com/BurntSushi/ripgrep/releases/download/${version}/ripgrep-${version}-x86_64-unknown-linux-musl.tar.gz
+  wget -qP "$install_dir" https://github.com/BurntSushi/ripgrep/releases/download/${version}/ripgrep-${version}-x86_64-unknown-linux-musl.tar.gz
   tar -xzf "$install_dir/ripgrep-${version}-x86_64-unknown-linux-musl.tar.gz" -C "$install_dir"
   mv "$install_dir/ripgrep-${version}-x86_64-unknown-linux-musl" "$install_dir/ripgrep"
   rm -f "$install_dir/ripgrep-${version}-x86_64-unknown-linux-musl.tar.gz"
@@ -69,8 +77,12 @@ install_fzf() {
   # https://github.com/junegunn/fzf
   local version="$1"
   local install_dir="$HOME/.local/bin"
+  if [[ -f "$install_dir/fzf" ]]; then
+    info "fzf already installed, skipping"
+    return 0
+  fi
   mkdir -p "$install_dir"
-  wget -P "$install_dir" "https://github.com/junegunn/fzf/releases/download/v${version}/fzf-${version}-linux_amd64.tar.gz"
+  wget -qP "$install_dir" "https://github.com/junegunn/fzf/releases/download/v${version}/fzf-${version}-linux_amd64.tar.gz"
   tar -xzf "$install_dir/fzf-${version}-linux_amd64.tar.gz" -C "$install_dir"
   rm -f "$install_dir/fzf-${version}-linux_amd64.tar.gz"
   grep -qxF "export PATH=\"\$HOME/.local/bin:\$PATH\"" ~/.bashrc \
@@ -83,8 +95,12 @@ install_fd() {
   # https://github.com/sharkdp/fd
   local version="$1"
   local install_dir="$HOME/.local/bin"
+  if [[ -d "$install_dir/fd" ]]; then
+    info "fd already installed, skipping"
+    return 0
+  fi
   mkdir -p "$install_dir"
-  wget -P "$install_dir" https://github.com/sharkdp/fd/releases/download/v${version}/fd-v${version}-x86_64-unknown-linux-gnu.tar.gz
+  wget -qP "$install_dir" https://github.com/sharkdp/fd/releases/download/v${version}/fd-v${version}-x86_64-unknown-linux-gnu.tar.gz
   tar -xzf "$install_dir/fd-v${version}-x86_64-unknown-linux-gnu.tar.gz" -C "$install_dir"
   mv "$install_dir/fd-v${version}-x86_64-unknown-linux-gnu" "$install_dir/fd"
   rm -f "$install_dir/fd-v${version}-x86_64-unknown-linux-gnu.tar.gz"
@@ -96,6 +112,10 @@ install_fd() {
 install_uv() {
   # Install uv
   # https://docs.astral.sh/uv/
+  if command -v uv &>/dev/null; then
+    info "uv already installed, skipping"
+    return 0
+  fi
   curl -LsSf https://astral.sh/uv/install.sh -o /tmp/uv_install.sh
   sh /tmp/uv_install.sh
   rm -f /tmp/uv_install.sh
@@ -104,17 +124,27 @@ install_uv() {
 install_starship() {
   # Install starship
   # https://starship.rs/
+  if command -v starship &>/dev/null; then
+    info "starship already installed, skipping"
+    return 0
+  fi
   curl -sS https://starship.rs/install.sh -o /tmp/starship_install.sh
   sh /tmp/starship_install.sh
   rm -f /tmp/starship_install.sh
   starship preset plain-text-symbols -o ~/.config/starship.toml
+  grep -qxF 'eval "$(starship init bash)"' ~/.bashrc \
+    || echo 'eval "$(starship init bash)"' >> ~/.bashrc
+  info "starship installed"
 }
 
 download_fonts() {
   # Download Fonts
   # https://www.nerdfonts.com/font-downloads
-  wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/UbuntuMono.zip
-  wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/Hack.zip
+  local fonts_dir="$HOME/Downloads"
+  mkdir -p "$fonts_dir"
+  wget -qP "$fonts_dir" https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/UbuntuMono.zip
+  wget -qP "$fonts_dir" https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/Hack.zip
+  info "Fonts downloaded in ${fonts_dir}"
 }
 
 clone_nvim_repo() {
@@ -127,7 +157,6 @@ clone_nvim_repo() {
   fi
 }
 
-
 main() {
   info "Installing development environment.."
 
@@ -137,10 +166,10 @@ main() {
   install_ripgrep "$RG_VERSION"
   install_fzf "$FZF_VERSION"
   install_fd "$FD_VERSION"
+  download_fonts
 
   # install_uv
   # install_starship
-  # download_fonts
   # clone_nvim_repo
 
   info "Setup complete!"
