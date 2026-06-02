@@ -7,13 +7,13 @@ return { -- DONE
     options = {
       always_show_bufferline = true,
       -- Disable Nerfont
-      show_buffer_icons = false,
-      show_buffer_close_icons = false,
-      show_close_icon = false,
-      show_tab_indicator = false,
+      -- show_buffer_icons = false,
+      -- show_buffer_close_icons = false,
+      -- show_close_icon = false,
+      -- show_tab_indicator = false,
 
-      -- separator_style = "slant",
-      separator_style = { "|", "|" },
+      separator_style = "thin",
+      -- separator_style = { "|", "|" },
       indicator = {
         -- style = "underline",
       },
