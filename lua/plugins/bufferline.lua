@@ -5,8 +5,15 @@ return { -- DONE
   event = "VeryLazy",
   opts = {
     options = {
-      always_show_bufferline = false,
-      separator_style = "slant",
+      always_show_bufferline = true,
+      -- Disable Nerfont
+      show_buffer_icons = false,
+      show_buffer_close_icons = false,
+      show_close_icon = false,
+      show_tab_indicator = false,
+
+      -- separator_style = "slant",
+      separator_style = { "|", "|" },
       indicator = {
         -- style = "underline",
       },
@@ -17,7 +24,7 @@ return { -- DONE
 
     -- inject presets now that bufferline is loaded
     opts.options.style_preset = {
-      -- bufferline.style_preset.no_italic,
+      bufferline.style_preset.no_italic,
       -- bufferline.style_preset.no_bold,
     }
 

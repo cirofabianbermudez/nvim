@@ -10,6 +10,6 @@ else
   -- require("config.markdown")
   -- require("config.latex")
   require("config.lazy")
-  require("config.autocmds")
+  -- require("config.autocmds")
 end
 
