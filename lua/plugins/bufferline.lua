@@ -25,7 +25,7 @@ return { -- DONE
     -- inject presets now that bufferline is loaded
     opts.options.style_preset = {
       bufferline.style_preset.no_italic,
-      -- bufferline.style_preset.no_bold,
+      bufferline.style_preset.no_bold,
     }
 
     bufferline.setup(opts)
