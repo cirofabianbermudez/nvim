@@ -10,8 +10,7 @@ ask a simple question. A more advance usage is to select the ChatGPT Work mode
 or Codex. Codex is a little bit more technical and gives you more details, so in
 that sense Codex is better, for now this is what we're going to use.
 
-
-There core concept when using any AI is  **Prompting**.
+There core concept when using any AI is **Prompting**.
 
 Prompting is how you tell the AI what you want to know, make, or change.
 A prompt can be a question, an instruction, or a goal.
@@ -74,8 +73,6 @@ unarchive "name of the chat"` of permanently delete the chat with `/delete`,
 or `codex delete "name of chat"`
 
 To start a new chat with a particular name use `/name <some-name>`
-
-
 
 
 ## 1. AI Foundations
